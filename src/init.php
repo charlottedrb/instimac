@@ -19,11 +19,16 @@ function displayResults(&$tests)
 require 'autoloader.php';
 
 use Database\Database;
+use Exemple\Tache;
 
 $test = [];
 
 $db = new Database();
 $test['Database'] = $db->connect();
+
+$test['Tache'] = Tache::init($db->connection);
+$tache = new Tache($db->connection);
+$test['TacheADD'] = $tache->getById(2);
 
 ?>
 <!DOCTYPE>
