@@ -14,21 +14,6 @@ class Commentaires
     //Nom de propriét en "camelCase"
     public $database = NULL;
 
-    /*
-    *CREATE TABLE commentaire(
-    *    c_id     Int  Auto_increment  NOT NULL ,
-    *    c_date   Datetime NOT NULL ,
-    *    c_texte  Varchar (242) NOT NULL ,
-    *    c_cacher Bool NOT NULL ,
-    *    p_id     Int NOT NULL ,
-    *    u_id     Int NOT NULL
-	*   ,CONSTRAINT commentaire_PK PRIMARY KEY (c_id)
-    *
-	*   ,CONSTRAINT commentaire_photo_FK FOREIGN KEY (p_id) REFERENCES photo(p_id)
-	*   ,CONSTRAINT commentaire_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
-    *   )ENGINE=InnoDB;
-    */
-
     //Appelé à chaque construction d'un objet
     public function __construct(&$database)
     {
@@ -56,12 +41,14 @@ class Commentaires
         {
             return TRUE;
         }else
+        {
             return FALSE;
         }
         
     }
 
-    private function creatTabBySQL($requetSQL) //retour un tableau si requet marche
+    //retour un tableau si requet marche
+    private function creatTabBySQL($requetSQL)
     {
         $donnees = $database->query($requetSQL);
         if ($donnees == FALSE) {
@@ -110,27 +97,31 @@ class Commentaires
     public function ajoutCommentaire( $u_id, $p_id, $c_date, $c_texte)
     {
         $sql ='INSERT INTO commentaire (c_date, c_texte, c_cacher, p_id, u_id)
-        VALUES (\''.$c_date.'\', \''.$c_texte.'\',\'FALSE\',\''.$p_id.'\',\''.$u_id.'\')';
+            VALUES (\''.$c_date.'\', \''.$c_texte.'\',\'FALSE\',\''.$p_id.'\',\''.$u_id.'\')';
         $database->query($sql) or die(print_r($bdd->errorInfo()));
         
     }
 
     public function suprimerCommentaire( $c_id)
     {
-        $sql ='DELETE FROM commentaire WHERE c_id='.$c_id;
-        $database->query($sql) or die(print_r($bdd->errorInfo()));
+        $sql='SELECT * FROM commentaire WHERE c_id='.$c_id;
+        $donnees =$database->query($sql);
+        if ($donnees != FALSE) 
+        {
+            $sql ='DELETE FROM commentaire WHERE c_id='.$c_id;
+            $database->query($sql) or die(print_r($bdd->errorInfo()));
+        }
         
     }
     
     private function affTabCom($tabCom)
     {
-        $affichage = '<div class="commentaire">'
+        $affichage = '<div class="commentaire">';
         if($tabCom== FALSE)
         {
             $affichage .='il n\'y a pas de commentaire';
         }else
         {
-            commentaire.c_id AS c_id, commentaire.c_cacher AS c_cacher, commentaire.p_id AS p_id, commentaire.u_id AS u_id, utilisateur.u_nom AS u_nom
             foreach ($tabCom as $commentaire) {
                 if($commentaire['c_cacher']==FALSE){
                     $affichage .= 
