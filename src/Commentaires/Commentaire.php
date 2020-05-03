@@ -42,19 +42,28 @@ class Commentaires
      */
     public static function init(&$database)
     {
-        $sql='SELECT * FROM commentaire';
-        $donneeTable = $database->query($sql);
+        $sql = 'CREATE TABLE IF NOT EXISTS commentaire(
+                c_id     Int  Auto_increment  NOT NULL ,
+                c_date   Datetime NOT NULL ,
+                c_texte  Varchar (242) NOT NULL ,
+                c_cacher Bool NOT NULL ,
+                p_id     Int NOT NULL ,
+                u_id     Int NOT NULL
+               ,CONSTRAINT commentaire_PK PRIMARY KEY (c_id)
+               ,CONSTRAINT commentaire_photo_FK FOREIGN KEY (p_id) REFERENCES photo(p_id)
+               ,CONSTRAINT commentaire_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
-        
-        if ($donneeTable == FALSE) {
-            return FALSE;
-        }else
+        if ($database->query($sql))
         {
             return TRUE;
+        }else
+            return FALSE;
         }
         
     }
-    private function creatTabBySQL($requetSQL)
+
+    private function creatTabBySQL($requetSQL) //retour un tableau si requet marche
     {
         $donnees = $database->query($requetSQL);
         if ($donnees == FALSE) {
@@ -114,7 +123,6 @@ class Commentaires
         $database->query($sql) or die(print_r($bdd->errorInfo()));
         
     }
-
     
     //Appelé à chaque destruction d'un objet, unset(), fin de script, destruction
     public function __destruct()
