@@ -38,6 +38,7 @@ class Reagir
         {
             return TRUE;
         }else
+        {
             return FALSE;
         }
         
@@ -92,14 +93,14 @@ class Reagir
     private function affReaction($p_id)
     {
         $tabReaction =tabTypeEtNbrReactionPhoto($p_id);
-        $affichage = '<div class="reaction">'
+        $affichage = '<div class="reaction">';
         if($tabReaction!= FALSE)
         {
             foreach ($tabReaction as $reaction) {
                 $affichage .= 
                     '<div class="typeReaction">'.$reaction['r_type'].'</div>'
-                    .'<div class="nbrReaction">'.$reaction['nbrReaction'].'</div>'
-                }
+                    .'<div class="nbrReaction">'.$reaction['nbrReaction'].'</div>';
+            }
         }
 
         $affichage .= '</div>';
