@@ -10,8 +10,6 @@ namespace Commentaires;
 
 class Commentaires
 {
-    //Constantes en majuscule avec _ pour séparer
-    const CONSTANTE_TROP_COLL = TRUE;
 
     //Nom de propriét en "camelCase"
     public $database = NULL;
@@ -79,7 +77,7 @@ class Commentaires
 
     public function getTabComPhotoDateCoissant($p_id)
     {
-        $sql='SELECT * FROM commentaire WHERE p_id='.$p_id.'ORDER BY c_date';
+        $sql='SELECT commentaire.c_id AS c_id, commentaire.c_date AS c_date, commentaire.c_texte AS c_texte, commentaire.c_cacher AS c_cacher, commentaire.p_id AS p_id, commentaire.u_id AS u_id, utilisateur.u_nom AS u_nom  FROM commentaire JOIN utilisateur ON commentaire.u_id = utilisateur.u_id WHERE p_id='.$p_id.'ORDER BY c_date';
         $tabComPhoto = creatTabBySQL($sql);
 
         return $tabComPhoto;
@@ -95,7 +93,7 @@ class Commentaires
 
     public function getTabComUtilisateurDateCoissant($u_id)
     {
-        $sql='SELECT * FROM commentaire WHERE u_id='.$u_id.'ORDER BY c_date';
+        $sql='SELECT *  FROM commentaire WHERE u_id='.$u_id.'ORDER BY c_date';
         $tabComUt = creatTabBySQL($sql);
 
         return $tabComUt;
@@ -124,6 +122,36 @@ class Commentaires
         
     }
     
+    private function affTabCom($tabCom)
+    {
+        $affichage = '<div class="commentaire">'
+        if($tabCom== FALSE)
+        {
+            $affichage .='il n\'y a pas de commentaire';
+        }else
+        {
+            commentaire.c_id AS c_id, commentaire.c_cacher AS c_cacher, commentaire.p_id AS p_id, commentaire.u_id AS u_id, utilisateur.u_nom AS u_nom
+            foreach ($tabCom as $commentaire) {
+                if($commentaire['c_cacher']==FALSE){
+                    $affichage .= 
+                        '<div class="nomUtilisateurCommentaire">'.$commentaire['u_nom'].'</div>'
+                        .'<div class="dateCommentaire">'.$commentaire['c_date'].'</div>'
+                        .'<div class="texteCommentaire">'.$commentaire['c_texte'].'</div>';
+                }
+            }
+        }
+
+        $affichage .= '</div>';
+        echo $affichage;
+    }
+
+    public function affComPhoto($p_id)
+    {
+        $tabCom = getTabComPhotoDateCoissant($p_id);
+        affTabCom ($tabCom);
+       
+    }
+
     //Appelé à chaque destruction d'un objet, unset(), fin de script, destruction
     public function __destruct()
     {
