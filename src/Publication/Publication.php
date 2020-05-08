@@ -29,13 +29,17 @@ class Publication
             p_date DATETIME NOT NULL, 
             p_lieu VARCHAR(50),
             p_description VARCHAR(255),
-            p_hide BOOLEAN, 
+            p_hide BOOLEAN NOT NULL, 
             PRIMARY KEY (p_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
         if($database->query($sql)){
             $sql = 'INSERT INTO ' .self::TABLE. ' (p_date, p_lieu, p_description, p_hide) VALUES (NOW(),' .$lieu. ',' .$description. ', TRUE)';
-
+            //requete preparée
+            $q = $this->database->prepare($sql);
+            if($requete->execute()) {
+                
+            }
             if($database->query($sql) == FALSE) return FALSE;
 
             return TRUE; 
