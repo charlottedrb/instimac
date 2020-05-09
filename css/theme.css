@@ -12,16 +12,24 @@ body {
   margin-top: 2rem;
 }
 
-.publications .publication {
-  position: relative;
+.publications a {
   -webkit-box-flex: 0;
-      -ms-flex: 0 0 47%;
-          flex: 0 0 47%;
-  margin-bottom: 1rem;
+      -ms-flex: 0 0 50%;
+          flex: 0 0 50%;
 }
 
-.publications .publication:nth-child(2n+1) {
-  margin-right: 1rem;
+@media (min-width: 992px) {
+  .publications a {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 25%;
+            flex: 0 0 25%;
+  }
+}
+
+.publications .publication {
+  position: relative;
+  margin-bottom: 1rem;
+  margin-right: 1.5rem;
 }
 
 .publications .publication::after {
@@ -46,20 +54,11 @@ body {
 
 @media (min-width: 992px) {
   .publications .publication {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 23%;
-            flex: 0 0 23%;
     margin-right: 1.5rem;
     margin-bottom: 1.5rem;
   }
   .publications .publication-image {
     width: 100%;
-  }
-  .publications .publication:nth-child(2n+1) {
-    margin-right: 1.5rem;
-  }
-  .publications .publication:nth-child(4n) {
-    margin-right: 0;
   }
 }
 
@@ -185,5 +184,135 @@ h1 {
 @media (min-width: 992px) {
   h1 {
     font-size: 6rem;
+  }
+}
+
+.sidebar .mois-selection {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
+}
+
+.sidebar .mois-selection ul {
+  padding: 2rem;
+  padding-top: 2.5rem;
+  padding-bottom: 2rem;
+  margin-top: 0;
+  list-style-type: none;
+  overflow: hidden;
+}
+
+.sidebar .mois-selection ul li {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.sidebar .mois-selection ul li:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar .mois-selection ul li:not(.active) {
+  display: none;
+}
+
+.sidebar .mois-selection ul li a {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.sidebar .mois-selection #icon {
+  top: 2.5rem;
+  right: 2rem;
+  position: absolute;
+  width: 2rem;
+  float: right;
+  fill: white;
+}
+
+@media (min-width: 992px) {
+  .sidebar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    height: 100vh;
+    background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
+  }
+  .sidebar .mois-selection {
+    text-align: center;
+    background: none;
+    width: 13rem;
+  }
+  .sidebar .mois-selection #icon {
+    display: none;
+  }
+  .sidebar .mois-selection #menu {
+    padding: 1rem;
+  }
+  .sidebar .mois-selection #menu > li:not(.active) {
+    display: block;
+    opacity: 0.8;
+  }
+  .sidebar .mois-selection #menu > li > a {
+    display: block;
+    padding: 1rem;
+    color: white;
+    text-decoration: none;
+    text-transform: lowercase;
+    font-weight: 300;
+  }
+}
+
+.event {
+  position: relative;
+}
+
+.event-name {
+  font-size: 2.5rem;
+  width: 60%;
+}
+
+.event-date {
+  position: absolute;
+  top: -1rem;
+  right: 2rem;
+  font-size: 4rem;
+  text-align: center;
+  background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (min-width: 992px) {
+  .event {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  .event-name {
+    font-size: 4rem;
+  }
+  .event-date {
+    position: static;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+            flex: 0 0 20%;
+    font-size: 8rem;
+    width: 100%;
   }
 }
