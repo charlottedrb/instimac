@@ -6,6 +6,17 @@
   width: 60%;
 }
 
+.container-index .fil .event-date {
+  position: absolute;
+  top: -1rem;
+  right: 2rem;
+  font-size: 4rem;
+  text-align: center;
+  background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @media (min-width: 992px) {
   .container-index {
     display: -webkit-box;
@@ -51,9 +62,17 @@
             flex: 0 0 80%;
     padding-left: 0;
   }
-  .container-index .fil .event .container-event-name {
+  .container-index .fil .event .container-event .container-index .fil .event-name {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 100%;
             flex: 0 0 100%;
+  }
+  .container-index .fil .event-date {
+    position: static;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 20%;
+            flex: 0 0 20%;
+    font-size: 8rem;
+    width: 100%;
   }
 }

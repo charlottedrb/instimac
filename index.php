@@ -119,7 +119,7 @@
             </div>
             <div class="event">
                 <div class="container-event">
-                    <h2 class="event-name">JEUDIMAC</h2>
+                    <h2 class="event-name">GALA IMAC</h2>
                     <div class="publications">
                         <a href="test_publication.php">
                             <div class="publication">
@@ -184,7 +184,7 @@
                     </div>
                 </div>
                 <div class="event-date">
-                    06
+                    12
                 </div>
             </div>
         </div>

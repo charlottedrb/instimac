@@ -19,6 +19,17 @@
                     width: 60%;
                 }
             }
+
+            &-date{
+                position: absolute; 
+                top: -1rem;
+                right: 2rem;
+                font-size: 4rem;
+                text-align: center;
+                background: linear-gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
         }
 
     }
@@ -40,6 +51,8 @@
             overflow: auto;
 
             .event{
+                $this: &;
+
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
@@ -49,9 +62,17 @@
                 .container-event{
                     flex: 0 0 80%;
                     padding-left: 0;
-                    &-name{
+                    
+                    #{$this}-name{
                         flex: 0 0 100%;
                     }
+                }
+
+                &-date{
+                    position: static;
+                    flex: 0 0 20%;
+                    font-size: 8rem;
+                    width: 100%;
                 }
             }
         }

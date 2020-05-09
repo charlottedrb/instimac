@@ -281,14 +281,14 @@ h1 {
 }
 
 .event-date {
-  position: absolute;
-  top: -1rem;
-  right: 2rem;
-  font-size: 4rem;
-  text-align: center;
+  width: 10rem;
   background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.event-lieu {
+  margin-top: 0.5rem;
 }
 
 @media (min-width: 992px) {
@@ -309,10 +309,11 @@ h1 {
   }
   .event-date {
     position: static;
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 20%;
-            flex: 0 0 20%;
-    font-size: 8rem;
-    width: 100%;
+    font-size: 2rem;
+    width: 18rem;
+  }
+  .event-lieu {
+    margin-top: 1rem;
+    font-size: 2rem;
   }
 }

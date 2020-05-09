@@ -15,15 +15,14 @@
     }
 
     &-date{
-        position: absolute; 
-        top: -1rem;
-        right: 2rem;
-        font-size: 4rem;
-        text-align: center;
+        width: 10rem;
         background: linear-gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
         background-clip: text;
         -webkit-text-fill-color: transparent;
+    }
 
+    &-lieu{
+        margin-top: 0.5rem;
     }
 
     @include lg{
@@ -39,9 +38,13 @@
 
         &-date{
             position: static;
-            flex: 0 0 20%;
-            font-size: 8rem;
-            width: 100%;
+            font-size: 2rem;
+            width: 18rem;
+        }
+
+        &-lieu{
+            margin-top: 1rem;
+            font-size: 2rem;
         }
     }
 
