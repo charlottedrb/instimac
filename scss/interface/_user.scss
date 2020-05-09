@@ -1,0 +1,34 @@
+//////////////////////////////////////////////////////////////////////////
+//
+//
+//             STYLE USER
+//
+//
+//////////////////////////////////////////////////////////////////////////
+
+.user{
+    &-image{
+        width: 5rem;
+        height: 5rem;
+    }
+    
+    .roundImg{
+        border-radius: 100%;
+        border: none;
+        overflow: hidden;
+
+        img{
+            width: auto; 
+            height: 100%;
+        }
+    }
+
+    &-name{
+        font-weight: 900;
+    }
+
+    // 992px window width and more
+    @include lg{
+        
+    }
+}

@@ -10,7 +10,7 @@ class Database
     const HOST = 'localhost';
     const DATABASE = 'dev';
     const USER = 'root';
-    const PASSWORD = '';
+    const PASSWORD = 'root';
     const ENCODAGE = 'utf8';
 
     //PDO Objet

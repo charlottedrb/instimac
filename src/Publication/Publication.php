@@ -101,4 +101,6 @@ class Publication
         $this->database = NULL;
     }
 
+    private function 
+
 }
