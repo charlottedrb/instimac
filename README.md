@@ -16,6 +16,11 @@
 - je tire les autres modification avec `git fetch`
 - Si j'ai modifié = je commit à nouveau
 
+## Comment ça marche ? Qui fait quoi ?
+
+![Graphique de git](http://courses.gregoirep.com/projects/git/illu-site-web-requetes.png)
+![Graphique de git](http://courses.gregoirep.com/projects/git/illu-site-web-requetes-team.png)
+
 ## Rappel git flow
 
 ![Graphique de git](http://courses.gregoirep.com/projects/git/git_flow_illustration.png)
