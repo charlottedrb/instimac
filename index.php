@@ -25,7 +25,7 @@
         <div class="fil">
             <div class="event">
                 <div class="container-event">
-                    <h2 class="event-name">JEUDIMAC</h2>
+                   <h2 class="event-name"><a href="test_groupe.php">JEUDIMAC</a></h2>
                     <div class="publications">
                         <a href="test_publication.php">
                             <div class="publication">
@@ -119,7 +119,7 @@
             </div>
             <div class="event">
                 <div class="container-event">
-                    <h2 class="event-name">GALA IMAC</h2>
+                    <h2 class="event-name"><a href="test_groupe.php">GALA IMAC</a></h2>
                     <div class="publications">
                         <a href="test_publication.php">
                             <div class="publication">

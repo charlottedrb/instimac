@@ -2,15 +2,21 @@
   padding-left: 1.5rem;
 }
 
-.container-index .fil .event .container-event .container-index .fil .event-name {
+.container-index .fil .event .container-event .event-name {
   width: 60%;
+}
+
+.container-index .fil .event .container-event .event-name a {
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .container-index .fil .event-date {
   position: absolute;
-  top: -1rem;
-  right: 2rem;
-  font-size: 4rem;
+  top: -0.5rem;
+  right: 0;
+  font-size: 3.5rem;
   text-align: center;
   background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
   background-clip: text;
@@ -62,10 +68,31 @@
             flex: 0 0 80%;
     padding-left: 0;
   }
-  .container-index .fil .event .container-event .container-index .fil .event-name {
+  .container-index .fil .event .container-event .event-name {
     -webkit-box-flex: 0;
-        -ms-flex: 0 0 100%;
-            flex: 0 0 100%;
+        -ms-flex: 0 0 10%;
+            flex: 0 0 10%;
+  }
+  .container-index .fil .event .container-event .event-name a {
+    position: relative;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  .container-index .fil .event .container-event .event-name a:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 10px;
+    margin: 5px 0 0;
+    background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
+    -webkit-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+  }
+  .container-index .fil .event .container-event .event-name a:hover:before {
+    width: 100%;
   }
   .container-index .fil .event-date {
     position: static;
