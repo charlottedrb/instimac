@@ -1,5 +1,7 @@
 <?php
 
+include 'autoloader.php';
+
 function displayResults(&$tests)
 {
     foreach ($tests as $key => $value) {
@@ -16,28 +18,37 @@ function displayResults(&$tests)
     }
 }
 
-require 'autoloader.php';
-
-use Database\Database;
-
-$test = [];
+use Database\Test as Database;
+use Team\Team;
+use User\User;
 
 $db = new Database();
-$test['Database'] = $db->connect();
+$db->connect();
 
-?>
-<!DOCTYPE>
+$test = [];
+$test['DataBaseRequests'] = $db->init();
+
+$team = new Team($db);
+$test['Team'] = $team->init();
+
+$user = new User($db);
+var_dump($user);
+$test['User'] = $user->init();
+
+
+?><!DOCTYPE>
 <html>
 <head>
-
+	<meta charset="UTF-8">
 </head>
 <body>
 
 <h1>Initialisation</h1>
 <table>
-	<td>Classe</td>
-	<td>Résultat</td>
-	</th>
+	<tr>
+		<td>Classe</td>
+		<td>Résultat</td>
+	</tr>
     <?php displayResults($test); ?>
 </table>
 </body>
