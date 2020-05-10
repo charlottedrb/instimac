@@ -1,0 +1,5 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+#Main pages
+#RewriteRule ^home$ index.php [L]
