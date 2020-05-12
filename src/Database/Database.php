@@ -8,6 +8,7 @@ use \PDOException;
 /**
  * Class Database
  * @package Database
+ * @author © 2020 Grégoire Petitalot
  */
 class Database
 {
@@ -22,7 +23,7 @@ class Database
     private $_params = [];
     private $_where = [];
 
-    private $_logEnabled = TRUE;
+    private $_logEnabled = FALSE;
     private $_logCount = 0;
 
     /**
@@ -49,7 +50,59 @@ class Database
             echo 'Connexion échouée : ' . $e->getMessage();
         }
         if ($this->pdo == null || !$this->pdo) return FALSE;
-        return $this->process('SET NAMES "' . self::ENCODAGE . '"');
+        return $this->exec('SET NAMES "' . self::ENCODAGE . '"');
+    }
+
+    /**
+     * Execute a request that needs no results
+     * @param $request
+     * @return bool
+     */
+    public function exec($request)
+    {
+        $request = $this->pdo->exec($request);
+        if ($request !== FALSE) return TRUE;
+        return FALSE;
+    }
+
+    /**
+     * Process a SQL select request with attributes
+     * @param $table
+     * @param $attributes
+     * @param bool $resultsRequired
+     * @return array|bool
+     */
+    public function select($table, $attributes, $resultsRequired = FALSE)
+    {
+        if ($attributes === FALSE) $attributes = ['*'];
+        $this->sqlRequest = 'SELECT ' . self::_generateList($attributes) . ' FROM ' . $table;
+        return $this->process($this->sqlRequest, $resultsRequired, TRUE);
+    }
+
+    /**
+     * Generate the list with coma and ? for a sql request
+     * @param $list
+     * @param string $sep
+     * @param string $before
+     * @param string $after
+     * @return string
+     */
+    private static function _generateList($list, $sep = ',', $before = '', $after = '')
+    {
+        $string = '';
+        if (is_array($list)) {
+            $c = count($list);
+            for ($i = 0; $i < $c; $i++) {
+                if ($i > 0) $string .= $sep;
+                $string .= $before . $list[$i] . $after;
+            }
+        } else if (is_int($list)) {
+            for ($i = 0; $i < $list; $i++) {
+                if ($i > 0) $string .= $sep;
+                $string .= $before . $after;
+            }
+        }
+        return $string;
     }
 
     /**
@@ -58,7 +111,7 @@ class Database
      * @param bool $resultsRequired
      * @return bool | array
      */
-    public function process($req, $resultsRequired = FALSE)
+    public function process($req, $resultsRequired = FALSE, $returnEmptyArray = FALSE)
     {
         $this->sqlRequest = $req;
         $this->sqlRequest .= $this->_generateWhere($this->_where);
@@ -69,15 +122,19 @@ class Database
         if ($request->execute()) {
 
             $data = $request->fetchAll();
+            //var_dump($data);
 
             if (!empty($data)) {
                 $request->closeCursor();
                 $this->_clear();
                 return $data;
+            } elseif ($returnEmptyArray === TRUE && $resultsRequired === FALSE) {
+                return [];
             }
 
             $request->closeCursor();
             $this->_clear();
+
             if ($resultsRequired) return FALSE;
             return TRUE;
         }
@@ -154,59 +211,6 @@ class Database
     }
 
     /**
-     * Execute a request that needs no results
-     * @param $request
-     * @return bool
-     */
-    public function exec($request)
-    {
-        $request = $this->pdo->exec($request);
-        if ($request !== FALSE) return TRUE;
-        return FALSE;
-    }
-
-    /**
-     * Process a SQL select request with attributes
-     * @param $table
-     * @param $attributes
-     * @param bool $resultsRequired
-     * @return array|bool
-     */
-    public function select($table, $attributes, $resultsRequired = FALSE)
-    {
-        if ($attributes === FALSE) $attributes = ['*'];
-        $this->sqlRequest = 'SELECT ' . self::_generateList($attributes) . ' FROM ' . $table;
-        //$this->_talkative($this->sqlRequest);
-        return $this->process($this->sqlRequest, $resultsRequired);
-    }
-
-    /**
-     * Generate the list with coma and ? for a sql request
-     * @param $list
-     * @param string $sep
-     * @param string $before
-     * @param string $after
-     * @return string
-     */
-    private static function _generateList($list, $sep = ',', $before = '', $after = '')
-    {
-        $string = '';
-        if (is_array($list)) {
-            $c = count($list);
-            for ($i = 0; $i < $c; $i++) {
-                if ($i > 0) $string .= $sep;
-                $string .= $before . $list[$i] . $after;
-            }
-        } else if (is_int($list)) {
-            for ($i = 0; $i < $list; $i++) {
-                if ($i > 0) $string .= $sep;
-                $string .= $before . $after;
-            }
-        }
-        return $string;
-    }
-
-    /**
      * Process an insert SQL request, if an array contain array is passed, the method insert multiple group of values by one request
      * @param $table
      * @param $attributes
@@ -236,7 +240,7 @@ class Database
                 $this->addParam($value);
             }
         }
-        $this->_talkative($this->sqlRequest);
+        //$this->_talkative($this->sqlRequest);
         return $this->process($this->sqlRequest);
     }
 
