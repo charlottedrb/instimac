@@ -16,12 +16,12 @@ class Publication
     public $description = NULL; 
     public $hide = TRUE;  
 
-    public function __construct(&$database)
+    public function __construct(Database &$database)
     {
         $this->database = $database;
     }
 
-    public static function init(&$database)
+    public static function init(Database &$database)
     {
         //opération de création de la.es table.s dans la base de données
         $sql = 'CREATE TABLE IF NOT EXISTS' .self::TABLE. '(
