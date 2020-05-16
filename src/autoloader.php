@@ -1,12 +1,4 @@
 <?php
-//Charge les classes required by "use"
-spl_autoload_register(function ($className) {
-    $file = dirname(__DIR__) . '\\src\\' . $className . '.php';
-    $file = str_replace('\\', DIRECTORY_SEPARATOR, $file);
-    if (file_exists($file)) include $file;
-    else echo 'Autoload: Error when loading class'.PHP_EOL."<br>";
-});
-
 /*
 // one folder back
 $root = __DIR__ . '\\..\\';
@@ -16,3 +8,17 @@ echo $root."<br>";
 $root = dirname(__DIR__);
 echo $root."<br>";
 */
+
+spl_autoload_register(function ($className) {
+
+    $file = dirname(__DIR__) . '\\src\\' . $className . '.php';
+    $file = str_replace('\\', DIRECTORY_SEPARATOR, $file);
+    //echo 'Directory: '.$file.';<br>';
+    if (file_exists($file)) {
+        //echo 'OK for ' . $className . ' in ' . $file . ";<br>".PHP_EOL;
+        include $file;
+    } else {
+        //echo '/!\ Not Founded ' . $className . ' in ' . $file . ';<br>'.PHP_EOL;
+    }
+    //echo '----------------<br>';
+});

@@ -1,43 +1,48 @@
 <?php
 
-function displayResults(&$tests)
-{
-    foreach ($tests as $key => $value) {
+require_once('autoloader.php');
+require_once('src/Database/Database.php');
+require_once('src/Publication/Publication.php');
 
-        $string = '<tr>';
-        $string .= '<td>' . $key . '</td><td>';
-        if ($value === TRUE) {
-            $string .= '<span style="color: limegreen;">OK</span>';
-        } else {
-            $string .= '<span style="color: darkred;">ERROR</span>';
-        }
-        $string .= '</td></tr>';
-        echo $string;
-    }
-}
 
-require 'autoloader.php';
-
-use Database\Database;
-
-$test = [];
+// use Database\Database as Database;
+// use Team\Team;
+// use User\User;
+//use Publication\Publication; 
 
 $db = new Database();
-$test['Database'] = $db->connect();
+$db->connect();
+
+// $test = [];
+// $test['DataBaseRequests'] = $db->init();
+
+// $team = new Team($db);
+// $test['Team'] = $team->init();
+
+// $user = new User($db);
+// var_dump($user);
+// $test['User'] = $user->init();
+
+$publication = new Publication($db);
+$publication = $publication->init($db);
+$publication->get(1);
+var_dump($publication);
 
 ?>
+
 <!DOCTYPE>
 <html>
 <head>
-
+	<meta charset="UTF-8">
 </head>
 <body>
 
 <h1>Initialisation</h1>
 <table>
-	<td>Classe</td>
-	<td>Résultat</td>
-	</th>
+	<tr>
+		<td>Classe</td>
+		<td>Résultat</td>
+	</tr>
     <?php displayResults($test); ?>
 </table>
 </body>
