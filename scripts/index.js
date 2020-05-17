@@ -19,7 +19,7 @@ if (window.innerWidth < 998 ){
         let active = document.querySelector('#menu>li.active');
         
         //on stocke les <a> dans des variables
-        let tmp = active.innerHTML
+        let tmp = active.innerHTML;
         active.innerHTML = e.target.outerHTML;
         e.target.outerHTML = tmp;
     
@@ -30,6 +30,8 @@ if (window.innerWidth < 998 ){
         });
     });
 }
+
+
 
 
 
