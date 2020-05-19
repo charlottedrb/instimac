@@ -13,9 +13,9 @@ use \PDOException;
 class Database
 {
     const HOST = 'localhost';
-    const DATABASE = 'dev';
+    const DATABASE = 'imacinsta';
     const USER = 'root';
-    const PASSWORD = '';
+    const PASSWORD = 'root';
     const ENCODAGE = 'utf8';
 
     public $pdo;

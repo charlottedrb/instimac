@@ -1,22 +1,5 @@
 <?php
-
 include 'autoloader.php';
-
-function displayResults(&$tests)
-{
-    foreach ($tests as $key => $value) {
-
-        $string = '<tr>';
-        $string .= '<td>' . $key . '</td><td>';
-        if ($value === TRUE) {
-            $string .= '<span style="color: limegreen;">OK</span>';
-        } else {
-            $string .= '<span style="color: darkred;">ERROR</span>';
-        }
-        $string .= '</td></tr>';
-        echo $string;
-    }
-}
 
 use Database\Test as Database;
 use Team\Team;
@@ -24,6 +7,10 @@ use User\User;
 
 $db = new Database();
 $db->connect();
+
+$publication = new Publication($db);
+$publication = $publication->init($db);
+$publication->get(1);
 
 $test = [];
 $test['DataBaseRequests'] = $db->init();

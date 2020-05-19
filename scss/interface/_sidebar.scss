@@ -1,0 +1,92 @@
+//////////////////////////////////////////////////////////////////////////
+//
+//
+//             STYLE MOIS SCROLL
+//
+//
+//////////////////////////////////////////////////////////////////////////
+
+.sidebar{
+    
+    .mois-selection{
+        position: relative;
+        width: 100%; 
+        background: linear-gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
+
+        ul{
+            padding: 2rem;
+            padding-top: 2.5rem;
+            padding-bottom: 2rem;
+            margin-top: 0;
+            list-style-type: none;
+            overflow: hidden;
+
+            li{
+                display: block;
+                margin-bottom: 0.5rem;
+
+                &:last-child{
+                    margin-bottom: 0;
+                }
+
+                &:not(.active){
+                    display: none;
+                }
+                
+                a{
+                    color: white;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    font-weight: 900;
+                }
+            }
+        }
+
+        #icon{
+            top: 2.5rem; 
+            right: 2rem;
+            position: absolute;
+            width: 2rem;
+            float: right;
+            fill: white;
+        }
+    }
+
+    @include lg{
+        display: flex; 
+        flex-direction: column;
+        justify-content: center;
+        height: 100vh;
+        background: linear-gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
+
+        .mois-selection{
+            text-align: center;
+            background: none;
+            width: 13rem;
+
+            #icon{
+                display: none;
+            }
+
+            #menu{
+                padding: 1rem;
+            }
+
+            #menu>li{
+                &:not(.active){
+                    display: block;
+                    opacity: 0.8;
+                }
+            }
+
+            #menu>li>a{
+                display: block;
+                padding: 1rem;
+                color: white;
+                text-decoration: none;
+                text-transform: lowercase;
+                font-weight: 300;
+            }
+        }
+    }
+}

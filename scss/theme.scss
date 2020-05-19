@@ -1,0 +1,26 @@
+//////////////////////////////////////////////////////////////////////////
+//
+//
+//				APPEL DES FICHIERS PARTIELS A COMPILER
+//				pour le css de base
+//
+//
+//////////////////////////////////////////////////////////////////////////
+
+body{
+    margin: 0;
+    font-family: "Karla";
+}
+
+//////////////////// VARIABLES / FONCTIONS / MIXINS / ICONES / ANIMATIONS ////////////////////
+ 
+@import 'general';
+
+////////////////// INTERFACE //////////////////
+
+@import 'interface/publication';
+@import 'interface/commentaire';
+@import 'interface/user';
+@import 'interface/titles';
+@import 'interface/sidebar';
+@import 'interface/event';
