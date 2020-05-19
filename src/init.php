@@ -1,36 +1,29 @@
 <?php
+include 'autoloader.php';
 
-require_once('autoloader.php');
-require_once('src/Database/Database.php');
-require_once('src/Publication/Publication.php');
-
-
-// use Database\Database as Database;
-// use Team\Team;
-// use User\User;
-//use Publication\Publication; 
+use Database\Test as Database;
+use Team\Team;
+use User\User;
 
 $db = new Database();
 $db->connect();
 
-// $test = [];
-// $test['DataBaseRequests'] = $db->init();
-
-// $team = new Team($db);
-// $test['Team'] = $team->init();
-
-// $user = new User($db);
-// var_dump($user);
-// $test['User'] = $user->init();
-
 $publication = new Publication($db);
 $publication = $publication->init($db);
 $publication->get(1);
-var_dump($publication);
 
-?>
+$test = [];
+$test['DataBaseRequests'] = $db->init();
 
-<!DOCTYPE>
+$team = new Team($db);
+$test['Team'] = $team->init();
+
+$user = new User($db);
+var_dump($user);
+$test['User'] = $user->init();
+
+
+?><!DOCTYPE>
 <html>
 <head>
 	<meta charset="UTF-8">

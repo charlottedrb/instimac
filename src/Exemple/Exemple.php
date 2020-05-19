@@ -13,6 +13,9 @@ namespace Exemple;
  * Chaque classe regroupe les fonctionnalité liées à une seule entité (ex: Tache, Utilisateur,etc.)
  * Toujours écrit avec une majuscule "Database"
  */
+
+use Database\Database;
+
 class Exemple
 {
     //Constantes en majuscule avec _ pour séparer
