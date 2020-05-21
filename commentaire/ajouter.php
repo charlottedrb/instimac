@@ -7,16 +7,19 @@ use Commentaire/Commentaire;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['texte'], ['utilisateur'], ['photo'])) {
+if (Sanitize::checkEmptyFields($_GET, ['texte'], ['id_ut'], ['id_photo'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['texte'], ['utilisateur'], ['photo']);
+$secured = Sanitize::arrayFields($_GET, ['texte'], ['id_ut'], ['id_photo']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
 $commentaire = new Commentaire($db);
-$commentaire->id = $secured['id'];
+$commentaire->texte = $secured['texte'];
+$commentaire->id_ut = $secured['id_ut'];
+$commentaire->id_photo = $secured['id_photo'];
 
-if ($commentaire->ajoutCommentaire($secured['utilisateur'], $secured['photo'], $secured['texte'])) {//action a faire
+
+if ($commentaire->ajout()) {//action a faire
 
 http_response_code(200);//envoie reponse
 echo json_encode(
