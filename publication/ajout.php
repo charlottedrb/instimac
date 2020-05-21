@@ -8,18 +8,18 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['photo'], ['id_ut'], ['lieu'], ['description'], ['tableau'])) {
+if (Sanitize::checkEmptyFields($_GET, ['photo'], ['id_ut'], ['lieu'], ['description'], ['groupe'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['photo'], ['id_ut'], ['lieu'],  ['description'], ['tableau']);
+$secured = Sanitize::arrayFields($_GET, ['photo'], ['id_ut'], ['lieu'],  ['description'], ['groupe']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
 $publication = new publication($db);
-$commentaire->photo = $secured['photo'];
+$publication->photo = $secured['photo'];
 $publication->id_ut = $secured['id_ut'];
-$commentaire->lieu = $secured['lieu'];
-$commentaire->description = $secured['description'];
-$commentaire->tableau = $secured['tableau'];
+$publication->lieu = $secured['lieu'];
+$publication->description = $secured['description'];
+$publication->groupe = $secured['groupe'];
 
 
 
@@ -31,8 +31,10 @@ echo json_encode(
 [
 'id' => $publication->id,
 'date' => $publication->date,
+'lieu' => $publication->lieu,
 'photo' => $publication->photo,
-'description' => $publication->description
+'description' => $publication->description,
+'groupe' => $publication->groupe
 ]
 );
 
