@@ -2,27 +2,31 @@
 
 require_once '../../includes.php';
 
-use Commentaire\Commentaire;
+use Reagir\Reagir;
 use Sanitize\Sanitize;
 
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['id_ut'], ['id'])) {
+if (Sanitize::checkEmptyFields($_GET, ['id_ut'], ['id_photo'], ['type'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['id_ut'], ['id']);
+$secured = Sanitize::arrayFields($_GET, ['id_ut'], ['id_photo'], ['type']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
-$commentaire = new Commentaire($db);
-$commentaire->id = $secured['id'];
+$reagir = new Reagir($db);
+$reagir->type = $secured['type'];
+$reagir->id_ut = $secured['id_ut'];
+$reagir->id_photo = $secured['id_photo'];
 
-if ($commentaire->delete($secured['id'], $secured['id_ut'])) {//action a faire
+if ($reagir->ajout()) { //action a faire
 
-http_response_code(200);//envoie reponse
+http_response_code(200); //envoie reponse
 echo json_encode(
 [
-'id' => $commentaire->id
+'id' => $commentaire->id,
+'date' => $commentaire->date,
+'type' => $commentaire->type,
 ]
 );
 

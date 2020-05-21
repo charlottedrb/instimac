@@ -2,7 +2,8 @@
 
 require_once '../../includes.php';
 
-use Commentaire/Commentaire;
+use Commentaire\Commentaire;
+use Sanitize\Sanitize;
 
 header('Content-Type: application/json; charset=UTF-8');
 
@@ -24,9 +25,9 @@ if ($commentaire->ajout()) {//action a faire
 http_response_code(200);//envoie reponse
 echo json_encode(
 [
-'id' => $commentaire->getId(),
-'date' => $commentaire->getDate(),
-'texte' => $commentaire->getTexte()
+'id' => $commentaire->id,
+'date' => $commentaire->date,
+'texte' => $commentaire->texte
 ]
 );
 
