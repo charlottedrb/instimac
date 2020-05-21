@@ -8,14 +8,13 @@
 namespace Commentaires;
 
 
+use Database\Database;
+
 class Commentaires
 {
-
-    //Nom de propriét en "camelCase"
     public $database = NULL;
 
-    //Appelé à chaque construction d'un objet
-    public function __construct(&$database)
+    public function __construct(Database &$database)
     {
         $this->database = $database;
     }
@@ -37,14 +36,8 @@ class Commentaires
                ,CONSTRAINT commentaire_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
-        if ($database->query($sql))
-        {
-            return TRUE;
-        }else
-        {
-            return FALSE;
-        }
-        
+        if ($database->exec($sql)) return TRUE;
+        return FALSE;
     }
 
     //retour un tableau si requet marche
