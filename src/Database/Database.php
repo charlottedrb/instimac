@@ -8,14 +8,13 @@ use \PDOException;
 /**
  * Class Database
  * @package Database
- * @author © 2020 Grégoire Petitalot
  */
 class Database
 {
     const HOST = 'localhost';
-    const DATABASE = 'imacinsta';
+    const DATABASE = 'dev';
     const USER = 'root';
-    const PASSWORD = 'root';
+    const PASSWORD = '';
     const ENCODAGE = 'utf8';
 
     public $pdo;
@@ -23,7 +22,7 @@ class Database
     private $_params = [];
     private $_where = [];
 
-    private $_logEnabled = FALSE;
+    private $_logEnabled = TRUE;
     private $_logCount = 0;
 
     /**
@@ -122,7 +121,6 @@ class Database
         if ($request->execute()) {
 
             $data = $request->fetchAll();
-            //var_dump($data);
 
             if (!empty($data)) {
                 $request->closeCursor();
@@ -267,8 +265,10 @@ class Database
         foreach ($values as $key => $value) {
             if ($i > 0) $this->sqlRequest .= ',';
             $this->sqlRequest .= $key . '=?';
+            $this->addParam($value);
             $i++;
         }
+
         $this->where($where);
         $this->_talkative($this->sqlRequest);
         return $this->process($this->sqlRequest);
@@ -300,7 +300,6 @@ class Database
     {
         $this->sqlRequest = 'DELETE FROM ' . $table;
         $this->where($where);
-        $this->_talkative($this->sqlRequest);
         return $this->process($this->sqlRequest);
     }
 
@@ -312,7 +311,6 @@ class Database
     public function drop($table)
     {
         $this->sqlRequest = 'DROP TABLE IF EXISTS ' . $table;
-        $this->_talkative($this->sqlRequest);
         return $this->process($this->sqlRequest);
     }
 
