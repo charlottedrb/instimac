@@ -10,9 +10,16 @@ namespace Commentaires;
 
 use Database\Database;
 
-class Commentaires
+class Commentaire
 {
     public $database = NULL;
+
+    public $id;
+    public $created;
+    public $texte;
+    private $hide;
+    public $photoId;
+    public $utilisateurId;
 
     public function __construct(Database &$database)
     {
@@ -22,34 +29,34 @@ class Commentaires
     /* Initialise la fonctionnalité dans la base de donnée
      * sera appelé dans le fichier "/src/init.php"
      */
-    public static function init(&$database)
+    public function init()
     {
         $sql = 'CREATE TABLE IF NOT EXISTS commentaire(
                 c_id     Int  Auto_increment  NOT NULL ,
                 c_date   Datetime NOT NULL ,
                 c_texte  Varchar (242) NOT NULL ,
                 c_cacher Bool NOT NULL ,
-                p_id     Int NOT NULL ,
+                p_id     Int NOT NULL,
                 u_id     Int NOT NULL
                ,CONSTRAINT commentaire_PK PRIMARY KEY (c_id)
                ,CONSTRAINT commentaire_photo_FK FOREIGN KEY (p_id) REFERENCES photo(p_id)
                ,CONSTRAINT commentaire_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
-        if ($database->exec($sql)) return TRUE;
+        if ($this->database->exec($sql)) return TRUE;
         return FALSE;
     }
 
     //retour un tableau si requet marche
     private function creatTabBySQL($requetSQL)
     {
-        $donnees = $database->query($requetSQL);
+        $donnees = $this->database->query($requetSQL);
         if ($donnees == FALSE) {
             return FALSE;
         }
 
         $tabDonnee = $donnees->fetchAll();
-        
+
 
         $donnees->closeCursor();
         return $tabDonnee;
