@@ -10,6 +10,10 @@ namespace Reagir;
 
 class Reagir
 {
+    public  $idPhoto;
+    public  $idUt;
+    public  $type;
+
 
     //Nom de propriét en "camelCase"
     public $database = NULL;
@@ -76,18 +80,23 @@ class Reagir
         
         
     }
-
-    public function suprimerReaction( $u_id, $p_id)
+    public function ajout( )
     {
-        $sql='SELECT * FROM reagir WHERE u_id='.$u_id.'p_id='.$p_id;
+        $sql='SELECT * FROM reagir WHERE u_id='.$this->$idUt.'p_id='.$this->$idPhoto;
         $donnees =$database->query($sql);
-        if ($donnees != FALSE) {
-            $sql ='DELETE FROM reagir WHERE u_id='.$u_id.'p_id='.$p_id;
+        if ($donnees == FALSE) {
+            $sql ='INSERT INTO reagir (p_id, u_id)
+                 VALUES (\''.$this->$idPhot.'\',\''.$this->$idUt.'\', \''.$this->$type.'\')';
             $database->query($sql) or die(print_r($bdd->errorInfo()));
         }
         
-        $database->query($sql) or die(print_r($bdd->errorInfo()));
         
+    }
+
+    public function delete( $p_id, $u_id)
+    {
+        $sql ='DELETE FROM reagir WHERE u_id='.$this->$idUt.'p_id='.$this->$idPhoto;
+        return $database->query($sql);
     }
     
     private function affReaction($p_id)
