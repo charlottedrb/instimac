@@ -8,23 +8,24 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['id'], ['nom'], ['description'])) {
+if (Sanitize::checkEmptyFields($_GET, ['nom'], ['description'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['id'], ['nom'], ['description']);
+$secured = Sanitize::arrayFields($_GET, ['nom'], ['description']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
 $groupe = new Groupe($db);
-$groupe->id = $secured['id'];
 $groupe->nom = $secured['nom'];
 $groupe->description = $secured['description'];
 
-if ($groupe->update($secured['id'],$secured['nom'],$secured['description'])) {//action a faire
+
+if ($groupe->ajout()) {//action a faire
 
 http_response_code(200);//envoie reponse
 echo json_encode(
 [
 'id' => $groupe->id,
+'date' => $groupe->date,
 'nom' => $groupe->nom,
 'description' => $groupe->description
 ]

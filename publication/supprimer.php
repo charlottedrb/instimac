@@ -2,31 +2,28 @@
 
 require_once '../../includes.php';
 
-use Groupe\Groupe;
+use Publication\Publication;
 use Sanitize\Sanitize;
 
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['id'], ['nom'], ['description'])) {
+if (Sanitize::checkEmptyFields($_GET, ['id'], ['id_ut'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['id'], ['nom'], ['description']);
+$secured = Sanitize::arrayFields($_GET, ['id'], ['id_ut']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
-$groupe = new Groupe($db);
-$groupe->id = $secured['id'];
-$groupe->nom = $secured['nom'];
-$groupe->description = $secured['description'];
+$publication = new publication($db);
+$publication->id = $secured['id'];
 
-if ($groupe->update($secured['id'],$secured['nom'],$secured['description'])) {//action a faire
+
+if ($publication->delete($secured['id'])) {//action a faire
 
 http_response_code(200);//envoie reponse
 echo json_encode(
 [
-'id' => $groupe->id,
-'nom' => $groupe->nom,
-'description' => $groupe->description
+'id' => $publication->id
 ]
 );
 

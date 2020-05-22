@@ -2,31 +2,30 @@
 
 require_once '../../includes.php';
 
-use Groupe\Groupe;
+use Reagir\Reagir;
 use Sanitize\Sanitize;
 
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['id'], ['nom'], ['description'])) {
+if (Sanitize::checkEmptyFields($_GET, ['id_phot'], ['id_ut'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['id'], ['nom'], ['description']);
+$secured = Sanitize::arrayFields($_GET, ['id_photo'], ['id_ut']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
-$groupe = new Groupe($db);
-$groupe->id = $secured['id'];
-$groupe->nom = $secured['nom'];
-$groupe->description = $secured['description'];
+$reagir = new Reagir($db);
+$reagir->id_photo = $secured['id_photo'];
+$reagir->id_ut = $secured['id_ut'];
 
-if ($groupe->update($secured['id'],$secured['nom'],$secured['description'])) {//action a faire
 
-http_response_code(200);//envoie reponse
+if ($reagir->delete($secured['id_photo'], $secured['id_ut'])) { //action a faire
+
+http_response_code(200); //envoie reponse
 echo json_encode(
 [
-'id' => $groupe->id,
-'nom' => $groupe->nom,
-'description' => $groupe->description
+'id_photo' => $reagir->id_photo,
+'id_ut' => $reagir->id_ut
 ]
 );
 
