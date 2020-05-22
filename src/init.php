@@ -4,6 +4,28 @@ include 'autoloader.php';
 use Database\Test as Database;
 use Team\Team;
 use User\User;
+<<<<<<< HEAD
+=======
+use Publication\Publication;
+
+function displayResults(&$tests)
+{
+    foreach ($tests as $key => $value) {
+
+        $string = '<tr>';
+        $string .= '<td>' . $key . '</td><td>';
+        if ($value === TRUE) {
+            $string .= '<span style="color: limegreen;">OK</span>';
+        } else {
+            $string .= '<span style="color: darkred;">ERROR</span>';
+        }
+        $string .= '</td></tr>';
+        echo $string;
+    }
+}
+
+// ------------------ PROCESS INIT & TESTING -------------------------
+>>>>>>> fix/class-groupe
 
 $db = new Database();
 $db->connect();
@@ -15,12 +37,14 @@ $publication->get(1);
 $test = [];
 $test['DataBaseRequests'] = $db->init();
 
-$team = new Team($db);
-$test['Team'] = $team->init();
-
 $user = new User($db);
-var_dump($user);
 $test['User'] = $user->init();
+
+$publication = new Publication($db);
+$test['Publication-Table'] = $publication->init();
+$test['Publication-Test'] = $publication->test();
+
+// --------------------------------------------------------------------
 
 
 ?><!DOCTYPE>

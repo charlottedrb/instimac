@@ -6,7 +6,7 @@ use \PDO;
 use \PDOException;
 
 /**
- * Class Database
+ * Class used to manage a mysql database based on PDO
  * @package Database
  */
 class Database
