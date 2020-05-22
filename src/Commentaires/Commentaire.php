@@ -10,6 +10,12 @@ namespace Commentaires;
 
 class Commentaires
 {
+    public $id;
+    public $idUt;
+    public $idPhoto;
+    public $date;
+    public $texte;
+    public $estCache;
 
     //Nom de propriét en "camelCase"
     public $database = NULL;
@@ -26,16 +32,17 @@ class Commentaires
     public static function init(&$database)
     {
         $sql = 'CREATE TABLE IF NOT EXISTS commentaire(
-                c_id     Int  Auto_increment  NOT NULL ,
-                c_date   Datetime NOT NULL ,
-                c_texte  Varchar (242) NOT NULL ,
-                c_cacher Bool NOT NULL ,
-                p_id     Int NOT NULL ,
-                u_id     Int NOT NULL
-               ,CONSTRAINT commentaire_PK PRIMARY KEY (c_id)
-               ,CONSTRAINT commentaire_photo_FK FOREIGN KEY (p_id) REFERENCES photo(p_id)
-               ,CONSTRAINT commentaire_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
+            c_id     Int  Auto_increment  NOT NULL ,
+            c_date   Datetime NOT NULL ,
+            c_texte  Varchar (242) NOT NULL ,
+            c_cacher Bool NOT NULL ,
+            p_id     Int NOT NULL ,
+            u_id     Int NOT NULL
+        ,CONSTRAINT commentaire_PK PRIMARY KEY (c_id)
+    
+        ,CONSTRAINT commentaire_publication_FK FOREIGN KEY (p_id) REFERENCES publication(p_id)
+        ,CONSTRAINT commentaire_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
+        )ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
         if ($database->query($sql))
         {
@@ -102,16 +109,34 @@ class Commentaires
         
     }
 
-    public function suprimerCommentaire( $c_id)
+
+    public function ajout()
     {
-        $sql='SELECT * FROM commentaire WHERE c_id='.$c_id;
-        $donnees =$database->query($sql);
-        if ($donnees != FALSE) 
+        if($this->$idUt=== NULL ||$this->$idPhoto === NULL||$this->$texte === NULL)
         {
-            $sql ='DELETE FROM commentaire WHERE c_id='.$c_id;
-            $database->query($sql) or die(print_r($bdd->errorInfo()));
+            return FALSE;
         }
+        $this->$date = date('Y-m-d h:i:s');
+        $this->$estCache = FALSE;
+        $sql ='INSERT INTO commentaire (c_date, c_texte, c_cacher, p_id, u_id)
+            VALUES (\''.$this->$date.'\', \''.$this->$texte.'\',\''.$this->$estCache.'\',\''.$this->$idPhoto.'\',\''.$this->$idUt.'\')';
+
+        //TODO recupérer id pour le metre ds id
+        return $database->query($sql);
+
         
+    }
+
+    public function suprimerCommentaire( $c_id, $p_id)
+    {
+        $sql='SELECT * FROM commentaire AS com JOIN publication AS pub ON com.p_id= pub.p_id WHERE com.c_id=\''.$c_id.'\' AND ( com.p_id=\''.$p_id.'\' OR pub.p_id=\''.$p_id.'\')' ;
+        $donnees =$database->query($sql);
+        if ($donnees == FALSE) 
+        {
+            return false;
+        }
+        $sql ='DELETE FROM commentaire WHERE c_id='.$c_id;
+        return $database->query($sql);
     }
     
     private function affTabCom($tabCom)
