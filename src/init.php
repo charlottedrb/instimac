@@ -2,6 +2,11 @@
 
 include 'autoloader.php';
 
+use Database\Test as Database;
+use Team\Team;
+use User\User;
+use Publication\Publication;
+
 function displayResults(&$tests)
 {
     foreach ($tests as $key => $value) {
@@ -18,9 +23,7 @@ function displayResults(&$tests)
     }
 }
 
-use Database\Test as Database;
-use Team\Team;
-use User\User;
+// ------------------ PROCESS INIT & TESTING -------------------------
 
 $db = new Database();
 $db->connect();
@@ -28,12 +31,14 @@ $db->connect();
 $test = [];
 $test['DataBaseRequests'] = $db->init();
 
-$team = new Team($db);
-$test['Team'] = $team->init();
-
 $user = new User($db);
-var_dump($user);
 $test['User'] = $user->init();
+
+$publication = new Publication($db);
+$test['Publication-Table'] = $publication->init();
+$test['Publication-Test'] = $publication->test();
+
+// --------------------------------------------------------------------
 
 
 ?><!DOCTYPE>

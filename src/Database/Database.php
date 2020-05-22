@@ -267,6 +267,7 @@ class Database
         foreach ($values as $key => $value) {
             if ($i > 0) $this->sqlRequest .= ',';
             $this->sqlRequest .= $key . '=?';
+            $this->addParam($value);
             $i++;
         }
         $this->where($where);

@@ -30,7 +30,7 @@ class Publication
         $sql = 'CREATE TABLE IF NOT EXISTS ' . self::TABLE . '(
             p_id INT NOT NULL AUTO_INCREMENT, 
             p_date DATETIME NOT NULL, 
-            p_lieu VARCHAR(70),
+            p_lieu VARCHAR(70) NULL,
             p_description VARCHAR(255),
             p_hide BOOLEAN, 
             PRIMARY KEY (p_id)
@@ -41,11 +41,18 @@ class Publication
 
     public function test()
     {
+        $i =0;
+        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', TRUE) === FALSE) return FALSE;
+        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->getById() === FALSE) return FALSE;
+        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->getById($this->id) === FALSE) return FALSE;
+        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->update() === FALSE) return FALSE;
+        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->delete() === FALSE) return FALSE;
+        echo "Publication: Phase $i \n<br>"; $i++;
         return TRUE;
     }
 
@@ -97,8 +104,8 @@ class Publication
     {
         if ($id) $this->id = (int)$id;
 
-        $this->where(['p_id' => $this->id]);
-        $data = $this->database->select(self::TABLE, ['p_date', 'p_description', 'p_hide']);
+        $this->database->where(['p_id' => $this->id]);
+        $data = $this->database->select(self::TABLE, ['p_date', 'p_lieu', 'p_description', 'p_hide']);
 
         if ($data !== FALSE && !empty($data)) {
             $data = $data[0];
