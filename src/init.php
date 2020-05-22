@@ -2,10 +2,8 @@
 include 'autoloader.php';
 
 use Database\Test as Database;
-use Team\Team;
 use User\User;
-<<<<<<< HEAD
-=======
+
 use Publication\Publication;
 
 function displayResults(&$tests)
@@ -25,14 +23,9 @@ function displayResults(&$tests)
 }
 
 // ------------------ PROCESS INIT & TESTING -------------------------
->>>>>>> fix/class-groupe
 
 $db = new Database();
 $db->connect();
-
-$publication = new Publication($db);
-$publication = $publication->init($db);
-$publication->get(1);
 
 $test = [];
 $test['DataBaseRequests'] = $db->init();
