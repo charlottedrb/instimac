@@ -6,7 +6,7 @@ use \PDO;
 use \PDOException;
 
 /**
- * Class used to manage a mysql database based on PDO
+ * Class Database
  * @package Database
  */
 class Database
@@ -22,7 +22,7 @@ class Database
     private $_params = [];
     private $_where = [];
 
-    private $_logEnabled = TRUE;
+    private $_logEnabled = FALSE;
     private $_logCount = 0;
 
     /**
@@ -121,13 +121,20 @@ class Database
         if ($request->execute()) {
 
             $data = $request->fetchAll();
+            var_dump($data);
 
             if (!empty($data)) {
+
                 $request->closeCursor();
                 $this->_clear();
                 return $data;
-            } elseif ($returnEmptyArray === TRUE && $resultsRequired === FALSE) {
-                return [];
+            }
+
+            if ($resultsRequired === FALSE) {
+
+                $request->closeCursor();
+                $this->_clear();
+                return NULL;
             }
 
             $request->closeCursor();

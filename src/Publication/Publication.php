@@ -39,18 +39,11 @@ class Publication
 
     public function test()
     {
-        $i =0;
-        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', TRUE) === FALSE) return FALSE;
-        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->getById() === FALSE) return FALSE;
-        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->getById($this->id) === FALSE) return FALSE;
-        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->update() === FALSE) return FALSE;
-        echo "Publication: Phase $i \n<br>"; $i++;
         if ($this->delete() === FALSE) return FALSE;
-        echo "Publication: Phase $i \n<br>"; $i++;
         return TRUE;
     }
 
