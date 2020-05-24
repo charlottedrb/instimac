@@ -8,6 +8,8 @@ use Token\Token;
 
 class User
 {
+    use Token;
+
     const TABLE = 'test_users';
     public $database = null;
 
@@ -33,7 +35,7 @@ class User
         return TRUE;
     }
 
-    use Token;
+
 
     public function init()
     {
