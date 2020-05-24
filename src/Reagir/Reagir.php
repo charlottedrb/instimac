@@ -8,26 +8,21 @@
 namespace Reagir;
 
 
+use Database\Database;
+
 class Reagir
 {
-    public  $idPhoto;
-    public  $idUt;
-    public  $type;
+    const TABLE = 'reagir';
 
-
-    //Nom de propriét en "camelCase"
     public $database = NULL;
 
-    //Appelé à chaque construction d'un objet
-    public function __construct(&$database)
+    public function __construct(Database &$database)
     {
         $this->database = $database;
     }
 
-    /* Initialise la fonctionnalité dans la base de donnée
-     * sera appelé dans le fichier "/src/init.php"
-     */
-    public static function init(&$database)
+
+    public function init()
     {
         $sql = 'CREATE TABLE IF NOT EXISTS reagir(
             p_id   Int NOT NULL ,
@@ -38,88 +33,31 @@ class Reagir
             ,CONSTRAINT reagir_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
-        if ($database->query($sql))
-        {
-            return TRUE;
-        }else
-        {
-            return FALSE;
-        }
-        
+        return $this->database->exec($sql);
     }
 
-    private function creatTabBySQL($requetSQL) //retour un tableau si requete marche
+    /**
+     * retourne un tab avec le type et le nombre de reaction de ce type
+     * @param $photoId
+     * @return mixed
+     */
+    function getCount($photoId)
     {
-        $donnees = $database->query($requetSQL);
-        if ($donnees == FALSE) {
-            return FALSE;
-        }
-
-        $tabDonnee = $donnees->fetchAll();
-        
-        $donnees->closeCursor();
-        return $tabDonnee;
+        $sql = 'SELECT r_type, COUNT(*) AS nbrReaction FROM reagir WHERE p_id=? GROUP BY r_type';
     }
 
-    function tabTypeEtNbrReactionPhoto($p_id) //retoune un tab avec le type et le nombre de reaction de ce type
+    public function set($typeReaction, $photoId, $utilisateurId)
     {
-        $sql='SELECT r_type, COUNT(*) AS nbrReaction FROM reagir WHERE p_id='.$p_id.'GROUP BY r_type';
-        $tabReaction = creatTabBySQL($sql);
-        return $tabReaction;
+        $sql = 'SELECT * FROM reagir WHERE u_id=' . $u_id . 'p_id=' . $p_id;
     }
 
-    public function ajoutReaction( $u_id, $p_id, $r_type)
+    public function delete($photoId, $utilisateurId)
     {
-        $sql='SELECT * FROM reagir WHERE u_id='.$u_id.'p_id='.$p_id;
-        $donnees =$database->query($sql);
-        if ($donnees == FALSE) {
-            $sql ='INSERT INTO reagir (p_id, u_id)
-                 VALUES (\''.$p_id.'\',\''.$u_id.'\', \''.$r_type.'\')';
-            $database->query($sql) or die(print_r($bdd->errorInfo()));
-        }
-        
-        
-    }
-    public function ajout( )
-    {
-        $sql='SELECT * FROM reagir WHERE u_id='.$this->$idUt.'p_id='.$this->$idPhoto;
-        $donnees =$database->query($sql);
-        if ($donnees == FALSE) {
-            $sql ='INSERT INTO reagir (p_id, u_id)
-                 VALUES (\''.$this->$idPhot.'\',\''.$this->$idUt.'\', \''.$this->$type.'\')';
-            $database->query($sql) or die(print_r($bdd->errorInfo()));
-        }
-        
-        
+        return $this->database->delete(self::TABLE, ['u_id' => $utilisateurId, 'p_id' => $photoId]);
     }
 
-    public function delete( $p_id, $u_id)
-    {
-        $sql ='DELETE FROM reagir WHERE u_id='.$this->$idUt.'p_id='.$this->$idPhoto;
-        return $database->query($sql);
-    }
-    
-    private function affReaction($p_id)
-    {
-        $tabReaction =tabTypeEtNbrReactionPhoto($p_id);
-        $affichage = '<div class="reaction">';
-        if($tabReaction!= FALSE)
-        {
-            foreach ($tabReaction as $reaction) {
-                $affichage .= 
-                    '<div class="typeReaction">'.$reaction['r_type'].'</div>'
-                    .'<div class="nbrReaction">'.$reaction['nbrReaction'].'</div>';
-            }
-        }
-
-        $affichage .= '</div>';
-        echo $affichage;
-    }
-
-    //Appelé à chaque destruction d'un objet, unset(), fin de script, destruction
     public function __destruct()
     {
         $this->database = NULL;
     }
-
 }
