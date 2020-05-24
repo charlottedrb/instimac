@@ -52,58 +52,46 @@ if (Sanitize::checkIssetFields($_POST, ['name', 'surname', 'email', 'password', 
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Do and success, the key to do what you need.</title>
-	<link rel="stylesheet" href="../webdesign/webpack.css">
-	<link href="https://fonts.googleapis.com/css?family=Quicksand:300,500,700&display=swap" rel="stylesheet">
+	<title></title>
 </head>
-<body class="th-gradient centered-parent section-full">
+<body>
 
 <section>
-
-
-	<div class="centered-inner form">
-
 		<h1>Create your account, it's easy and fast</h1>
 		<form action="" method="post">
 
             <?php echo $speaker->generate(); ?>
 
 			<input type="email" name="email" placeholder="Email" autofocus
-				   value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required id="" class="form-input">
+				   value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required >
 
 			<input type="text" name="name" class="form-input" placeholder="My name is...oohh"
-				   value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>" required id="">
+				   value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>" required >
 
 			<input type="text" name="surname" placeholder="My surname is...hey hey"
-				   value="<?php if (isset($_POST['surname'])) echo $_POST['surname']; ?>" required id=""
-				   class="form-input">
+				   value="<?php if (isset($_POST['surname'])) echo $_POST['surname']; ?>" required >
 
 			<input type="password" name="password"
 				   value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>"
-				   placeholder="Your fancy password..." id="" class="form-input" required>
+				   placeholder="Your fancy password..." id="" required>
 			<input type="password" name="password_confirm"
 				   value="<?php if (isset($_POST['password_confirm'])) echo $_POST['password_confirm']; ?>"
 				   placeholder="Repeat your password, please..." id="" class="form-input" required>
 
 			<label for="agree"><input type="checkbox" name="agree"
-                    <?php if (isset($_POST['agree'])) echo 'checked="checked"'; ?> value="1" id="agree"
-									  class="form-checkbox" required> I agree to
-				doandsuccess.com conditions, It means:</label>
+                    <?php if (isset($_POST['agree'])) echo 'checked="checked"'; ?> value="1" required> I agree to
+				our conditions, It means:</label>
 			<ul>
-				<li>Use, process and store your data for <span class="underlined">doandsuccess.com use only</span></li>
+				<li>Use, process and store your data for <span class="underlined">website use only</span></li>
 				<li>I know our conditions can evolved at anytime and <span class="underlined">I will be informed</span>
 					in
 					that case
 				</li>
 			</ul>
 
-			<input type="submit" value="Create my account" class="form-btn shadow-light ">
+			<input type="submit" value="Create my account">
 		</form>
 	</div>
-
 </section>
-
-<script src="js/global.js"></script>
-
 </body>
 </html>
