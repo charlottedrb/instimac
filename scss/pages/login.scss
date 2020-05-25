@@ -1,0 +1,25 @@
+@import "../general";
+
+//////////////////////////////////////////////////////////////////////////
+//
+//
+//             STYLE DE PAGE LOGIN
+//
+//
+//////////////////////////////////////////////////////////////////////////
+
+body{
+    &#login{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 100vh;
+        background: $gradient-tb;
+
+        
+        @include lg{
+            align-items: center;
+        }
+    }
+}

@@ -32,7 +32,7 @@
                     font-size: 8rem;
                     width: 100%;
                     text-align: center;
-                    background: linear-gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
+                    background: $gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
                     background-clip: text;
                     -webkit-text-fill-color: transparent;
                 }

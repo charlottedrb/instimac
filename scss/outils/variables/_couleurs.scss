@@ -5,3 +5,13 @@
 //
 //
 //////////////////////////////////////////////////////////////////////////
+$color1: rgba(94,214,99,1);
+$color2: rgba(2,121,154,1);
+
+//Dégradé top to bottom
+$deg-tb: 180deg; 
+$gradient-tb: linear-gradient($deg-tb, $color1 0%, $color2 100%);
+
+//Dégradé left to right
+$deg-lr: 120deg;
+$gradient-lr: linear-gradient($deg-lr, $color1 0%, $color2 100%);

@@ -13,7 +13,7 @@
         <form action="">
             <input type="text" name="pseudo" id="pseudo" placeholder="Pseudo ou mail">
             <input type="text" name="mdp" id="mdp" placeholder="Mot de passe">
-            <button>Connexion</button>
+            
         </form>
         <p>Pas de compte ? <a href="registered.php">C'est par ici.</a></p>
     </div>

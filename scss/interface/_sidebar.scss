@@ -1,3 +1,5 @@
+@import "../general";
+
 //////////////////////////////////////////////////////////////////////////
 //
 //
@@ -11,7 +13,7 @@
     .mois-selection{
         position: relative;
         width: 100%; 
-        background: linear-gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
+        background: $gradient-lr;
 
         ul{
             padding: 2rem;
@@ -57,7 +59,7 @@
         flex-direction: column;
         justify-content: center;
         height: 100vh;
-        background: linear-gradient(120deg, rgba(255,0,76,1) 0%, rgba(255,134,0,1) 50%, rgba(255,250,0,1) 100%);
+        background: $gradient-lr;
 
         .mois-selection{
             text-align: center;
