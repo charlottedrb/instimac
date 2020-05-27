@@ -22,6 +22,7 @@ use User\User;
 use Publication\Publication;
 use File\File;
 use Groupe\Groupe;
+use Reagir\Reagir;
 
 // ------------------ PROCESS INIT & TESTING -------------------------
 
@@ -44,9 +45,9 @@ $publication = new Publication($db);
 $test['Publication-Table'] = $publication->init();
 $test['Publication-Test'] = $publication->test();
 
-$groupe = new Groupe($db);
-$test['Groupe-Table'] = $groupe->init();
-$test['Groupe-Test'] = $groupe->test();
+$reagir = new Reagir($db);
+$test['Reagir-Table'] = $reagir->init();
+$test['Reagir-Test'] = $reagir->test();
 
 if (!empty($_FILES['file'])) {
 

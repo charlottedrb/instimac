@@ -12,9 +12,10 @@ use Database\Database;
 
 class Reagir
 {
-    const TABLE = 'reagir';
+    const TABLE = 'reactions';
 
     public $database = NULL;
+    public $count = 0;
 
     public function __construct(Database &$database)
     {
@@ -32,20 +33,16 @@ class Reagir
             p_id INT NOT NULL,
             u_id INT NOT NULL,
             r_type INT NOT NULL,
-            CONSTRAINT reagir_PK PRIMARY KEY (p_id,u_id),
-            CONSTRAINT reagir_photo_FK FOREIGN KEY (p_id) REFERENCES photo(p_id),
-            CONSTRAINT reagir_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateurs(u_id)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
+            CONSTRAINT PRIMARY KEY (r_id)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8';
         return $this->database->exec($sql);
     }
 
     public function test()
     {
-        if ($this->set(1, 1, 1) === FALSE) return FALSE;
-        if ($this->set(1, 1, 1) === FALSE) return FALSE;
-        if ($this->set(1, 1, 1) === FALSE) return FALSE;
-        if ($this->get(1) === FALSE) return FALSE;
-        if ($this->delete(1, 1) === FALSE) return FALSE;
+        if ($this->set(1, 3, 1) === FALSE) return FALSE;
+        //if ($this->getCount(1) === FALSE) return FALSE;
+        //if ($this->delete(1, 1) === FALSE) return FALSE;
         return TRUE;
     }
 
@@ -73,15 +70,21 @@ class Reagir
     }
 
     /**
-     * retourne un tab avec le type et le nombre de reaction de ce type
+     * Retourne un tab avec le type et le nombre de reaction de ce type
      * @param $photoId
-     * @return mixed
+     * @return boolean|int
      */
     function getCount($photoId)
     {
-        $sql = 'SELECT r_type, COUNT(r_id) AS nbrReaction FROM reagir WHERE p_id=? GROUP BY r_type';
+        $sql = 'SELECT r_type, COUNT(*) AS count FROM reagir WHERE p_id=? GROUP BY r_type';
         $this->database->addParam($photoId);
-        $this->database->process($sql);
+        $data = $this->database->process($sql);
+
+        if ($data !== FALSE && !empty($data)) {
+            $data[0]['count'] = $this->count;
+            return TRUE;
+        }
+        return FALSE;
     }
 
     public function __destruct()

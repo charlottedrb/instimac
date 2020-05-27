@@ -17,6 +17,7 @@ class Publication
     public $date;
     public $lieu;
     public $description;
+    public $groupeId;
     public $hide = FALSE;
 
     public function __construct($database)
@@ -33,6 +34,7 @@ class Publication
             p_lieu VARCHAR(50),
             p_description VARCHAR(255) NULL,
             p_hide BOOLEAN NOT NULL, 
+            g_id INT NULL,
             PRIMARY KEY (p_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
@@ -41,7 +43,9 @@ class Publication
 
     public function test()
     {
-        if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', TRUE) === FALSE) return FALSE;
+        if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', 2,TRUE) === FALSE) return FALSE;
+        if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', 3,TRUE) === FALSE) return FALSE;
+        if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', 4,TRUE) === FALSE) return FALSE;
         if ($this->getById() === FALSE) return FALSE;
         if ($this->getById($this->id) === FALSE) return FALSE;
         if ($this->update() === FALSE) return FALSE;
@@ -49,11 +53,12 @@ class Publication
         return TRUE;
     }
 
-    public function set($lieu, $description, $hide = FALSE)
+    public function set($lieu, $description, $groupeId, $hide = FALSE)
     {
         $this->date = date('Y-m-d H:i:s');
         $this->lieu = $lieu;
         $this->description = $description;
+        $this->groupeId = $groupeId;
         $this->hide = $hide;
 
         $fields = [
@@ -61,6 +66,7 @@ class Publication
             'p_lieu',
             'p_description',
             'p_hide',
+            'g_id',
         ];
 
         $values = [
@@ -68,6 +74,7 @@ class Publication
             $this->lieu,
             $this->description,
             $this->hide,
+            $this->groupeId,
         ];
 
         if ($this->database->insert(self::TABLE, $fields, $values) !== FALSE) {
