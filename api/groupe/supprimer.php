@@ -8,24 +8,20 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['id'], ['id_ut'])) {
+if (Sanitize::checkEmptyFields($_GET, ['id'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['id'], ['id_ut']);
+$secured = Sanitize::arrayFields($_GET, ['id']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
 $groupe = new Groupe($db);
-$groupe->nom = $secured['id'];
+$groupe->id = $secured['id'];
 
 
-if ($groupe->delete($secured['id'], $secured['id_ut'])) {//action a faire
+if ($groupe->delete($secured['id'])) {//action a faire
 
 http_response_code(200);//envoie reponse
-echo json_encode(
-[
-'id' => $groupe->id
-]
-);
+echo json_encode("C'est fait!! bulubulu");
 
 } else {
 http_response_code(500);
