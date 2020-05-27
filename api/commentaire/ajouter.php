@@ -8,9 +8,9 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['publication-id', 'contenu'])) {
+if (Sanitize::checkEmptyFields($_POST, ['publication-id', 'contenu'])) {
 
-    $secured = Sanitize::arrayFields($_GET, ['publication-id', 'contenu']);
+    $secured = Sanitize::arrayFields($_POST, ['publication-id', 'contenu']);
 
     // --------------- PROCESSING THE REQUEST------------------------
 
