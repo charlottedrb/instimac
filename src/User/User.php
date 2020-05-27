@@ -274,7 +274,7 @@ class User
                 'connected' => $this->connected,
             ];
         }
-        return false;
+        return FALSE;
     }
 
     public function getAll($where = [])

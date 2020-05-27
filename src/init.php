@@ -21,6 +21,7 @@ use Database\Test as Database;
 use User\User;
 use Publication\Publication;
 use File\File;
+use Groupe\Groupe;
 
 // ------------------ PROCESS INIT & TESTING -------------------------
 
@@ -34,6 +35,10 @@ $test['DataBaseRequests'] = $db->init();
 $user = new User($db);
 $test['User-Table'] = $user->init();
 $test['User-Test'] = $user->test();
+
+$groupe = new Groupe($db);
+$test['Groupe-Table'] = $groupe->init();
+$test['Groupe-Test'] = $groupe->test();
 
 $publication = new Publication($db);
 $test['Publication-Table'] = $publication->init();

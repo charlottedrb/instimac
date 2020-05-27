@@ -19,13 +19,15 @@ class Publication
     public $description;
     public $hide = FALSE;
 
-    public function __construct($database) {
+    public function __construct($database)
+    {
         $this->database = $database;
     }
 
-    public function init() {
+    public function init()
+    {
         //opération de création de la table dans la base de données
-        $sql = 'CREATE TABLE IF NOT EXISTS ' .self::TABLE. '(
+        $sql = 'CREATE TABLE IF NOT EXISTS ' . self::TABLE . '(
             p_id INT NOT NULL AUTO_INCREMENT, 
             p_date DATETIME NOT NULL, 
             p_lieu VARCHAR(50),
@@ -47,13 +49,12 @@ class Publication
         return TRUE;
     }
 
-    public function set($lieu = FALSE, $description = FALSE, $hide = FALSE)
+    public function set($lieu, $description, $hide = FALSE)
     {
         $this->date = date('Y-m-d H:i:s');
-
-        if ($lieu) $this->lieu = $lieu;
-        if ($description) $this->description = $description;
-        if ($hide) $this->hide = $hide;
+        $this->lieu = $lieu;
+        $this->description = $description;
+        $this->hide = $hide;
 
         $fields = [
             'p_date',
@@ -86,7 +87,6 @@ class Publication
                 $this->id = (int)$data['p_id'];
                 return TRUE;
             }
-            return FALSE;
         }
         return FALSE;
     }
@@ -106,6 +106,28 @@ class Publication
             $this->hide = $data['p_hide'];
             return TRUE;
         }
+        return FALSE;
+    }
+
+    public function update()
+    {
+        $values = [
+            'p_date' => $this->date,
+            'p_lieu' => $this->lieu,
+            'p_description' => $this->description,
+            'p_hide' => $this->hide,
+        ];
+
+        $where = ['p_id' => $this->id];
+
+        if ($this->database->update(self::TABLE, $values, $where) !== FALSE) return TRUE;
+        return FALSE;
+    }
+
+    public function delete()
+    {
+        $where = ['p_id' => $this->id];
+        if ($this->database->delete(self::TABLE, $where) !== FALSE) return TRUE;
         return FALSE;
     }
 
@@ -130,28 +152,6 @@ class Publication
             }
             return $results;
         }
-    }
-
-    public function update()
-    {
-        $values = [
-            'p_date' => $this->date,
-            'p_lieu' => $this->lieu,
-            'p_description' => $this->description,
-            'p_hide' => $this->hide,
-        ];
-
-        $where = ['p_id' => $this->id];
-
-        if ($this->database->update(self::TABLE, $values, $where) !== FALSE) return TRUE;
-        return FALSE;
-    }
-
-    public function delete()
-    {
-        $where = ['p_id' => $this->id];
-        if ($this->database->delete(self::TABLE, $where) !== FALSE) return TRUE;
-        return FALSE;
     }
 
     public function __destruct()

@@ -21,6 +21,10 @@ class Reagir
         $this->database = $database;
     }
 
+    /**
+     * Initialise en bdd
+     * @return bool
+     */
     public function init()
     {
         $sql = 'CREATE TABLE IF NOT EXISTS ' . self::TABLE . '(
@@ -30,7 +34,7 @@ class Reagir
             r_type INT NOT NULL,
             CONSTRAINT reagir_PK PRIMARY KEY (p_id,u_id),
             CONSTRAINT reagir_photo_FK FOREIGN KEY (p_id) REFERENCES photo(p_id),
-            CONSTRAINT reagir_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateur(u_id)
+            CONSTRAINT reagir_utilisateur0_FK FOREIGN KEY (u_id) REFERENCES utilisateurs(u_id)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
         return $this->database->exec($sql);
     }
