@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Laurine Capdeville
+ * @author Laurine Capdeville
  */
 
 namespace Groupe;
