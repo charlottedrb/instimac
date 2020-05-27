@@ -8,31 +8,28 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['id_ut'], ['id_photo'], ['type'])) {
+if (Sanitize::checkEmptyFields($_GET, ['publication','type_reaction'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['id_ut'], ['id_photo'], ['type']);
+$secured = Sanitize::arrayFields($_GET, ['publication','type_reaction']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
 $reagir = new Reagir($db);
-$reagir->type = $secured['type'];
-$reagir->id_ut = $secured['id_ut'];
-$reagir->id_photo = $secured['id_photo'];
+$reagir->type = $secured['type_reaction'];
+$reagir->id_photo = $secured['publication'];
 
-if ($reagir->ajout()) { //action a faire
-
-http_response_code(200); //envoie reponse
-echo json_encode(
-[
-'id' => $commentaire->id,
-'date' => $commentaire->date,
-'type' => $commentaire->type,
-]
-);
+if ($reagir->set($secured['type_reaction'],$secured['publication'],$idUt) && $reagir->getCount($secured['publication']) ) { 
+    $count=$reagir->getCount($secured['publication']
+    http_response_code(200); //envoie reponse
+    echo json_encode(
+        [
+            'love' => $count,
+        ]
+    );
 
 } else {
-http_response_code(500);
-echo json_encode('Server Error');
+    http_response_code(500);
+    echo json_encode('Server Error');
 }
 
 // --------------- END - PROCESSING THE REQUEST------------------------

@@ -17,11 +17,17 @@ $secured = Sanitize::arrayFields($_GET, ['id']);
 $groupe = new Groupe($db);
 $groupe->id = $secured['id'];
 
-
-if ($groupe->delete($secured['id'])) {//action a faire
+if ($groupe->update($secured['id'])) {//action a faire
 
 http_response_code(200);//envoie reponse
-echo json_encode("C'est fait!! bulubulu");
+echo json_encode(
+[
+'id' => $groupe->id,
+'titre' => $groupe->titre,
+'lieu' => $groupe->lieu,
+'date' => $groupe->date
+]
+);
 
 } else {
 http_response_code(500);

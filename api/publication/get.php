@@ -2,7 +2,7 @@
 
 require_once '../../includes.php';
 
-use Groupe\Groupe;
+use Publication\Publication;
 use Sanitize\Sanitize;
 
 header('Content-Type: application/json; charset=UTF-8');
@@ -14,14 +14,21 @@ $secured = Sanitize::arrayFields($_GET, ['id']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
-$groupe = new Groupe($db);
-$groupe->id = $secured['id'];
+$publication = new publication($db);
+$publication->id = $secured['id'];
 
-
-if ($groupe->delete($secured['id'])) {//action a faire
+if ($publication->update($secured['id'])) {//action a faire
 
 http_response_code(200);//envoie reponse
-echo json_encode("C'est fait!! bulubulu");
+echo json_encode(
+[
+'id' => $publication->id,
+'description' => $publication->description,
+'photoURL',
+'date' => $publication->date,
+'utilisateur' => ['photoURL', 'nom']
+]
+);
 
 } else {
 http_response_code(500);
