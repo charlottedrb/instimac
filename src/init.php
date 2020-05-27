@@ -44,6 +44,10 @@ $publication = new Publication($db);
 $test['Publication-Table'] = $publication->init();
 $test['Publication-Test'] = $publication->test();
 
+$groupe = new Groupe($db);
+$test['Groupe-Table'] = $groupe->init();
+$test['Groupe-Test'] = $groupe->test();
+
 if (!empty($_FILES['file'])) {
 
     $file = new File($db);
