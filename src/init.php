@@ -1,11 +1,6 @@
 <?php
 include 'autoloader.php';
 
-use Database\Test as Database;
-use User\User;
-
-use Publication\Publication;
-
 function displayResults(&$tests)
 {
     foreach ($tests as $key => $value) {
@@ -22,7 +17,13 @@ function displayResults(&$tests)
     }
 }
 
+use Database\Test as Database;
+use User\User;
+use Publication\Publication;
+use File\File;
+
 // ------------------ PROCESS INIT & TESTING -------------------------
+
 
 $db = new Database();
 $db->connect();
@@ -33,12 +34,19 @@ $test['DataBaseRequests'] = $db->init();
 $user = new User($db);
 $test['User'] = $user->init();
 
+
 $publication = new Publication($db);
 $test['Publication-Table'] = $publication->init();
 $test['Publication-Test'] = $publication->test();
 
-// --------------------------------------------------------------------
+if (!empty($_FILES['file'])) {
 
+    $file = new File($db);
+    $test['File-Table'] = $file->init();
+    $test['File-Test'] = $file->test($_FILES['file']);
+}
+
+// --------------------------------------------------------------------
 
 ?><!DOCTYPE>
 <html>
@@ -46,6 +54,11 @@ $test['Publication-Test'] = $publication->test();
 	<meta charset="UTF-8">
 </head>
 <body>
+
+<form action="" method="post" enctype="multipart/form-data">
+	<input type="file" name="file">
+	<button>Test FILE</button>
+</form>
 
 <h1>Initialisation</h1>
 <table>
