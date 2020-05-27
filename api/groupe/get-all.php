@@ -8,28 +8,28 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_POST, ['id', 'titre', 'lieu', 'date'])) {
+if (Sanitize::checkEmptyFields($_GET)) {
 
-$secured = Sanitize::arrayFields($_POST, ['id', 'titre', 'lieu', 'date']);
+$secured = Sanitize::arrayFields($_GET);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
 $groupe = new Groupe($db);
-$groupe->id = $secured['id'];
-$groupe->titre = $secured['titre'];
-$groupe->lieu = $secured['lieu'];
-$groupe->date = $secured['date'];
+$tabGroupe = $groupe->getGroupe($secured['id']);
 
-if ($groupe->update($secured['id'],$secured['titre'],$secured['lieu'], $secured['date'])) {//action a faire
-
+if ($tabGroupe) {//action a faire
+	$tabResultat;
+	foreach($tabGroupe as $grp){
+		foreach($tabResultat as $nouvCom){
+			$nouvCom['id'] = $tabGroupe['id'];
+			$nouvCom['titre'] = $tabGroupe['titre'];
+			$nouvCom['lieu'] = $tabGroupe['lieu'];
+			$nouvCom['date'] = $tabGroupe['date'];
+		}
+	}
 http_response_code(200);//envoie reponse
 echo json_encode(
-[
-'id' => $groupe->id,
-'titre' => $groupe->titre,
-'lieu' => $groupe->lieu,
-'date' => $groupe->date
-]
+$nouvCom;
 );
 
 } else {
