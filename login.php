@@ -22,7 +22,6 @@ if (Sanitize::checkIssetFields($_POST, ['login', 'password']) && Sanitize::check
 
         $_SESSION['user'] = $user;
         $_SESSION['session'] = new Session();
-        //echo "AUTHENTIFIED";
         header('Location: dashboard.php');
         exit;
 

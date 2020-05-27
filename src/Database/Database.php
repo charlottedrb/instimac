@@ -22,7 +22,7 @@ class Database
     private $_params = [];
     private $_where = [];
 
-    private $_logEnabled = FALSE;
+    private $_logEnabled = TRUE;
     private $_logCount = 0;
 
     /**
@@ -121,7 +121,6 @@ class Database
         if ($request->execute()) {
 
             $data = $request->fetchAll();
-            var_dump($data);
 
             if (!empty($data)) {
 
