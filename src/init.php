@@ -35,7 +35,6 @@ $user = new User($db);
 $test['User-Table'] = $user->init();
 $test['User-Test'] = $user->test();
 
-
 $publication = new Publication($db);
 $test['Publication-Table'] = $publication->init();
 $test['Publication-Test'] = $publication->test();
@@ -56,12 +55,13 @@ if (!empty($_FILES['file'])) {
 </head>
 <body>
 
+<h1>1- add a file</h1>
 <form action="" method="post" enctype="multipart/form-data">
 	<input type="file" name="file">
 	<button>Test FILE</button>
 </form>
 
-<h1>Initialisation</h1>
+<h1>2 - Check Initialisation</h1>
 <table>
 	<tr>
 		<td>Classe</td>
