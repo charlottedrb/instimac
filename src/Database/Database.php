@@ -71,7 +71,7 @@ class Database
      * @param bool $resultsRequired
      * @return array|bool
      */
-    public function select($table, $attributes, $resultsRequired = FALSE)
+    public function select($table, $attributes = FALSE, $resultsRequired = FALSE)
     {
         if ($attributes === FALSE) $attributes = ['*'];
         $this->sqlRequest = 'SELECT ' . self::_generateList($attributes) . ' FROM ' . $table;

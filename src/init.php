@@ -1,26 +1,42 @@
 <?php
 include 'autoloader.php';
 
+function displayResults(&$tests)
+{
+    foreach ($tests as $key => $value) {
+
+        $string = '<tr>';
+        $string .= '<td>' . $key . '</td><td>';
+        if ($value === TRUE) {
+            $string .= '<span style="color: limegreen;">OK</span>';
+        } else {
+            $string .= '<span style="color: darkred;">ERROR</span>';
+        }
+        $string .= '</td></tr>';
+        echo $string;
+    }
+}
+
 use Database\Test as Database;
-use Team\Team;
 use User\User;
+
+use File\File;
 
 $db = new Database();
 $db->connect();
 
-$publication = new Publication($db);
-$publication = $publication->init($db);
-$publication->get(1);
-
 $test = [];
 $test['DataBaseRequests'] = $db->init();
 
-$team = new Team($db);
-$test['Team'] = $team->init();
-
 $user = new User($db);
-var_dump($user);
 $test['User'] = $user->init();
+
+if (!empty($_FILES['file'])) {
+
+    $file = new File($db);
+    $test['File-Table'] = $file->init();
+    $test['File-Test'] = $file->test($_FILES['file']);
+}
 
 
 ?><!DOCTYPE>
@@ -29,6 +45,11 @@ $test['User'] = $user->init();
 	<meta charset="UTF-8">
 </head>
 <body>
+
+<form action="" method="post" enctype="multipart/form-data">
+	<input type="file" name="file">
+	<button>Test FILE</button>
+</form>
 
 <h1>Initialisation</h1>
 <table>
