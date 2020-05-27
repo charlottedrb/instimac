@@ -8,35 +8,29 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['photo'], ['id_ut'], ['lieu'], ['description'], ['groupe'])) {
+if (Sanitize::checkEmptyFields($_POST, ['photo','description', 'groupe'])) {
 
-$secured = Sanitize::arrayFields($_GET, ['photo'], ['id_ut'], ['lieu'],  ['description'], ['groupe']);
+$secured = Sanitize::arrayFields($_POST, ['photo','description', 'groupe']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
 $publication = new publication($db);
-$publication->photo = $secured['photo'];
-$publication->id_ut = $secured['id_ut'];
-$publication->lieu = $secured['lieu'];
-$publication->description = $secured['description'];
-$publication->groupe = $secured['groupe'];
 
 
 
 
-if ($publication->ajout()) {//action a faire
+if ($publication->set(FALSE, $secured['description'] )) {//action a faire
 
-http_response_code(200);//envoie reponse
-echo json_encode(
-[
-'id' => $publication->id,
-'date' => $publication->date,
-'lieu' => $publication->lieu,
-'photo' => $publication->photo,
-'description' => $publication->description,
-'groupe' => $publication->groupe
-]
-);
+    http_response_code(200);//envoie reponse
+    echo json_encode(
+        [
+            'id' => $publication->$id,
+            'date' => $publication->$date,
+            'description' => $publication->$description,
+            'photoURL',
+            'utilisateur' => ['photoURL','nom']
+        ]
+    );
 
 } else {
 http_response_code(500);
