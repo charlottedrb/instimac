@@ -32,7 +32,8 @@ $test = [];
 $test['DataBaseRequests'] = $db->init();
 
 $user = new User($db);
-$test['User'] = $user->init();
+$test['User-Table'] = $user->init();
+$test['User-Test'] = $user->test();
 
 
 $publication = new Publication($db);
