@@ -351,12 +351,15 @@ class File
         return $_SERVER['SERVER_NAME'] . '/api/publication/get-photo.php?id=' . $this->id;
     }
 
-    public function getContentById($id = FALSE)
+    public function getPath()
     {
-        if ($id !== FALSE) $this->id = (int)$id;
-        if ($this->getById() === FALSE) return FALSE;
+        return $this->_basePath() . DIRECTORY_SEPARATOR . $this->serverPath . DIRECTORY_SEPARATOR . $this->serverName;
+    }
 
-        $path = $this->_basePath() . DIRECTORY_SEPARATOR . self::FILE_PATH . DIRECTORY_SEPARATOR . $this->serverName;
+    public function getContent()
+    {
+        $path = $this->getPath();
+        if( !file_exists($path) ) return NULL;
         return file_get_contents($path);
     }
 
