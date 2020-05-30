@@ -124,7 +124,69 @@ body {
   }
 }
 
+#affichage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: wrap;
+      -ms-flex: wrap;
+          flex: wrap;
+}
+
+#affichage .publication {
+  width: 100%;
+}
+
+#affichage .add-comm {
+  position: absolute;
+  bottom: -3rem;
+  left: 0;
+  width: 100%;
+}
+
+#affichage .add-comm input[type="text"] {
+  position: relative;
+  border-radius: 0 0 10px 10px;
+}
+
+#affichage .add-comm button[type="submit"] {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+  border-radius: 0 0 10px 0;
+  width: 5rem;
+  height: 35px;
+  color: white;
+  font-family: "Karla";
+  font-size: 1rem;
+  background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
+  border: none;
+}
+
+#affichage .return-button {
+  position: absolute;
+  top: 2rem;
+  right: 0.7rem;
+  width: 5rem;
+  height: 2rem;
+  color: white;
+  font-family: "Karla";
+  font-size: 1rem;
+  background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
+  border: none;
+  border-radius: 1rem;
+}
+
+#affichage .return-button:hover {
+  cursor: pointer;
+}
+
+#affichage .fil .publications .publication {
+  width: auto;
+}
+
 .commentaires {
+  position: relative;
   background-color: #f3f2f2;
 }
 
@@ -143,6 +205,10 @@ body {
 .commentaires .commentaire .user-image {
   width: 2rem;
   height: 2rem;
+}
+
+.commentaires .commentaire .user-name {
+  color: #535353;
 }
 
 .commentaires .commentaire-content {
@@ -380,6 +446,15 @@ h1 {
   height: 50vh;
 }
 
+.form-container p {
+  color: white;
+  text-align: center;
+}
+
+.form-container p a {
+  color: white;
+}
+
 form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -406,15 +481,6 @@ form input {
   form input {
     width: 100%;
   }
-}
-
-p {
-  color: white;
-  text-align: center;
-}
-
-p a {
-  color: white;
 }
 
 .modal {

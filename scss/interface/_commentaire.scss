@@ -9,6 +9,7 @@
 $xs-com-img-w: 2rem;
 
 .commentaires{
+    position: relative;
     background-color: rgb(243, 242, 242);
 
     .commentaire{
@@ -24,6 +25,10 @@ $xs-com-img-w: 2rem;
             &-image{
                 width: $xs-com-img-w;
                 height: $xs-com-img-w;
+            }
+
+            &-name{
+                color: rgb(83, 83, 83);
             }
         }
 

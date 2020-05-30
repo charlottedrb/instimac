@@ -62,7 +62,7 @@ var publications = [
         }
     },
     {
-        id: 23,
+        id: 26,
         description: "chaussette",
         photoURL: "img/taiga.jpg",
         utilisateur: {
@@ -166,6 +166,11 @@ function formulaire_ajout_publication() {
     date_label.setAttribute('for', 'date');
     date_label.appendChild(date_label_content);
 
+    //BUTTON SUBMIT
+    var button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.innerHTML = "Envoyer";
+
     //APPENDS 
     modal.appendChild(closeModal);
     modal.appendChild(form);
@@ -173,6 +178,7 @@ function formulaire_ajout_publication() {
     form.appendChild(description);
     form.appendChild(url_img);
     form.appendChild(date);
+    form.appendChild(button);
     form.insertBefore(description_label, description);
     form.insertBefore(url_img_label, url_img);
     form.insertBefore(date_label, date);
@@ -228,6 +234,11 @@ function formulaire_ajout_groupe() {
     var date_label_content = document.createTextNode("Date");
     date_label.setAttribute('for', 'date');
     date_label.appendChild(date_label_content);
+    
+    //BUTTON SUBMIT
+    var button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.innerHTML = "Envoyer";
 
     //APPENDS 
     modal.appendChild(closeModal);
@@ -236,6 +247,7 @@ function formulaire_ajout_groupe() {
     form.appendChild(titre);
     form.appendChild(lieu);
     form.appendChild(date);
+    form.appendChild(button);
     form.insertBefore(titre_label, titre);
     form.insertBefore(lieu_label, lieu);
     form.insertBefore(date_label, date);
@@ -244,9 +256,126 @@ function formulaire_ajout_groupe() {
     document.getElementById('affichage').appendChild(modal);
 }
 
-console.log("form");
+function formulaire_modif_groupe() {
+    var modal = document.createElement('div');
+    modal.className = 'modal';
+    var form = document.createElement('form');
+    form.className = 'actions-form modal-content';
+    modal.id = 'modif_groupe';
+
+    //FERMETURE DE LA MODAL
+    var closeModal = document.createElement('span');
+    closeModal.className = "closeModal";
+    var legend = document.createTextNode('Fermer')
+    closeModal.appendChild(legend);
+    closeModal.onclick = function () {
+        var modal = document.getElementById('modif_groupe');
+        modal.style.display = "none";
+    }
+
+    var formTitle = document.createElement('h3');
+    var formTitle_content = document.createTextNode('Modifier un événement');
+    formTitle.appendChild(formTitle_content);
+
+    //INPUT TITRE
+    var titre = document.createElement('input');
+    setAttributes(titre, { 'type': 'text', 'name': 'titre', 'id': 'titre' });
+    //label
+    var titre_label = document.createElement('LABEL');
+    var titre_label_content = document.createTextNode("Titre");
+    titre_label.setAttribute('for', 'titre');
+    titre_label.appendChild(titre_label_content);
+
+    //INPUT IMAGE
+    var lieu = document.createElement('input');
+    setAttributes(lieu, { 'type': 'text', 'name': 'lieu', 'id': 'lieu' });
+    //label
+    var lieu_label = document.createElement('LABEL');
+    var lieu_label_content = document.createTextNode("Lieu");
+    lieu_label.setAttribute('for', 'lieu');
+    lieu_label.appendChild(lieu_label_content);
+
+    //INPUT DATE
+    var date = document.createElement('input');
+    setAttributes(date, { 'type': 'date', 'name': 'date', 'id': 'date' });
+    //label
+    var date_label = document.createElement('LABEL');
+    var date_label_content = document.createTextNode("Date");
+    date_label.setAttribute('for', 'date');
+    date_label.appendChild(date_label_content);
+
+    //BUTTON SUBMIT
+    var button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.innerHTML = "Envoyer";
+
+    //APPENDS 
+    modal.appendChild(closeModal);
+    modal.appendChild(form);
+    form.appendChild(formTitle);
+    form.appendChild(titre);
+    form.appendChild(lieu);
+    form.appendChild(date);
+    form.appendChild(button);
+    form.insertBefore(titre_label, titre);
+    form.insertBefore(lieu_label, lieu);
+    form.insertBefore(date_label, date);
+
+    //AFFICHAGE
+    document.getElementById('affichage').appendChild(modal);
+}
+
+function formulaire_delete_groupe() {
+    var modal = document.createElement('div');
+    modal.className = 'modal';
+    var form = document.createElement('form');
+    form.className = 'actions-form modal-content';
+    modal.id = 'delete_groupe';
+
+    //FERMETURE DE LA MODAL
+    var closeModal = document.createElement('span');
+    closeModal.className = "closeModal";
+    var legend = document.createTextNode('Fermer')
+    closeModal.appendChild(legend);
+    closeModal.onclick = function () {
+        var modal = document.getElementById('delete_groupe');
+        modal.style.display = "none";
+    }
+
+    var formTitle = document.createElement('h3');
+    var formTitle_content = document.createTextNode('Supprimer un événement');
+    formTitle.appendChild(formTitle_content);
+
+    //INPUT TITRE
+    var titre = document.createElement('input');
+    setAttributes(titre, { 'type': 'text', 'name': 'titre', 'id': 'titre' });
+    //label
+    var titre_label = document.createElement('LABEL');
+    var titre_label_content = document.createTextNode("Titre");
+    titre_label.setAttribute('for', 'titre');
+    titre_label.appendChild(titre_label_content);
+
+    //BUTTON SUBMIT
+    var button = document.createElement('button');
+    button.setAttribute('type', 'submit');
+    button.innerHTML = "Supprimer";
+
+    //APPENDS 
+    modal.appendChild(closeModal);
+    modal.appendChild(form);
+    form.appendChild(formTitle);
+    form.appendChild(titre);
+    form.insertBefore(titre_label, titre);
+
+    //AFFICHAGE
+    document.getElementById('affichage').appendChild(modal);
+}
+
+console.log("Création des formulaires");
 formulaire_ajout_publication();
 formulaire_ajout_groupe();
+formulaire_modif_groupe();
+formulaire_delete_groupe();
 
 //AFFICHAGE INDIVIDUEL////////////////////////////////////////////////////////////////////
 function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actualité
@@ -262,7 +391,7 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     var texte_groupe_name = document.createTextNode(groupe_json.titre);
     groupe_name.appendChild(texte_groupe_name);
     groupe_name.onclick = function () {
-        clearAffichage();
+        clearFilActu();
         groupeSidebar();
         afficher_page_groupe();
         afficher_titre_page_groupe(groupe_json);
@@ -285,7 +414,11 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     action_modif.className = 'modif icon'; 
     var modif_icon = document.createElement('img');
     modif_icon.setAttribute('src', '../img/modif.png'); 
-    modif_icon.className = 'icon-img'; 
+    modif_icon.className = 'icon-img';
+    action_modif.onclick = function () {
+        var modal = document.getElementById('modif_groupe');
+        modal.style.display = "block";
+    }
 
     //ICONE DE SUPPRESSION
     var action_delete = document.createElement('div');
@@ -293,6 +426,10 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     var delete_icon = document.createElement('img');
     delete_icon.setAttribute('src', '../img/delete.png'); 
     delete_icon.className = 'icon-img'; 
+    action_delete.onclick = function () {
+        var modal = document.getElementById('delete_groupe');
+        modal.style.display = "block";
+    }
 
     //Ajout des icones à la div action 
     groupe_actions.appendChild(action_modif);
@@ -312,6 +449,13 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
 function afficher_publication(publication_json) { //affiche les pré_vues des publication sur la page du groupe
     var publication = document.createElement('div');
     publication.className = 'publication';
+    publication.setAttribute('data-id', publication_json.id);
+    publication.addEventListener("click", function() {
+        clearAll();
+        afficher_page_publication();
+        afficher_publication_detail(publication_json);
+        afficher_tous_les_commentaire(commentaires);
+    });
 
     //IMAGE
     var publication_image = document.createElement('div');
@@ -337,7 +481,6 @@ function afficher_publication(publication_json) { //affiche les pré_vues des pu
 
 function afficher_publication_detail(publication_json) {//affiche le detail d'une publication (sans les commentaires)
     //PUBLICATION
-
     var publication_image = document.createElement('div');
     publication_image.className = 'publication-image';
 
@@ -383,15 +526,15 @@ function afficher_publication_detail(publication_json) {//affiche le detail d'un
 
     //AUTRES APPEND
     document.querySelector('.publication-infos').insertBefore(publication_description,
-        document.querySelector('.commentaires'));
+    document.querySelector('.commentaires'));
     publication_image.appendChild(publication_image_url);
     document.querySelector('.publication').insertBefore(publication_image,
-        document.querySelector('.publication-infos'));
+    document.querySelector('.publication-infos'));
 }
 
 function afficher_commentaire(commentaire_json) { //affiche un commentaire
     var commentaire = document.createElement('div');
-    groupe.className = 'commentaire';
+    commentaire.className = 'commentaire';
 
     //USER
     var user = document.createElement('div');
@@ -451,13 +594,12 @@ function afficher_tous_les_groupes(groupes) {
 //genere les divs pour injecter les infos des requettes
 
 function afficher_fil_actualite() {
-    var container_index = document.createElement('div');
-    container_index.className = "container-index";
+    var container = document.getElementById('affichage');
 
     //SIDEBAR
     var sidebar = document.createElement('div');
     sidebar.className = "sidebar";
-    container_index.appendChild(sidebar);
+    container.appendChild(sidebar);
 
     //AJOUT NOUVEL EVENT
     var groupe_actions = document.createElement('div');
@@ -481,9 +623,7 @@ function afficher_fil_actualite() {
     //FIL D'ACTU
     var fil = document.createElement('div');
     fil.className = "fil";
-    container_index.appendChild(fil);
-
-    document.getElementById('affichage').appendChild(container_index);
+    container.appendChild(fil);
 }
 
 function afficher_page_groupe() {
@@ -495,7 +635,8 @@ function afficher_page_groupe() {
     button.className = 'return-button';
     button.innerHTML = "Retour";
     button.onclick = function() {
-        clearAffichage();
+        clearAll();
+        formulaire_ajout_groupe();
         afficher_fil_actualite();
         afficher_tous_les_groupes(groupes);
     }
@@ -538,9 +679,36 @@ function afficher_page_publication() {
     var commentaires = document.createElement('div');
     commentaires.className = 'commentaires';
 
+    var button = document.createElement('button');
+    button.className = 'return-button';
+    button.innerHTML = "Retour";
+    button.onclick = function () {
+        clearAll();
+        var container = document.getElementById('affichage');
+        var fil = document.createElement('div');
+        fil.className = "fil";
+        container.appendChild(fil);
+        afficher_page_groupe();
+        afficher_titre_page_groupe(groupe_json);
+        afficher_toutes_les_publications(publication_json);
+    }
+
+    var add_comm_form = document.createElement('form');
+    add_comm_form.className = 'add-comm';
+    var add_comm_input = document.createElement('input');
+    setAttributes(add_comm_input, {'type': 'text', 'name': 'add-comm', 'id': 'add-comm', 'placeholder': 'Nouveau commentaire...'});
+    var add_comm_submit = document.createElement('button');
+    add_comm_submit.setAttribute('type', 'submit');
+    var add_comm_submit_content = document.createTextNode('Envoyer');
+    add_comm_submit.appendChild(add_comm_submit_content);
+    add_comm_form.appendChild(add_comm_input); 
+    add_comm_form.appendChild(add_comm_submit); 
+    commentaires.appendChild(add_comm_form);   
+
     publication_infos.appendChild(commentaires);
     publication.appendChild(publication_infos);
     document.getElementById('affichage').appendChild(publication);
+    document.getElementById('affichage').appendChild(button);
 }
 
 //EVENEMENT////////////////////////////////////////////////////////////////////////////
@@ -568,11 +736,16 @@ function setAttributes(el, attrs) {
     }
 }
 
-function clearAffichage(){
+function clearFilActu(){
     document.querySelector('.fil').innerHTML = "";
 }
 
+function clearAll(){
+    document.getElementById('affichage').innerHTML = "";
+}
+
 function groupeSidebar(){
+    formulaire_ajout_publication();
     var sidebar = document.querySelector('.sidebar');
 
     //AJOUT NOUVELLE PUBLICATION

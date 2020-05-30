@@ -133,3 +133,64 @@
         }
     }
 }
+
+#affichage{
+    display: flex;
+    flex: wrap;
+
+    .publication{
+        width: 100%;
+    }
+
+    .add-comm{
+        position: absolute;
+        bottom: -3rem;
+        left: 0;
+        width: 100%;
+
+        input[type="text"]{
+            position: relative; 
+            border-radius: 0 0 10px 10px;
+        }
+
+        button[type="submit"]{
+            position: absolute; 
+            bottom: 1rem; 
+            right: 0; 
+            border-radius: 0 0 10px 0; 
+            width: 5rem;
+            height: 35px;
+            color: white; 
+            font-family: "Karla";
+            font-size: 1rem;
+            background: $gradient-lr;
+            border: none; 
+        }
+    }
+
+    .return-button{
+        position: absolute; 
+        top: 2rem; 
+        right: 0.7rem;
+        width: 5rem;
+        height: 2rem;
+        color: white; 
+        font-family: "Karla";
+        font-size: 1rem;
+        background: $gradient-lr;
+        border: none; 
+        border-radius: 1rem;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    .fil{
+        .publications{
+            .publication{
+                width: auto;
+            }
+        }
+    }
+}

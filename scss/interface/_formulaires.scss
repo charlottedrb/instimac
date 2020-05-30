@@ -10,6 +10,15 @@
 
 .form-container{
     height: 50vh;
+
+    p{
+        color: white; 
+        text-align: center;
+    
+        a{
+            color: white; 
+        }
+    }
 }
 
 form{
@@ -30,14 +39,5 @@ form{
         @include sm{
             width: 100%;
         }
-    }
-}
-
-p{
-    color: white; 
-    text-align: center;
-
-    a{
-        color: white; 
     }
 }

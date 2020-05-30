@@ -1,18 +1,18 @@
-.container-index .fil .event .container-event {
+#affichage .fil .event .container-event {
   padding-left: 1.5rem;
 }
 
-.container-index .fil .event .container-event .event-name {
+#affichage .fil .event .container-event .event-name {
   width: 60%;
 }
 
-.container-index .fil .event .container-event .event-name a {
+#affichage .fil .event .container-event .event-name a {
   color: black;
   font-weight: bold;
   text-decoration: none;
 }
 
-.container-index .fil .event-date {
+#affichage .fil .event-date {
   position: absolute;
   top: -0.5rem;
   right: 0;
@@ -21,15 +21,15 @@
 }
 
 @media (min-width: 992px) {
-  .container-index {
+  #affichage {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
   }
-  .container-index .sidebar {
+  #affichage .sidebar {
     width: 25rem;
   }
-  .container-index .fil {
+  #affichage .fil {
     -webkit-box-flex: 3;
         -ms-flex-positive: 3;
             flex-grow: 3;
@@ -42,7 +42,7 @@
     height: 100vh;
     overflow-x: auto;
   }
-  .container-index .fil .event {
+  #affichage .fil .event {
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -53,22 +53,22 @@
         -ms-flex-align: center;
             align-items: center;
   }
-  .container-index .fil .event .container-event {
+  #affichage .fil .event .container-event {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 80%;
             flex: 0 0 80%;
     padding-left: 0;
   }
-  .container-index .fil .event .container-event .event-name {
+  #affichage .fil .event .container-event .event-name {
     width: 50%;
   }
-  .container-index .fil .event .container-event .event-name a {
+  #affichage .fil .event .container-event .event-name a {
     position: relative;
     color: black;
     font-weight: bold;
     text-decoration: none;
   }
-  .container-index .fil .event .container-event .event-name a:before {
+  #affichage .fil .event .container-event .event-name a:before {
     content: "";
     position: absolute;
     bottom: 0;
@@ -80,20 +80,20 @@
     -webkit-transition: width 0.5s ease-in-out;
     transition: width 0.5s ease-in-out;
   }
-  .container-index .fil .event .container-event .event-name a:hover {
+  #affichage .fil .event .container-event .event-name a:hover {
     cursor: pointer;
   }
-  .container-index .fil .event .container-event .event-name a:hover:before {
+  #affichage .fil .event .container-event .event-name a:hover:before {
     width: 100%;
   }
-  .container-index .fil .event-date {
+  #affichage .fil .event-date {
     position: static;
     font-size: 8rem;
     width: 20%;
   }
-  .container-index .fil .return-button {
+  #affichage .fil .return-button {
     position: absolute;
-    top: 2rem;
+    top: 7rem;
     right: 5rem;
     width: 5rem;
     height: 2rem;
@@ -104,7 +104,7 @@
     border: none;
     border-radius: 1rem;
   }
-  .container-index .fil .return-button:hover {
+  #affichage .fil .return-button:hover {
     cursor: pointer;
   }
 }
