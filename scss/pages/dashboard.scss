@@ -10,20 +10,15 @@
 
 #affichage{
     $this: '.event';
-    
+
     .fil{
+        width: 100%;
         .event{
             .container-event{
                 padding-left: 1.5rem;
         
                 #{$this}-name{
                     width: 60%;
-
-                    a{
-                        color: black;
-                        font-weight: bold; 
-                        text-decoration: none;
-                    }
                 }
             }
 
@@ -52,6 +47,10 @@
             padding: 0 2rem;
             height: 100vh; 
             overflow-x: auto;
+
+            .header{
+                width: 100%;
+            }
 
             .event{
                 position: relative;

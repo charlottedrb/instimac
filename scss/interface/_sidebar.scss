@@ -9,18 +9,32 @@
 //////////////////////////////////////////////////////////////////////////
 
 .sidebar{
+    $this : '.sidebar';
     position: relative; 
+    display: flex; 
+    align-items: center;
+    justify-content: center;
 
     .actions{
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
+        position: static;
+        margin-bottom: 2rem;
+    
         .icon{
-            transform: translate(-50%, -50%);
             background: none;
             border: 3px solid white;
             margin-left: 0;
+        }
+
+    }
+    
+    &-description{
+        color: white; 
+    }
+
+    .logo{
+        margin-bottom: 5rem;
+        img{
+            width: 10rem;
         }
     }
 

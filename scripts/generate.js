@@ -88,8 +88,8 @@ var commentaires = [
         }
     },
     {
-        id: 23,
-        contenu: "blabla",
+        id: 26,
+        contenu: "coucou",
         date: "2020-02-12 12:12:20",
         utilisateur: {
             photoURL: "img/taiga.jpg",
@@ -392,6 +392,7 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     groupe_name.appendChild(texte_groupe_name);
     groupe_name.onclick = function () {
         clearFilActu();
+        clearSidebar();
         groupeSidebar();
         afficher_page_groupe();
         afficher_titre_page_groupe(groupe_json);
@@ -447,14 +448,13 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
 }
 
 function afficher_publication(publication_json) { //affiche les pré_vues des publication sur la page du groupe
+    modal_detail_publication(publication_json);
     var publication = document.createElement('div');
     publication.className = 'publication';
     publication.setAttribute('data-id', publication_json.id);
     publication.addEventListener("click", function() {
-        clearAll();
-        afficher_page_publication();
-        afficher_publication_detail(publication_json);
-        afficher_tous_les_commentaire(commentaires);
+        var modal = document.getElementById("publication-" + publication_json.id);
+        modal.style.display = "block";
     });
 
     //IMAGE
@@ -479,17 +479,53 @@ function afficher_publication(publication_json) { //affiche les pré_vues des pu
     document.querySelector('.publications').appendChild(publication);
 }
 
-function afficher_publication_detail(publication_json) {//affiche le detail d'une publication (sans les commentaires)
+function modal_detail_publication(publication_json){
+    //MODAL
+    var modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.id = 'publication-' + publication_json.id;
+    console.log(modal.id);
+
+    //FERMETURE DE LA MODAL
+    var closeModal = document.createElement('span');
+    closeModal.className = "closeModal";
+    var legend = document.createTextNode('Fermer')
+    closeModal.appendChild(legend);
+    closeModal.onclick = function () {
+        var modal = document.getElementById('publication-' + publication_json.id);
+        modal.style.display = "none";
+    }
+    modal.appendChild(closeModal);
+
     //PUBLICATION
+    var publication = document.createElement('div');
+    publication.className = 'publication modal-content';
+
+    //IMAGE
     var publication_image = document.createElement('div');
     publication_image.className = 'publication-image';
-
     var publication_image_url = document.createElement('img');
     publication_image_url.setAttribute('src', publication_json.photoURL);
     publication_image_url.alt = "photo";
+    publication_image.appendChild(publication_image_url);
 
+    //INFOS
+    var publication_infos = document.createElement('div');
+    publication_infos.className = 'publication-infos';
+
+    //DESCRIPTION
     var publication_description = document.createElement('div');
     publication_description.className = 'publication-description';
+    var description = document.createElement('p');
+    var texte_description = document.createTextNode(publication_json.description);
+    description.appendChild(texte_description);
+
+
+    //DATE
+    var publication_date = document.createElement('div');
+    publication_date.className = 'publication-date';
+    var texte_publication_date = document.createTextNode(publication_json.date);
+    publication_date.appendChild(texte_publication_date);
 
     //USER
     var user = document.createElement('user');
@@ -510,29 +546,29 @@ function afficher_publication_detail(publication_json) {//affiche le detail d'un
     user.appendChild(user_image);
 
     publication_description.appendChild(user);
-
-    //DESCRIPTION
-    var description = document.createElement('p');
-    var texte_description = document.createTextNode(publication_json.description);
-    description.appendChild(texte_description);
     publication_description.appendChild(description);
-
-    //DATE
-    var publication_date = document.createElement('div');
-    publication_date.className = 'publication-date';
-    var texte_publication_date = document.createTextNode(publication_json.date);
-    publication_date.appendChild(texte_publication_date);
     publication_description.appendChild(publication_date);
 
+    publication - publication_infos.appendChild(publication_description);
+
+
+    publication.appendChild(publication_image);
+    publication.appendChild(publication_infos);
+
     //AUTRES APPEND
-    document.querySelector('.publication-infos').insertBefore(publication_description,
-    document.querySelector('.commentaires'));
-    publication_image.appendChild(publication_image_url);
-    document.querySelector('.publication').insertBefore(publication_image,
-    document.querySelector('.publication-infos'));
+    modal.appendChild(publication);
+
+    //AFFICHAGE
+    document.getElementById('affichage').appendChild(modal);
 }
 
+
+
+afficher_tous_les_commentaires(commentaires);
+
 function afficher_commentaire(commentaire_json) { //affiche un commentaire
+    var commentaires = document.createElement('div');
+    commentaires.className = 'commentaires';
     var commentaire = document.createElement('div');
     commentaire.className = 'commentaire';
 
@@ -564,10 +600,8 @@ function afficher_commentaire(commentaire_json) { //affiche un commentaire
     commentaire_content.appendChild(commentaire_date);
 
     commentaire.appendChild(commentaire_content);
-    document.querySelector('.commentaires').appendChild(commentaire);
+    commentaires.appendChild(commentaire);
 }
-
-
 
 //AFFICHAGES MULTIPLES////////////////////////////////////////////////////////////////////////////
 function afficher_toutes_les_publications(publications) {
@@ -578,7 +612,7 @@ function afficher_toutes_les_publications(publications) {
 
 }
 
-function afficher_tous_les_commentaire(commentaires) {
+function afficher_tous_les_commentaires(commentaires) {
     for (let i = 0; i < commentaires.length; i++) {
         afficher_commentaire(commentaires[i]);
     }
@@ -601,9 +635,22 @@ function afficher_fil_actualite() {
     sidebar.className = "sidebar";
     container.appendChild(sidebar);
 
+    //LOGO
+    var logo = document.createElement('div'); 
+    logo.className = "logo"; 
+    var logo_content = document.createElement('img');
+    setAttributes(logo_content, {'src' : '../img/logoIMAC.png', 'alt': 'logo-imac'});
+    logo.appendChild(logo_content);
+
     //AJOUT NOUVEL EVENT
     var groupe_actions = document.createElement('div');
     groupe_actions.className = 'actions';
+
+    //DESCRIPTION ACTION
+    var action_description = document.createElement('div');
+    action_description.className = 'sidebar-description';
+    var action_description_content = document.createTextNode('Nouvel événement');
+    action_description.appendChild(action_description_content);
 
     //ICONE D'AJOUT
     var action_add = document.createElement('div');
@@ -618,7 +665,9 @@ function afficher_fil_actualite() {
 
     groupe_actions.appendChild(action_add);
     action_add.appendChild(add_icon);
+    sidebar.appendChild(logo);
     sidebar.appendChild(groupe_actions);
+    sidebar.appendChild(action_description);
 
     //FIL D'ACTU
     var fil = document.createElement('div');
@@ -636,7 +685,9 @@ function afficher_page_groupe() {
     button.innerHTML = "Retour";
     button.onclick = function() {
         clearAll();
-        formulaire_ajout_groupe();
+        formulaire_ajout_groupe(); 
+        formulaire_modif_groupe();
+        formulaire_delete_groupe();
         afficher_fil_actualite();
         afficher_tous_les_groupes(groupes);
     }
@@ -669,47 +720,6 @@ function afficher_titre_page_groupe(groupe_json) {//marche
 
 }
 
-function afficher_page_publication() {
-    var publication = document.createElement('div');
-    publication.className = 'publication';
-
-    var publication_infos = document.createElement('div');
-    publication_infos.className = 'publication-infos';
-
-    var commentaires = document.createElement('div');
-    commentaires.className = 'commentaires';
-
-    var button = document.createElement('button');
-    button.className = 'return-button';
-    button.innerHTML = "Retour";
-    button.onclick = function () {
-        clearAll();
-        var container = document.getElementById('affichage');
-        var fil = document.createElement('div');
-        fil.className = "fil";
-        container.appendChild(fil);
-        afficher_page_groupe();
-        afficher_titre_page_groupe(groupe_json);
-        afficher_toutes_les_publications(publication_json);
-    }
-
-    var add_comm_form = document.createElement('form');
-    add_comm_form.className = 'add-comm';
-    var add_comm_input = document.createElement('input');
-    setAttributes(add_comm_input, {'type': 'text', 'name': 'add-comm', 'id': 'add-comm', 'placeholder': 'Nouveau commentaire...'});
-    var add_comm_submit = document.createElement('button');
-    add_comm_submit.setAttribute('type', 'submit');
-    var add_comm_submit_content = document.createTextNode('Envoyer');
-    add_comm_submit.appendChild(add_comm_submit_content);
-    add_comm_form.appendChild(add_comm_input); 
-    add_comm_form.appendChild(add_comm_submit); 
-    commentaires.appendChild(add_comm_form);   
-
-    publication_infos.appendChild(commentaires);
-    publication.appendChild(publication_infos);
-    document.getElementById('affichage').appendChild(publication);
-    document.getElementById('affichage').appendChild(button);
-}
 
 //EVENEMENT////////////////////////////////////////////////////////////////////////////
 
@@ -726,7 +736,7 @@ afficher_tous_les_groupes(groupes);
 //COMMANDES POUR AFFICHER UNE PUBLICATION
 // afficher_page_publication();
 // afficher_publication_detail(publication);
-// afficher_tous_les_commentaire(commentaires);
+// afficher_tous_les_commentaires(commentaires);
 //manque afficher réactions
 
 //Permet de paramétrer plusieurs attributs en même temps 
@@ -740,6 +750,10 @@ function clearFilActu(){
     document.querySelector('.fil').innerHTML = "";
 }
 
+function clearSidebar() {
+    document.querySelector('.sidebar').innerHTML = "";
+}
+
 function clearAll(){
     document.getElementById('affichage').innerHTML = "";
 }
@@ -748,9 +762,22 @@ function groupeSidebar(){
     formulaire_ajout_publication();
     var sidebar = document.querySelector('.sidebar');
 
+    //LOGO
+    var logo = document.createElement('div');
+    logo.className = "logo";
+    var logo_content = document.createElement('img');
+    setAttributes(logo_content, { 'src': '../img/logoIMAC.png', 'alt': 'logo-imac' });
+    logo.appendChild(logo_content);
+
     //AJOUT NOUVELLE PUBLICATION
     var groupe_actions = document.createElement('div');
     groupe_actions.className = 'actions';
+
+    //DESCRIPTION ACTION
+    var action_description = document.createElement('div');
+    action_description.className = 'sidebar-description';
+    var action_description_content = document.createTextNode('Ajouter une publication');
+    action_description.appendChild(action_description_content);
 
     //ICONE D'AJOUT
     var action_add = document.createElement('div');
@@ -765,5 +792,72 @@ function groupeSidebar(){
 
     groupe_actions.appendChild(action_add);
     action_add.appendChild(add_icon);
+    sidebar.appendChild(logo);
     sidebar.appendChild(groupe_actions);
+    sidebar.appendChild(action_description);
 }
+
+
+
+// function afficher_publication_detail(publication_json) {//affiche le detail d'une publication (sans les commentaires) 
+
+//     //PUBLICATION
+//     var publication = document.createElement('div');
+//     publication.className = 'publication modal-content';
+
+//     //IMAGE
+//     var publication_image = document.createElement('div');
+//     publication_image.className = 'publication-image';
+//     var publication_image_url = document.createElement('img');
+//     publication_image_url.setAttribute('src', publication_json.photoURL);
+//     publication_image_url.alt = "photo";
+//     publication_image.appendChild(publication_image_url);
+
+//     //INFOS
+//     var publication_infos = document.createElement('div');
+//     publication_infos.className = 'publication-infos';
+
+//     //DESCRIPTION
+//     var publication_description = document.createElement('div');
+//     publication_description.className = 'publication-description';
+//     var description = document.createElement('p');
+//     var texte_description = document.createTextNode(publication_json.description);
+//     description.appendChild(texte_description);
+
+//     //DATE
+//     var publication_date = document.createElement('div');
+//     publication_date.className = 'publication-date';
+//     var texte_publication_date = document.createTextNode(publication_json.date);
+//     publication_date.appendChild(texte_publication_date);
+
+//     //USER
+//     var user = document.createElement('user');
+//     user.className = 'user';
+
+//     var user_name = document.createElement('div');
+//     user_name.className = 'user-name';
+//     var texte_user_name = document.createTextNode(publication_json.utilisateur.nom);
+
+//     var user_image = document.createElement('div');
+//     user_image.className = 'user-image roundImg';
+//     var user_image_url = document.createElement('img');
+//     user_image_url.src = publication_json.utilisateur.photoURL;
+//     user_image_url.alt = 'photo utilisateur';
+//     user_image.appendChild(user_image_url);
+//     user_name.appendChild(texte_user_name);
+//     user.appendChild(user_name);
+//     user.appendChild(user_image);
+
+//     publication_description.appendChild(description);
+//     publication_description.appendChild(publication_date);
+//     publication_description.appendChild(user);
+
+//     publication-publication_infos.appendChild(publication_description);
+
+
+//     publication.appendChild(publication_image);
+//     publication.appendChild(publication_infos);
+
+//     //AUTRES APPEND
+//     modal.appendChild(publication);
+// }

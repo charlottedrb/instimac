@@ -9,11 +9,6 @@
 </head>
 <body>
     <div id="affichage"></div>
-    <div class="modal" id="processingModal-embed">
-        <span class="closeModal" onkeypress="if(event.which == 27){ exit(document.getElementById('processingModal-embed')); }"
-        onclick="exit();">quitter &times;</span>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/WbCuYdQ6sQw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="processingModal-video" class="modal-content_embed"></iframe>
-    </div>
 
     <?php include('includes/scripts.php'); ?>
 </body>

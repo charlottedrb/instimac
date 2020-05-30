@@ -1,15 +1,13 @@
+#affichage .fil {
+  width: 100%;
+}
+
 #affichage .fil .event .container-event {
   padding-left: 1.5rem;
 }
 
 #affichage .fil .event .container-event .event-name {
   width: 60%;
-}
-
-#affichage .fil .event .container-event .event-name a {
-  color: black;
-  font-weight: bold;
-  text-decoration: none;
 }
 
 #affichage .fil .event-date {
@@ -41,6 +39,9 @@
     padding: 0 2rem;
     height: 100vh;
     overflow-x: auto;
+  }
+  #affichage .fil .header {
+    width: 100%;
   }
   #affichage .fil .event {
     position: relative;
