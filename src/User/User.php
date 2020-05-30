@@ -160,7 +160,8 @@ class User
     {
         $values = ['u_email' => $this->email];
         $this->database->where($values);
-        if ($this->database->select(self::TABLE, ['u_id'], TRUE) !== FALSE) return true;
+        $data = $this->database->select(self::TABLE, ['u_id'], TRUE);
+        if ( $data !== FALSE && !empty($data)) return true;
         return FALSE;
     }
 
@@ -171,7 +172,7 @@ class User
         $this->database->where($where);
         $data = $this->database->select(self::TABLE, FALSE, TRUE);
 
-        if ($data !== FALSE) {
+        if ($data !== FALSE && !empty($data)) {
 
             $data = $data[0];
 
@@ -280,7 +281,8 @@ class User
     public function getAll($where = [])
     {
         $users = [];
-        if ($data = $this->database->select(self::TABLE, FALSE, $where)) {
+        $data = $this->database->select(self::TABLE, FALSE, $where);
+        if ( $data !== FALSE && !empty($data)) {
 
             foreach ($data as $user) {
                 $users[] = [

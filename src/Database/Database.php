@@ -22,7 +22,7 @@ class Database
     private $_params = [];
     private $_where = [];
 
-    private $_logEnabled = TRUE;
+    private $_logEnabled = FALSE;
     private $_logCount = 0;
 
     /**

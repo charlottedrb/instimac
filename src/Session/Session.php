@@ -57,12 +57,10 @@ class Session
 
     private function checkToken()
     {
-        var_dump($_COOKIE);
         if (!empty($_COOKIE[self::COOKIE_TOKEN_NAME])) {
             $securedToken = Sanitize::sanitize($_COOKIE[self::COOKIE_TOKEN_NAME]);
             if ($securedToken === $this->token) return true;
         }
-        echo 'COOKIE NOT HERRRE';
         return false;
     }
 
