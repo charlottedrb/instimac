@@ -804,7 +804,7 @@ function groupeSidebar(){
 //     //PUBLICATION
 //     var publication = document.createElement('div');
 //     publication.className = 'publication modal-content';
-
+    
 //     //IMAGE
 //     var publication_image = document.createElement('div');
 //     publication_image.className = 'publication-image';
@@ -823,7 +823,7 @@ function groupeSidebar(){
 //     var description = document.createElement('p');
 //     var texte_description = document.createTextNode(publication_json.description);
 //     description.appendChild(texte_description);
-
+    
 //     //DATE
 //     var publication_date = document.createElement('div');
 //     publication_date.className = 'publication-date';
