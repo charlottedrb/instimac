@@ -289,8 +289,26 @@ h1 {
 }
 
 .event-name {
+  position: relative;
   font-size: 2.5rem;
-  width: 60%;
+  font-weight: bold;
+}
+
+.event-name:before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 10px;
+  margin: 5px 0 0;
+  background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
+  -webkit-transition: width 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out;
+}
+
+.event-name:hover:before {
+  width: 100%;
 }
 
 .event-date {
@@ -315,7 +333,6 @@ h1 {
         -ms-flex-align: center;
             align-items: center;
     width: 100%;
-    height: 100%;
   }
   .event-name {
     font-size: 4rem;
@@ -335,7 +352,7 @@ h1 {
   height: 50vh;
 }
 
-.form-container form {
+form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -346,7 +363,7 @@ h1 {
           justify-content: center;
 }
 
-.form-container form input {
+form input {
   margin-bottom: 1rem;
   padding: 0.5rem;
   height: 1.2rem;
@@ -358,16 +375,209 @@ h1 {
 }
 
 @media (min-width: 576px) {
-  .form-container form input {
+  form input {
     width: 100%;
   }
 }
 
-.form-container p {
+p {
   color: white;
   text-align: center;
 }
 
-.form-container p a {
+p a {
   color: white;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.modal-span {
+  position: relative;
+  color: white;
+  font-weight: bold;
+  -webkit-transition: background-size 0.25s ease-in;
+  transition: background-size 0.25s ease-in;
+  text-decoration: none;
+}
+
+.modal-span:before {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 0;
+  height: 5px;
+  margin: 5px 0 0;
+  background-color: white;
+  -webkit-transition: width 0.5s ease-in-out;
+  transition: width 0.5s ease-in-out;
+}
+
+.modal-span:hover {
+  cursor: pointer;
+}
+
+.modal-span:hover:before {
+  width: 100%;
+}
+
+.modal-content {
+  margin: auto;
+  display: block;
+  max-height: 80vh;
+  width: auto;
+  -webkit-animation: 0.5s ease-in-out zoomIn,  0.5s ease-in-out fadeIn;
+          animation: 0.5s ease-in-out zoomIn,  0.5s ease-in-out fadeIn;
+}
+
+@-webkit-keyframes zoomIn {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content_embed {
+  margin: auto;
+  display: block;
+  -webkit-animation: 0.5s ease-in-out zoomIn,  0.5s ease-in-out fadeIn;
+          animation: 0.5s ease-in-out zoomIn,  0.5s ease-in-out fadeIn;
+}
+
+@keyframes zoomIn {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal .closeModal {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.modal .closeModal:hover {
+  color: lightblue;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal #caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  text-align: center;
+  color: lightgray;
+  padding: 10px 0;
+  height: 150px;
+}
+
+.actions {
+  position: absolute;
+  top: 5rem;
+  right: 15rem;
+}
+
+.actions .icon {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: 1rem;
+}
+
+.actions .icon:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.actions .icon:hover {
+  cursor: pointer;
+}
+
+.actions .icon:hover:after {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s ease-in;
+  transition: opacity 0.3s ease-in;
+}
+
+.actions .icon-img {
+  position: absolute;
+  width: 1rem;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  -webkit-filter: invert(100%);
+          filter: invert(100%);
+  z-index: 15;
+}
+
+.actions-form {
+  display: block;
+  width: 30rem;
 }

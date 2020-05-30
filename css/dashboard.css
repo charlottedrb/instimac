@@ -32,9 +32,13 @@
             flex-grow: 1;
   }
   .container-index .fil {
-    -webkit-box-flex: 4;
-        -ms-flex-positive: 4;
-            flex-grow: 4;
+    -webkit-box-flex: 6;
+        -ms-flex-positive: 6;
+            flex-grow: 6;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -44,10 +48,10 @@
         -ms-flex-align: center;
             align-items: center;
     padding: 0 2rem;
-    height: 100vh;
     overflow: auto;
   }
   .container-index .fil .event {
+    position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -56,8 +60,6 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    width: 100%;
-    height: 100%;
   }
   .container-index .fil .event .container-event {
     -webkit-box-flex: 0;
@@ -66,9 +68,7 @@
     padding-left: 0;
   }
   .container-index .fil .event .container-event .event-name {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 10%;
-            flex: 0 0 10%;
+    width: 50%;
   }
   .container-index .fil .event .container-event .event-name a {
     position: relative;
@@ -93,10 +93,7 @@
   }
   .container-index .fil .event-date {
     position: static;
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 20%;
-            flex: 0 0 20%;
     font-size: 8rem;
-    width: 100%;
+    width: 20%;
   }
 }

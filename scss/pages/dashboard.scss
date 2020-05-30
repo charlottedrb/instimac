@@ -34,7 +34,6 @@
                 text-align: center;
             }
         }
-
     }
     
     @include lg{
@@ -45,28 +44,26 @@
         }
 
         .fil{
-            flex-grow: 4;
+            flex-grow: 6;
+            flex-direction: column;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             padding: 0 2rem;
-            height: 100vh;
             overflow: auto;
 
             .event{
+                position: relative;
                 display: flex;
                 flex-wrap: wrap;
                 align-items: center;
-                width: 100%;
-                height: 100%;
 
                 .container-event{
                     flex: 0 0 80%;
-                    padding-left: 0;                    
+                    padding-left: 0;                  
                     
                     #{$this}-name{
-                        flex: 0 0 10%;
-
+                        width: 50%;
                         a{
                             position: relative;
                             color: black;
@@ -96,9 +93,8 @@
 
                 &-date{
                     position: static;
-                    flex: 0 0 20%;
                     font-size: 8rem;
-                    width: 100%;
+                    width: 20%
                 }
             }
         }
