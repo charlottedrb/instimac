@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../includes.php';
+require_once '../../src/includes-api.php';
 
 use Commentaire\Commentaire;
 use Sanitize\Sanitize;
@@ -15,20 +15,19 @@ if (Sanitize::checkEmptyFields($_POST, ['publication-id', 'contenu'])) {
     // --------------- PROCESSING THE REQUEST------------------------
 
     $commentaire = new Commentaire($db);
-    $commentaire->texte = $secured['contenu'];
-    //$commentaire->idUt = idUt;
-    $commentaire->idPublication = $secured['publication-id'];
 
+    if ($commentaire->set($_SESSION['user']->id, $secured['publication-id'], $secured['contenu']) !== FALSE) {
 
-    if ($commentaire->ajout()) {//action a faire
-
-        http_response_code(200);//envoie reponse
+        http_response_code(200);
         echo json_encode(
             [
                 'id' => $commentaire->id,
-                'date' => $commentaire->date,
+                'date' => $commentaire->created,
                 'contenu' => $commentaire->texte,
-                'utilisateur' => ['photoURL','nom']
+                'utilisateur' => [
+                    'photoURL' => './img/default-user.jpg',
+                    'nom' => $_SESSION['user']->name . ' ' . $_SESSION['user']->surname,
+                ]
             ]
         );
 
@@ -40,11 +39,6 @@ if (Sanitize::checkEmptyFields($_POST, ['publication-id', 'contenu'])) {
     // --------------- END - PROCESSING THE REQUEST------------------------
 
 } else {
-
-        http_response_code(400);
-        echo json_encode('Missing Arguments');
-
-        /* http_response_code(401);
-        echo json_encode('Please login to use our services'); */
-
+    http_response_code(400);
+    echo json_encode('Missing Arguments');
 }

@@ -33,7 +33,8 @@ class File
     public $userId = NULL;
 
     private $maxSize = FALSE;
-    private $forbiddenExtensions = array('htaccess', 'php', 'js');
+    private $_forbiddenExtensions = ['htaccess', 'php', 'js'];
+    private $_authorisedExtensions = ['jpg', 'png', 'gif'];
 
     public function __construct(Database &$database)
     {
@@ -119,7 +120,7 @@ class File
         if ($this->idToURL() === FALSE) return FALSE;
         $this->_log(__METHOD__ . "OK idTOURL");
 
-        if ($this->getContentById() === FALSE) return FALSE;
+        if ($this->getContent() === FALSE) return FALSE;
         $this->_log(__METHOD__ . "OK getContentById");
 
         return TRUE;
@@ -220,7 +221,9 @@ class File
      */
     private function _checkAuthorisedExtension($extension)
     {
-        if (in_array($extension, $this->forbiddenExtensions)) return FALSE;
+        $extension = strtolower($extension);
+        if (!empty($this->_authorisedExtensions) && !in_array($extension, $this->_authorisedExtensions)) return FALSE;
+        if (in_array($extension, $this->_forbiddenExtensions)) return FALSE;
         $this->_log(__METHOD__ . ' ' . "Autorized OK");
         return TRUE;
     }
@@ -351,16 +354,16 @@ class File
         return $_SERVER['SERVER_NAME'] . '/api/publication/get-photo.php?id=' . $this->id;
     }
 
-    public function getPath()
-    {
-        return $this->_basePath() . DIRECTORY_SEPARATOR . $this->serverPath . DIRECTORY_SEPARATOR . $this->serverName;
-    }
-
     public function getContent()
     {
         $path = $this->getPath();
-        if( !file_exists($path) ) return NULL;
+        if (!file_exists($path)) return NULL;
         return file_get_contents($path);
+    }
+
+    public function getPath()
+    {
+        return $this->_basePath() . DIRECTORY_SEPARATOR . $this->serverPath . DIRECTORY_SEPARATOR . $this->serverName;
     }
 
     function __destruct()

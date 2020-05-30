@@ -16,10 +16,10 @@ if (Sanitize::checkEmptyFields($_GET, ['publication'])) {
 
     $reagir = new Reagir($db);
 
-    if ($reagir->getCount($secured['publication'])) {
+    if ($reagir->getCount($secured['publication']) !== FALSE ) {
 
         http_response_code(200);
-        echo json_encode(['love' => $reagir->count]);
+        echo json_encode(['love' => (int)$reagir->count]);
 
     } else {
         http_response_code(500);

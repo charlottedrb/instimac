@@ -16,11 +16,11 @@ class Publication
     public $database = NULL;
     public $id;
     public $date;
-    public $lieu;
     public $description;
     public $groupeId;
     public $photoId;
     public $utilisateurId;
+    public $utilisateurName;
     public $hide = FALSE;
 
     public function __construct(Database &$database)
@@ -34,7 +34,6 @@ class Publication
         $sql = 'CREATE TABLE IF NOT EXISTS ' . self::TABLE . '(
             p_id INT NOT NULL AUTO_INCREMENT, 
             p_date DATETIME NOT NULL, 
-            p_lieu VARCHAR(255),
             p_description VARCHAR(255) NULL,
             f_id INT NULL,
             u_id INT NULL,
@@ -46,31 +45,17 @@ class Publication
         return $this->database->exec($sql);
     }
 
-    public function test()
-    {
-        if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', 2, TRUE) === FALSE) return FALSE;
-        if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', 3, TRUE) === FALSE) return FALSE;
-        if ($this->set('Copernic H représente', 'Belle description, lisible en tout point', 4, TRUE) === FALSE) return FALSE;
-        if ($this->getById() === FALSE) return FALSE;
-        if ($this->getById($this->id) === FALSE) return FALSE;
-        if ($this->update() === FALSE) return FALSE;
-        if ($this->delete() === FALSE) return FALSE;
-        return TRUE;
-    }
-
-    public function set($lieu, $description, $groupeId, $utilisateurId, $photoId = NULL, $hide = FALSE)
+    public function set($description, $groupeId, $utilisateurId, $photoId = NULL, $hide = FALSE)
     {
         $this->date = date('Y-m-d H:i:s');
-        $this->lieu = $lieu;
         $this->description = $description;
-        $this->groupeId = $groupeId;
-        $this->photoId = $photoId;
-        $this->utilisateurId = $utilisateurId;
+        $this->groupeId = (int)$groupeId;
+        $this->photoId = (int)$photoId;
+        $this->utilisateurId = (int)$utilisateurId;
         $this->hide = $hide;
 
         $fields = [
             'p_date',
-            'p_lieu',
             'p_description',
             'p_hide',
             'g_id',
@@ -80,7 +65,6 @@ class Publication
 
         $values = [
             $this->date,
-            $this->lieu,
             $this->description,
             $this->hide,
             $this->groupeId,
@@ -92,15 +76,17 @@ class Publication
 
             $where = [
                 'p_date' => $this->date,
-                'p_lieu' => $this->lieu,
                 'p_description' => $this->description,
                 'p_hide' => $this->hide,
+                'g_id' => $this->groupeId,
+                'u_id' => $this->utilisateurId,
+                'f_id' => $this->photoId,
             ];
 
-            $data = $this->database->select(self::TABLE, ['p_id'], $where);
+            $this->database->where($where);
+            $data = $this->database->select(self::TABLE);
 
             if ($data !== FALSE && !empty($data)) {
-
                 $data = $data[0];
                 $this->id = (int)$data['p_id'];
                 return TRUE;
@@ -113,18 +99,22 @@ class Publication
     {
         if ($id) $this->id = (int)$id;
 
-        $this->database->where(['p_id' => $this->id]);
-        $data = $this->database->select(self::TABLE);
+        $sql = 'SELECT ' . self::TABLE . '.*, utilisateurs.u_id, utilisateurs.u_prenom, utilisateurs.u_nom FROM photos
+        JOIN utilisateurs ON ' . self::TABLE . '.u_id = utilisateurs.u_id WHERE p_id=? ORDER BY p_date';
 
-        if ($data !== FALSE && !empty($data)) {
+        $this->database->addParam($this->id);
+        $data = $this->database->process($sql);
+
+        if (!empty($data)) {
+
             $data = $data[0];
             $this->date = $data['p_date'];
-            $this->lieu = $data['p_lieu'];
             $this->description = $data['p_description'];
             $this->hide = $data['p_hide'];
             $this->photoId = $data['f_id'];
             $this->groupeId = $data['g_id'];
             $this->utilisateurId = $data['u_id'];
+            $this->utilisateurName = $data['u_prenom'] . ' ' . $data['u_nom'];
             return TRUE;
         }
         return FALSE;
@@ -133,13 +123,10 @@ class Publication
     public function update()
     {
         $values = [
-            'p_date' => $this->date,
-            'p_lieu' => $this->lieu,
             'p_description' => $this->description,
-            'p_hide' => $this->hide,
-            'f_id' => $this->photoId,
-            'g_id' => $this->groupeId,
-            'u_id' => $this->utilisateurId,
+            'f_id' => (int)$this->photoId,
+            'g_id' => (int)$this->groupeId,
+            'u_id' => (int)$this->utilisateurId,
         ];
 
         $where = ['p_id' => $this->id];
@@ -176,12 +163,11 @@ class Publication
                 $results[] = [
                     'id' => (int)$row['p_id'],
                     'date' => $row['p_date'],
-                    'lieu' => $row['p_lieu'],
                     'description' => $row['p_description'],
                     'photoURL' => $file->idToURL($row['f_id']),
                     'utilisateur' => [
                         'photoURL' => './img/default-user.jpg',
-                        'nom' => $row['u_prenom'].' '.$row['u_nom'],
+                        'nom' => $row['u_prenom'] . ' ' . $row['u_nom'],
                     ],
                 ];
             }

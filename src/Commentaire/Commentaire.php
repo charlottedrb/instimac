@@ -7,7 +7,6 @@
 //espace de nom ou "namespace" correspond au nom du dossier Parent.
 namespace Commentaire;
 
-
 use Database\Database;
 
 class Commentaire
@@ -38,7 +37,7 @@ class Commentaire
                 c_id     Int  Auto_increment  NOT NULL ,
                 c_date   Datetime NOT NULL ,
                 c_texte  Varchar (242) NOT NULL ,
-                c_cacher Bool NOT NULL ,
+                c_cacher Bool NOT NULL,
                 p_id     Int NOT NULL,
                 u_id     Int NOT NULL
                 ,CONSTRAINT commentaire_PK PRIMARY KEY (c_id)
@@ -50,7 +49,7 @@ class Commentaire
         return FALSE;
     }
 
-    public function getTabComPhotoDateCoissant($photoId)
+    public function getMultiple($photoId)
     {
         $sql = 'SELECT commentaires.c_id AS c_id, 
                commentaires.c_date AS c_date, 
@@ -58,6 +57,7 @@ class Commentaire
                commentaires.c_cacher AS c_cacher, 
                commentaires.p_id AS p_id, 
                commentaires.u_id AS u_id, 
+               utilisateurs.u_prenom AS u_prenom,
                utilisateurs.u_nom AS u_nom  
         FROM commentaires JOIN utilisateurs ON commentaires.u_id = utilisateurs.u_id WHERE p_id=? ORDER BY c_date';
 
@@ -69,12 +69,12 @@ class Commentaire
         if ($data !== FALSE && !empty($data)) {
             foreach ($data as $value) {
                 $commentaires[] = [
-                    'id' => $data['c_id'],
-                    'date' => $data['c_date'],
-                    'contenu' => $data['c_texte'],
+                    'id' => $value['c_id'],
+                    'date' => $value['c_date'],
+                    'contenu' => $value['c_texte'],
                     'utilisateur' => [
-                        'id' => $data['u_id'],
-                        'nom' => $data['u_nom'],
+                        'id' => $value['u_id'],
+                        'nom' => $value['u_prenom'] . ' ' . $value['u_nom'],
                     ]
                 ];
             }
@@ -85,16 +85,54 @@ class Commentaire
 
     public function set($u_id, $p_id, $c_texte)
     {
-        $fields = ['c_date', 'c_texte', 'c_cacher', 'p_id', 'u_id'];
-        $values = [date('Y-m-d H:i:s'), $c_texte, FALSE, $p_id, $u_id];
+        $this->created = date('Y-m-d H:i:s');
+        $this->utilisateurId = $u_id;
+        $this->photoId = $p_id;
+        $this->texte = $c_texte;
 
-        if ($this->database->insert(self::TABLE, $fields  ,$values  ) === FALSE) return FALSE;
-        return TRUE;
+        $fields = [
+            'c_date',
+            'c_texte',
+            'c_cacher',
+            'p_id',
+            'u_id'
+        ];
+
+        $values = [
+            $this->created,
+            $c_texte,
+            FALSE,
+            $p_id,
+            $u_id
+        ];
+
+        if ($this->database->insert(self::TABLE, $fields, $values) !== FALSE) {
+
+            $where = [
+                'c_date' => $this->created,
+                'c_texte' => $this->texte,
+                'p_id' => $this->photoId,
+            ];
+
+            $this->database->where($where);
+            $data = $this->database->select(self::TABLE);
+
+            if (!empty($data)) {
+                $this->id = (int)$data[0]['c_id'];
+                return TRUE;
+            }
+        }
+        return FALSE;
     }
 
-    public function delete($commentaireId)
+    public function delete($commentaireId, $userId = FALSE)
     {
-        return $this->database->delete(self::TABLE, ['c_id' => $commentaireId]);
+        if ($userId) {
+            $this->utilisateurId = (int)$userId;
+            return $this->database->delete(self::TABLE, ['c_id' => $commentaireId, 'u_id' => $this->utilisateurId]);
+        } else {
+            return $this->database->delete(self::TABLE, ['c_id' => $commentaireId]);
+        }
     }
 
     public function __destruct()
@@ -102,13 +140,13 @@ class Commentaire
         $this->database = NULL;
     }
 
-    public function afficher($tabCom)
+    public function afficher($commentaires)
     {
         $affichage = '<div class="commentaire">';
-        if ($tabCom == FALSE) {
+        if ($commentaires == FALSE) {
             $affichage .= 'il n\'y a pas de commentaire';
         } else {
-            foreach ($tabCom as $commentaire) {
+            foreach ($commentaires as $commentaire) {
                 if ($commentaire['c_cacher'] == FALSE) {
                     $affichage .=
                         '<div class="nomUtilisateurCommentaire">' . $commentaire['u_nom'] . '</div>'

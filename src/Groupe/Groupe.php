@@ -32,7 +32,7 @@ class Groupe
      */
     public function init()
     {
-        $sql = 'CREATE TABLE IF NOT EXISTS groupes(
+        $sql = 'CREATE TABLE IF NOT EXISTS groupes (
         g_id            Int  Auto_increment  NOT NULL,
         g_nom           VARCHAR (50) NOT NULL,
         g_lieu          Varchar (255) NULL,
@@ -40,26 +40,10 @@ class Groupe
         g_cacher        BOOLEAN NULL,
         u_id            INT NULL
 	    ,CONSTRAINT tableau_PK PRIMARY KEY (g_id)
-	    ,CONSTRAINT tableau_utilisateur_FK FOREIGN KEY (u_id) REFERENCES utilisateurs(u_id)
+	    /* ,CONSTRAINT tableau_utilisateur_FK FOREIGN KEY (u_id) REFERENCES utilisateurs(u_id) */
         )ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
         return $this->database->exec($sql);
-    }
-
-    /**
-     * Test the class
-     * @return bool
-     */
-    public function test()
-    {
-        if ($this->set('IMAC1', 'COpernicassoulet', '2020-05-23 12:21:00', 1, TRUE) === FALSE) return FALSE;
-        if ($this->set('Jeudimac', 'Trop de jus de fruits', '2020-05-23 12:21:00', 2, TRUE) === FALSE) return FALSE;
-        if ($this->getMultiple() === FALSE) return FALSE;
-        if ($this->getById($this->id) === FALSE) return FALSE;
-        if ($this->update('IMAC1', 'Coperevolution', '2020-05-23 12:21:00', TRUE) === FALSE) return FALSE;
-        if ($this->delete($this->id, $this->utilisateurId) === FALSE) return FALSE;
-
-        return TRUE;
     }
 
     /**
@@ -116,14 +100,12 @@ class Groupe
         if ($data !== FALSE && !empty($data)) {
 
             foreach ($data as $row) {
-                $groupe = new Groupe($this->database);
-                $groupe->id = (int)$row['g_id'];
-                $groupe->date = $row['g_date'];
-                $groupe->lieu = $row['g_lieu'];
-                $groupe->hide = (boolean)$row['g_cacher'];
-                $groupe->utilisateurId = (int)$row['u_id'];
-
-                $results[] = $groupe;
+                $results[] = [
+                    'id' => (int)$row['g_id'],
+                    'titre' => $row['g_nom'],
+                    'lieu' => $row['g_lieu'],
+                    'date' => $row['g_date'],
+                ];
             }
             return $results;
         }
@@ -175,7 +157,7 @@ class Groupe
      * @param bool $hide
      * @return bool
      */
-    public function update($nom = FALSE, $lieu = FALSE, $date = FALSE, $hide = FALSE)
+    public function update($nom , $lieu , $date, $hide = FALSE)
     {
         $this->nom = $nom;
         $this->lieu = $lieu;
@@ -191,7 +173,9 @@ class Groupe
 
         $where = ['g_id' => $this->id];
 
-        if ($this->database->update(self::TABLE, $values, $where) === FALSE) return FALSE;
+        $data = $this->database->update(self::TABLE, $values, $where);
+
+        if ( $data === FALSE ) return FALSE;
         return TRUE;
     }
 

@@ -55,31 +55,6 @@ class User
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;';
 
         if ($this->database->exec($req) === FALSE) return FALSE;
-
-        $columns = [
-            'u_prenom',
-            'u_nom',
-            'u_email',
-            'u_password',
-            'u_role',
-            'u_actif',
-            'u_date_creation',
-            'u_connection',
-        ];
-
-        $values = [
-            [
-                'Lola',
-                'Fakil',
-                'gregor.g12@gmail.com',
-                self::generatePass(self::_token(15)),
-                json_encode(['VISITOR']),
-                0,
-                date('Y-m-d H:i:s'),
-                date('Y-m-d H:i:s'),
-            ]
-        ];
-        if ($this->database->insert(self::TABLE, $columns, $values) === FALSE) return FALSE;
         return TRUE;
     }
 
@@ -139,7 +114,7 @@ class User
             $this->created,
         ];
 
-        if ($this->database->insert(self::TABLE, $columns, $values) === FALSE) return false;
+        if ($this->database->insert(self::TABLE, $columns, $values) === FALSE) return FALSE;
 
         $values = [
             'u_prenom' => $this->name,
@@ -147,9 +122,9 @@ class User
             'u_date_creation' => $this->created,
         ];
         $this->database->where($values);
-        $data = $this->database->select(self::TABLE, ['u_id'], TRUE);
+        $data = $this->database->select(self::TABLE, ['u_id']);
 
-        if ($data !== FALSE) {
+        if ($data !== FALSE && !empty($data)) {
             $this->id = $data[0]['u_id'];
             return TRUE;
         }
@@ -161,7 +136,7 @@ class User
         $values = ['u_email' => $this->email];
         $this->database->where($values);
         $data = $this->database->select(self::TABLE, ['u_id'], TRUE);
-        if ( $data !== FALSE && !empty($data)) return true;
+        if ($data !== FALSE && !empty($data)) return TRUE;
         return FALSE;
     }
 
@@ -194,6 +169,49 @@ class User
     public function checkPassword($raw, $hash)
     {
         return password_verify($raw, $hash);
+    }
+
+    public function get($id)
+    {
+        $this->database->where(['u_id' => $id]);
+        $data = $this->database->select(self::TABLE, FALSE, TRUE);
+        if ($data !== FALSE & !empty($data)) {
+
+            $data = $data[0];
+
+            $this->id = $data['u_id'];
+            $this->name = $data['u_prenom'];
+            $this->surname = $data['u_nom'];
+            $this->email = $data['u_email'];
+            $this->enabled = $data['u_actif'];
+            $this->level = json_decode($data['u_role']);
+            $this->created = $data['u_date_creation'];
+            $this->connected = $data['u_connection'];
+
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'surname' => $this->surname,
+                'email' => $this->email,
+                'enabled' => $this->enabled,
+                'level' => $this->level,
+                'created' => $this->created,
+                'connected' => $this->connected,
+            ];
+        }
+        return FALSE;
+    }
+
+    public function disable()
+    {
+        if ($this->database->update(self::TABLE, ['u_actif' => 0], ['u_id' => $this->id]) !== FALSE) return TRUE;
+        return FALSE;
+    }
+
+    public function enable()
+    {
+        if ($this->database->update(self::TABLE, ['u_actif' => 1], ['u_id' => $this->id]) !== FALSE) return TRUE;
+        return FALSE;
     }
 
     public function updatePassword($new)
@@ -247,42 +265,11 @@ class User
         return false;
     }
 
-    public function get($id)
-    {
-        $this->database->where(['u_id' => $id]);
-        $data = $this->database->select(self::TABLE, FALSE, TRUE);
-        if ($data !== FALSE & !empty($data)) {
-
-            $data = $data[0];
-
-            $this->id = $data['u_id'];
-            $this->name = $data['u_prenom'];
-            $this->surname = $data['u_nom'];
-            $this->email = $data['u_email'];
-            $this->enabled = $data['u_actif'];
-            $this->level = json_decode($data['u_role']);
-            $this->created = $data['u_date_creation'];
-            $this->connected = $data['u_connection'];
-
-            return [
-                'id' => $this->id,
-                'name' => $this->name,
-                'surname' => $this->surname,
-                'email' => $this->email,
-                'enabled' => $this->enabled,
-                'level' => $this->level,
-                'created' => $this->created,
-                'connected' => $this->connected,
-            ];
-        }
-        return FALSE;
-    }
-
     public function getAll($where = [])
     {
         $users = [];
         $data = $this->database->select(self::TABLE, FALSE, $where);
-        if ( $data !== FALSE && !empty($data)) {
+        if ($data !== FALSE && !empty($data)) {
 
             foreach ($data as $user) {
                 $users[] = [
@@ -299,18 +286,6 @@ class User
             return $users;
         }
         return false;
-    }
-
-    public function disable()
-    {
-        if ($this->database->update(self::TABLE, ['u_actif' => 0], ['u_id' => $this->id]) !== FALSE) return TRUE;
-        return FALSE;
-    }
-
-    public function enable()
-    {
-        if ($this->database->update(self::TABLE, ['u_actif' => 1], ['u_id' => $this->id]) !== FALSE) return TRUE;
-        return FALSE;
     }
 
     public function delete()

@@ -25,7 +25,10 @@ if (Sanitize::checkEmptyFields($_GET, ['id'])) {
                 'description' => $publication->description,
                 'photoURL',
                 'date' => $publication->date,
-                'utilisateur' => ['photoURL', 'nom']
+                'utilisateur' => [
+                    'photoURL' => './img/default-user.jpg',
+                    'nom' => $publication->utilisateurName,
+                ]
             ]
         );
 

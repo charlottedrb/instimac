@@ -8,9 +8,9 @@ use Sanitize\Sanitize;
 header('Content-Type: application/json; charset=UTF-8');
 
 // Check if params are sended
-if (Sanitize::checkEmptyFields($_GET, ['publication', 'reaction'])) {
+if (Sanitize::checkEmptyFields($_GET, ['publication'])) {
 
-    $secured = Sanitize::arrayFields($_GET, ['publication', 'reaction']);
+    $secured = Sanitize::arrayFields($_GET, ['publication']);
 
 // --------------- PROCESSING THE REQUEST------------------------
 
@@ -19,7 +19,7 @@ if (Sanitize::checkEmptyFields($_GET, ['publication', 'reaction'])) {
     if ($reagir->set(1, $secured['publication'], $_SESSION['user']->id) && $reagir->getCount($secured['publication'])) {
 
         http_response_code(200);
-        echo json_encode([ 'love' => $reagir->count]);
+        echo json_encode([ 'love' => (int)$reagir->count]);
 
     } else {
         http_response_code(500);

@@ -15,11 +15,11 @@ if (Sanitize::checkEmptyFields($_GET, ['groupe'])) {
 // --------------- PROCESSING THE REQUEST------------------------
 
     $publication = new publication($db);
-    $values = $publication->getMultiple($secured['groupe']);
+    $data = $publication->getMultiple($secured['groupe']);
 
-    if (!empty($values)) {
+    if (!empty($data)) {
         http_response_code(200);//envoie reponse
-        echo json_encode($values);
+        echo json_encode($data);
 
     } else {
         http_response_code(500);

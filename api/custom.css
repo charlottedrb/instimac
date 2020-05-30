@@ -1,0 +1,84 @@
+body {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.route {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background: white;
+}
+
+.url {
+  padding: 10px;
+  margin: 0;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.method {
+  padding: 5px;
+  margin-right: 10px;
+  font-size: 0.9em;
+  font-weight: bold;
+  background-color: lightblue;
+  border-radius: 5px;
+}
+
+.method-post {
+  background-color: rgba(188, 97, 38, 0.49);
+}
+
+.method-get {
+  background-color: rgba(120, 188, 28, 0.49);
+}
+
+.send, .receive {
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 5px;
+  width: 48%;
+  margin: 0.48%;
+  padding: 0 0 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: white;
+}
+.send p, .receive p {
+  margin: 10px;
+}
+
+.http {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  margin: 0 !important;
+}
+
+.data {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+pre, code, kbd {
+  background-color: lightblue;
+  color: black;
+  padding: 10px;
+  border: unset;
+  font-size: 1em;
+}
+
+pre {
+  display: block;
+  margin: 10px;
+}
+
+code {
+  display: block;
+}
+
+kbd {
+  padding: 2px 4px;
+}
+
+/*# sourceMappingURL=custom.css.map */

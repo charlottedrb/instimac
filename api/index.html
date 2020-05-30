@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" href="./webpack.css">
+	<link rel="stylesheet" href="./custom.css">
+</head>
+<body>
+
+<section style="max-width: 1000px;">
+
+	<div class="route">
+		<p class="url">./api/groupe/ajouter.php</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-post">POST</span>titre, lieu, date</p>
+
+			<form action="./groupe/ajouter.php" method="post" class="padding">
+				<input type="text" name="titre" value="Un super Groupe" class="input">
+				<input type="text" name="lieu" value="Un super lieu" class="input">
+				<input type="text" name="date" value="2016-06-12 12:23:23" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+    id: 21,
+    titre: "Jeudimac",
+    lieu: "Cpernic",
+    date: "2020-02-12 12:12:20",
+}</code></pre>
+		</div>
+	</div>
+
+
+	<div class="route">
+		<p class="url">./api/groupe/get.php?id=12</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>id</p>
+
+			<form action="./groupe/get.php" method="get" class="padding">
+				<input type="text" name="id" value="2" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+    id: 21,
+    titre: "Jeudimac",
+    lieu: "Cpernic",
+    date: "2020-02-12 12:12:20",
+}</code></pre>
+		</div>
+	</div>
+
+
+	<div class="route">
+		<p class="url">./api/groupe/get-all.php</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span></p>
+
+			<form action="./groupe/get-all.php" method="get" class="padding">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>[
+    {
+        id: 21,
+        titre: "",
+        lieu: "",
+        date: "2020-02-12 12:12:20",
+    },
+    {
+        id: 21,
+        titre: "",
+        lieu: "",
+        date: "2020-02-12 12:12:20",
+    },
+]</code></pre>
+		</div>
+	</div>
+
+
+	<div class="route">
+		<p class="url">./api/groupe/modifier.php</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-post">POST</span>id, titre, lieu, date</p>
+
+			<form action="./groupe/modifier.php" method="post" class="padding">
+				<input type="text" name="id" value="1" class="input">
+				<input type="text" name="titre" value="Un super Groupe MODIFIED" class="input">
+				<input type="text" name="lieu" value="Un super lieu MODIFIED" class="input">
+				<input type="text" name="date" value="2016-06-12 12:23:23" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+    id: 21,
+    titre: "Jeudimac",
+    lieu: "Cpernic",
+    date: "2020-02-12 12:12:20",
+}</code></pre>
+		</div>
+	</div>
+
+	<div class="route">
+		<p class="url">./api/groupe/supprimer.php?id=12</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>id</p>
+
+			<form action="./groupe/supprimer.php" method="get" class="padding">
+				<input type="text" name="id" value="2" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>"Supprimé"</code></pre>
+		</div>
+	</div>
+
+
+	<div class="route">
+		<p class="url">./api/publication/ajouter.php</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-post">POST</span>groupe, description</p>
+			<p><span class="method">FILES</span>photo</p>
+
+			<form action="./publication/ajouter.php" method="post" enctype="multipart/form-data" class="padding">
+				<input type="text" name="groupe" value="1" class="input">
+				<input type="text" name="description" value="Une description en etude forme" class="input">
+				<input type="file" name="photo" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+        id: 23,
+        description: "",
+        photoURL: "",
+        date: "2020-02-12 12:12:20",
+        utilisateur: {
+            photoURL:"",
+            nom: "",
+        }
+    }</code></pre>
+		</div>
+	</div>
+
+	<div class="route">
+		<p class="url">./api/publication/get-by-groupe.php?groupe=12&limite=4</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>groupe, limite</p>
+			<p>Limite est le nombre de photo max à afficher, 0 si toutes, sinon un nombre</p>
+
+			<form action="./publication/get-by-groupe.php" method="get" class="padding">
+				<input type="text" name="groupe" value="1" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>[
+    {
+        id: 23,
+        description: "",
+        photoURL: "",
+        utilisateur: {
+            photoURL:"",
+            nom: "",
+        }
+    },
+    {
+        id: 23,
+        description: "",
+        photoURL: "",
+        utilisateur: {
+            photoURL:"",
+            nom: "",
+        }
+    },
+]</code></pre>
+		</div>
+	</div>
+
+	<div class="route">
+		<p class="url">./api/publication/get.php?id=12</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>id</p>
+
+			<form action="./publication/get.php" method="get" class="padding">
+				<input type="text" name="id" value="1" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+        id: 23,
+        description: "",
+        photoURL: "",
+        date: "2020-02-12 12:12:20",
+        utilisateur: {
+            photoURL:"",
+            nom: "",
+        }
+    }</code></pre>
+		</div>
+	</div>
+
+	<div class="route">
+		<p class="url">./api/publication/get-photo.php?id=12</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>id</p>
+
+			<form action="./publication/get-photo.php" method="get" class="padding">
+				<input type="text" name="id" value="1" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">FILE MIME TYPE</span></p>
+		</div>
+	</div>
+
+	<div class="route">
+		<p class="url">./api/commentaire/ajouter.php</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-post">POST</span>publication-id, contenu</p>
+
+			<form action="./commentaire/ajouter.php" method="post"  class="padding">
+				<input type="text" name="publication-id" value="1" class="input">
+				<input type="text" name="contenu" value="Un commentaire sans équivoKe" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+        id: 23,
+        contenu: "blabla",
+        date: "2020-02-12 12:12:20",
+        utilisateur: {
+            photoURL: "",
+            nom: "",
+        }
+    }</code></pre>
+		</div>
+	</div>
+
+
+	<div class="route">
+		<p class="url">./api/commentaire/get-by-publication.php?publication-id=12</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>publication-id</p>
+
+			<form action="./commentaire/get-by-publication.php" method="get"  class="padding">
+				<input type="text" name="publication-id" value="1" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>[
+    {
+        id: 23,
+        contenu: "blabla",
+        date: "2020-02-12 12:12:20",
+        utilisateur: {
+            photoURL: "",
+            nom: "",
+        }
+    },
+    {
+        id: 23,
+        contenu: "blabla",
+        date: "2020-02-12 12:12:20",
+        utilisateur: {
+            photoURL: "",
+            nom: "",
+        }
+    },
+]</code></pre>
+		</div>
+	</div>
+
+
+	<div class="route">
+		<p class="url">./api/reagir/get-by-publication.php?publication=12</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>publication</p>
+
+			<form action="./reagir/get-by-publication.php" method="get"  class="padding">
+				<input type="text" name="publication" value="1" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+    love: 23
+}</code></pre>
+		</div>
+	</div>
+
+	<div class="route">
+		<p class="url">./api/reagir/ajouter.php?publication=12</p>
+		<div class="send">
+			<p class="http">Reçu</p>
+			<p><span class="method method-get">GET</span>publication</p>
+
+			<form action="./reagir/ajouter.php" method="get"  class="padding">
+				<input type="text" name="publication" value="1" class="input">
+				<button>Test route</button>
+			</form>
+
+		</div>
+		<div class="receive">
+			<p class="http">Réponse</p>
+			<p><span class="method">JSON</span></p>
+			<pre><code>{
+    love: 23
+}</code></pre>
+		</div>
+	</div>
+
+</section>
+
+</body>
+</html>

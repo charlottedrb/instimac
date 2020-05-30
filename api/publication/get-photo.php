@@ -19,7 +19,7 @@ if (Sanitize::checkEmptyFields($_GET, ['id'])) {
     if ($file->getById($secured['id'])) {
 
         http_response_code(200);
-        header('Content-Type: ' . $file->mime . '; charset=UTF-8');
+        header('Content-Type: ' . $file->mime . ';');
         echo $file->getContent();
         exit;
 

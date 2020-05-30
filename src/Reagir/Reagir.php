@@ -38,12 +38,6 @@ class Reagir
         return $this->database->exec($sql);
     }
 
-    public function test()
-    {
-        if ($this->set(1, 3, 1) === FALSE) return FALSE;
-        return TRUE;
-    }
-
     /**
      * Set une réaction dans la base de donnée
      * @param $typeReaction
@@ -53,7 +47,8 @@ class Reagir
      */
     public function set($typeReaction, $photoId, $utilisateurId)
     {
-        return $this->database->insert(self::TABLE, ['p_id', 'u_id', 'r_type'], [$photoId, $utilisateurId, $typeReaction]);
+        if ($this->database->insert(self::TABLE, ['p_id', 'u_id', 'r_type'], [$photoId, $utilisateurId, $typeReaction]) === FALSE) return FALSE;
+        return TRUE;
     }
 
     /**
@@ -74,12 +69,12 @@ class Reagir
      */
     function getCount($photoId)
     {
-        $sql = 'SELECT r_type, COUNT(*) AS count FROM '.self::TABLE.' WHERE p_id=? GROUP BY r_type';
+        $sql = 'SELECT COUNT(r_id) AS count FROM ' . self::TABLE . ' WHERE p_id=? ';
         $this->database->addParam($photoId);
         $data = $this->database->process($sql);
 
         if ($data !== FALSE && !empty($data)) {
-            $data[0]['count'] = $this->count;
+            $this->count = $data[0]['count'];
             return TRUE;
         }
         return FALSE;
