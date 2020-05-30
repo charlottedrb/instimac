@@ -40,15 +40,14 @@
     display: flex;
 
         .sidebar{
-            flex-grow: 1;
+            width: 15rem;
         }
 
         .fil{
-            flex-grow: 6;
+            flex-grow: 3;
             flex-direction: column;
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
             padding: 0 2rem;
             overflow: auto;
 
@@ -83,6 +82,7 @@
                             }
     
                             &:hover{
+                                cursor: pointer;
                                 &:before{
                                     width: 100%;
                                 }

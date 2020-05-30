@@ -307,6 +307,10 @@ h1 {
   transition: width 0.5s ease-in-out;
 }
 
+.event-name:hover {
+  cursor: pointer;
+}
+
 .event-name:hover:before {
   width: 100%;
 }
@@ -506,13 +510,17 @@ p a {
   position: absolute;
   top: 15px;
   right: 35px;
+  padding: 1rem;
   color: #f1f1f1;
-  font-size: 40px;
+  font-size: 2rem;
   font-weight: bold;
+  border-radius: 1rem;
+  -webkit-transition: background 0.2s ease-in;
+  transition: background 0.2s ease-in;
 }
 
 .modal .closeModal:hover {
-  color: lightblue;
+  background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
   text-decoration: none;
   cursor: pointer;
 }
@@ -580,4 +588,9 @@ p a {
 .actions-form {
   display: block;
   width: 30rem;
+  color: white;
+}
+
+.actions-form input {
+  margin-top: 1rem;
 }

@@ -57,5 +57,10 @@ $icon-diameter : 2.5rem;
     &-form{
         display: block;
         width: 30rem;
+        color: white;
+
+        input {
+            margin-top: 1rem;
+        }
     }
 }

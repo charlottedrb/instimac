@@ -70,12 +70,15 @@
         position: absolute;
         top: 15px;
         right: 35px;
+        padding: 1rem;
         color: #f1f1f1;
-        font-size: 40px;
+        font-size: 2rem;;
         font-weight: bold;
+        border-radius: 1rem;
+        transition: background 0.2s ease-in;
 
         &:hover{
-            color: lightblue;
+            background: $gradient-lr;
             text-decoration: none;
             cursor: pointer;
         }

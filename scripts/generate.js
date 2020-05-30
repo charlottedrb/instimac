@@ -20,6 +20,24 @@ var groupes = [
         lieu: "Confiné",
         date: "2020-02-12 12:12:20",
     },
+    {
+        id: 23,
+        titre: "Gala",
+        lieu: "Confiné",
+        date: "2020-02-12 12:12:20",
+    },
+    {
+        id: 24,
+        titre: "Gala",
+        lieu: "Confiné",
+        date: "2020-02-12 12:12:20",
+    },
+    {
+        id: 24,
+        titre: "Gala",
+        lieu: "Confiné",
+        date: "2020-02-12 12:12:20",
+    },
 ];
 
 var publication = {
@@ -99,6 +117,73 @@ var evenement = {
     date: "2020-02-12 12:12:20"
 };
 
+// ------------- formulaires ------------------
+function formulaire_ajout_publication() {
+    var modal = document.createElement('div');
+    modal.className = 'modal';
+    var form = document.createElement('form');
+    form.className = 'actions-form modal-content';
+    modal.id = 'add_publication';
+
+    //FERMETURE DE LA MODAL
+    var closeModal = document.createElement('span');
+    closeModal.className = "closeModal";
+    var legend = document.createTextNode('Fermer')
+    closeModal.appendChild(legend);
+;    closeModal.onclick = function () {
+        var modal = document.getElementById('add_publication');
+        modal.style.display = "none";
+    }
+    
+
+    var formTitle = document.createElement('h3');
+    var formTitle_content = document.createTextNode('Ajouter une publication');
+    formTitle.appendChild(formTitle_content);
+
+    //INPUT DESCRIPTION
+    var description = document.createElement('input');
+    setAttributes(description, { 'type': 'text', 'name': 'description', 'id': 'description' });
+    //label
+    var description_label = document.createElement('LABEL');
+    var description_label_content = document.createTextNode("Description");
+    description_label.setAttribute('for', 'description');
+    description_label.appendChild(description_label_content);
+
+    //INPUT IMAGE
+    var url_img = document.createElement('input');
+    setAttributes(url_img, { 'type': 'file', 'name': 'url_img', 'id': 'url_img' });
+    //label
+    var url_img_label = document.createElement('LABEL');
+    var url_img_label_content = document.createTextNode("URL de l'image");
+    url_img_label.setAttribute('for', 'url_img');
+    url_img_label.appendChild(url_img_label_content);
+
+    //INPUT DATE
+    var date = document.createElement('input');
+    setAttributes(date, { 'type': 'date', 'name': 'date', 'id': 'date' });
+    //label
+    var date_label = document.createElement('LABEL');
+    var date_label_content = document.createTextNode("Date");
+    date_label.setAttribute('for', 'date');
+    date_label.appendChild(date_label_content);
+
+    //APPENDS 
+    modal.appendChild(closeModal);
+    modal.appendChild(form);
+    form.appendChild(formTitle);
+    form.appendChild(description);
+    form.appendChild(url_img);
+    form.appendChild(date);
+    form.insertBefore(description_label, description);
+    form.insertBefore(url_img_label, url_img);
+    form.insertBefore(date_label, date);
+
+    //AFFICHAGE
+    document.getElementById('affichage').appendChild(modal);
+}
+console.log("form");
+formulaire_ajout_publication();
+
 //AFFICHAGE INDIVIDUEL////////////////////////////////////////////////////////////////////
 function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actualité
     
@@ -112,6 +197,13 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     groupe_name.className = 'event-name';
     var texte_groupe_name = document.createTextNode(groupe_json.titre);
     groupe_name.appendChild(texte_groupe_name);
+    groupe_name.onclick = function () {
+        clearAffichage();
+        afficher_page_groupe();
+        afficher_titre_page_groupe(groupe);
+        afficher_toutes_les_publications(publications);
+        return;
+    }
 
     var groupe_date = document.createElement('div');
     groupe_date.className = 'event-date';
@@ -122,24 +214,34 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
 
     var groupe_actions = document.createElement('div');
     groupe_actions.className = 'actions';
-    var action_add = document.createElement('div'); 
-    action_add.className = 'add icon'; 
-    var action_modif = document.createElement('div');
-    action_modif.className = 'modif icon'; 
-    var action_delete = document.createElement('div');
-    action_delete.className = 'delete icon';
 
+    //ICONE D'AJOUT
+    var action_add = document.createElement('div'); 
+    action_add.className = 'add icon';
+    action_add.onclick = function () {
+        var modal = document.getElementById('add_publication');
+        modal.style.display = "block";
+    };
     var add_icon = document.createElement('img');
     add_icon.setAttribute('src', '../img/plus.png'); 
     add_icon.className = 'icon-img'; 
 
+    //ICONE DE MODIF
+    var action_modif = document.createElement('div');
+    action_modif.className = 'modif icon'; 
     var modif_icon = document.createElement('img');
     modif_icon.setAttribute('src', '../img/modif.png'); 
     modif_icon.className = 'icon-img'; 
 
+    //ICONE DE SUPPRESSION
+    var action_delete = document.createElement('div');
+    action_delete.className = 'delete icon';
     var delete_icon = document.createElement('img');
     delete_icon.setAttribute('src', '../img/delete.png'); 
     delete_icon.className = 'icon-img'; 
+
+
+
 
     //Ajout des icones à la div action 
     groupe_actions.appendChild(action_add);
@@ -324,10 +426,10 @@ function afficher_fil_actualite() {
 function afficher_page_groupe() {
     var header = document.createElement('header');
     header.className = 'header';
-    var publications = document.createElement('publications');
+    var publications = document.createElement('div');
     publications.className = 'publications';
-    document.getElementById('affichage').appendChild(header);
-    document.getElementById('affichage').appendChild(publications);
+    document.querySelector('.fil').appendChild(header);
+    document.querySelector('.fil').appendChild(publications);
 }
 
 function afficher_titre_page_groupe(groupe_json) {//marche
@@ -385,65 +487,13 @@ afficher_tous_les_groupes(groupes);
 // afficher_tous_les_commentaire(commentaires);
 //manque afficher réactions
 
-// ------------- formulaires ------------------
-function formulaire_ajout_publication(){
-    var form = document.createElement('form'); 
-    form.className = 'actions-form';
-
-    var formTitle = document.createElement('h3');
-    var formTitle_content = document.createTextNode('Ajouter une publication');
-    formTitle.appendChild(formTitle_content);
-
-    //INPUT DESCRIPTION
-    var description = document.createElement('input');
-    setAttributes(description, {'type': 'text', 'name': 'description', 'id': 'description'});
-    //label
-    var description_label = document.createElement('LABEL');
-    var description_label_content = document.createTextNode("Description");
-    description_label.setAttribute('for', 'description');
-    description_label.appendChild(description_label_content);
-    
-    //INPUT IMAGE
-    var url_img = document.createElement('input');
-    setAttributes(url_img, { 'type': 'file', 'name': 'url_img', 'id': 'url_img' });
-    //label
-    var url_img_label = document.createElement('LABEL');
-    var url_img_label_content = document.createTextNode("URL de l'image");
-    url_img_label.setAttribute('for', 'url_img');
-    url_img_label.appendChild(url_img_label_content);
-
-    //INPUT DATE
-    var date = document.createElement('input');
-    setAttributes(date, { 'type': 'date', 'name': 'date', 'id': 'date' });
-    //label
-    var date_label = document.createElement('LABEL');
-    var date_label_content = document.createTextNode("Date");
-    date_label.setAttribute('for', 'date');
-    date_label.appendChild(date_label_content);
-
-    //APPENDS 
-    form.appendChild(formTitle);
-    form.appendChild(description);
-    form.appendChild(url_img);
-    form.appendChild(date);
-    form.insertBefore(description_label, description);
-    form.insertBefore(url_img_label, url_img);
-    form.insertBefore(date_label, date);
-
-    //AFFICHAGE
-    document.getElementById('affichage').appendChild(form);
-}
-    
-    console.log('form');
-    formulaire_ajout_publication();
-
-
-// ------------- modal ------------------
-
-
-
+//Permet de paramétrer plusieurs attributs en même temps 
 function setAttributes(el, attrs) {
     for (var key in attrs) {
         el.setAttribute(key, attrs[key]);
     }
+}
+
+function clearAffichage(){
+    document.querySelector('.fil').innerHTML = "";
 }

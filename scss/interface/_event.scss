@@ -29,6 +29,7 @@
         }
 
         &:hover{
+            cursor: pointer;
             &:before{
                 width: 100%;
             }
