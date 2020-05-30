@@ -8,6 +8,6 @@
     <?php include('includes/styles.php'); ?>
 </head>
 <body>
-    
+    <div class="affichage"></div>
     <?php include('includes/scripts.php'); ?>
 </body>
