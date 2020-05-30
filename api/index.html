@@ -5,10 +5,41 @@
 	<title>Title</title>
 	<link rel="stylesheet" href="./webpack.css">
 	<link rel="stylesheet" href="./custom.css">
+	<script src="../scripts/ajax.js"></script>
 </head>
 <body>
 
 <section style="max-width: 1000px;">
+
+	<div class="route">
+		<p class="url">Testing JavaScript AJAX request</p>
+		<div class="send">
+			<p class="http">GET</p>
+			<pre><code id="get_test"></code></pre>
+		</div>
+		<div class="receive">
+			<p class="http">POST</p>
+			<pre><code id="post_test"></code></pre>
+		</div>
+	</div>
+
+	<script>
+
+        function displayInGet(value) {
+            document.getElementById('get_test').innerHTML = value;
+        }
+
+        function displayInPost(value) {
+            document.getElementById('post_test').innerHTML = value;
+        }
+
+        body = new FormData();
+        body.append('test', 1);
+
+        getRequest('./test/get.php', {test: 1}, displayInGet, displayInGet);
+        postRequest('./test/post.php', body, displayInPost, displayInPost);
+	</script>
+
 
 	<div class="route">
 		<p class="url">./api/groupe/ajouter.php</p>
@@ -263,7 +294,7 @@
 			<p class="http">Reçu</p>
 			<p><span class="method method-post">POST</span>publication-id, contenu</p>
 
-			<form action="./commentaire/ajouter.php" method="post"  class="padding">
+			<form action="./commentaire/ajouter.php" method="post" class="padding">
 				<input type="text" name="publication-id" value="1" class="input">
 				<input type="text" name="contenu" value="Un commentaire sans équivoKe" class="input">
 				<button>Test route</button>
@@ -292,7 +323,7 @@
 			<p class="http">Reçu</p>
 			<p><span class="method method-get">GET</span>publication-id</p>
 
-			<form action="./commentaire/get-by-publication.php" method="get"  class="padding">
+			<form action="./commentaire/get-by-publication.php" method="get" class="padding">
 				<input type="text" name="publication-id" value="1" class="input">
 				<button>Test route</button>
 			</form>
@@ -331,7 +362,7 @@
 			<p class="http">Reçu</p>
 			<p><span class="method method-get">GET</span>publication</p>
 
-			<form action="./reagir/get-by-publication.php" method="get"  class="padding">
+			<form action="./reagir/get-by-publication.php" method="get" class="padding">
 				<input type="text" name="publication" value="1" class="input">
 				<button>Test route</button>
 			</form>
@@ -352,7 +383,7 @@
 			<p class="http">Reçu</p>
 			<p><span class="method method-get">GET</span>publication</p>
 
-			<form action="./reagir/ajouter.php" method="get"  class="padding">
+			<form action="./reagir/ajouter.php" method="get" class="padding">
 				<input type="text" name="publication" value="1" class="input">
 				<button>Test route</button>
 			</form>
@@ -370,4 +401,7 @@
 </section>
 
 </body>
+
+<script src="../scripts/ajax.js"></script>
+
 </html>

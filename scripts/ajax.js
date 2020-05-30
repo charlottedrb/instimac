@@ -1,5 +1,8 @@
 function postRequest(URL, body, callBackSuccess, callBackError) {
-    var options = {method: 'post', body: body};
+    var options = {
+        method: 'post',
+        body: body
+    };
     sendAjaxRequest(URL, options, callBackSuccess, callBackError);
 }
 
@@ -13,6 +16,15 @@ function getRequest(URL, body, callBackSuccess, callBackError) {
     delete options.body;
     sendAjaxRequest(URL, options, callBackSuccess, callBackError);
 }
+
+/*
+function sendAfile(fileElement, URL, callBackSuccess, callBackError) {
+    var body = new FormData();
+    body.append('useless-value', 'no-because-multipart-boundary');
+    body.append('photo', file);
+    postRequest(URL, body, updateDisplay, updateDisplay);
+}
+*/
 
 function sendAjaxRequest(URL, options, callBackSuccess, callBackError) {
 
