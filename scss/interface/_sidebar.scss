@@ -9,7 +9,21 @@
 //////////////////////////////////////////////////////////////////////////
 
 .sidebar{
-    
+    position: relative; 
+
+    .actions{
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .icon{
+            transform: translate(-50%, -50%);
+            background: none;
+            border: 3px solid white;
+            margin-left: 0;
+        }
+    }
+
     .mois-selection{
         position: relative;
         width: 100%; 

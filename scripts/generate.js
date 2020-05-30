@@ -130,11 +130,10 @@ function formulaire_ajout_publication() {
     closeModal.className = "closeModal";
     var legend = document.createTextNode('Fermer')
     closeModal.appendChild(legend);
-;    closeModal.onclick = function () {
+    closeModal.onclick = function () {
         var modal = document.getElementById('add_publication');
         modal.style.display = "none";
-    }
-    
+    }    
 
     var formTitle = document.createElement('h3');
     var formTitle_content = document.createTextNode('Ajouter une publication');
@@ -181,8 +180,73 @@ function formulaire_ajout_publication() {
     //AFFICHAGE
     document.getElementById('affichage').appendChild(modal);
 }
+
+function formulaire_ajout_groupe() {
+    var modal = document.createElement('div');
+    modal.className = 'modal';
+    var form = document.createElement('form');
+    form.className = 'actions-form modal-content';
+    modal.id = 'add_groupe';
+
+    //FERMETURE DE LA MODAL
+    var closeModal = document.createElement('span');
+    closeModal.className = "closeModal";
+    var legend = document.createTextNode('Fermer')
+    closeModal.appendChild(legend);
+    closeModal.onclick = function () {
+        var modal = document.getElementById('add_groupe');
+        modal.style.display = "none";
+    }
+
+    var formTitle = document.createElement('h3');
+    var formTitle_content = document.createTextNode('Ajouter un évènement');
+    formTitle.appendChild(formTitle_content);
+
+    //INPUT TITRE
+    var titre = document.createElement('input');
+    setAttributes(titre, { 'type': 'text', 'name': 'titre', 'id': 'titre' });
+    //label
+    var titre_label = document.createElement('LABEL');
+    var titre_label_content = document.createTextNode("Titre");
+    titre_label.setAttribute('for', 'titre');
+    titre_label.appendChild(titre_label_content);
+
+    //INPUT IMAGE
+    var lieu = document.createElement('input');
+    setAttributes(lieu, { 'type': 'text', 'name': 'lieu', 'id': 'lieu' });
+    //label
+    var lieu_label = document.createElement('LABEL');
+    var lieu_label_content = document.createTextNode("Lieu");
+    lieu_label.setAttribute('for', 'lieu');
+    lieu_label.appendChild(lieu_label_content);
+
+    //INPUT DATE
+    var date = document.createElement('input');
+    setAttributes(date, { 'type': 'date', 'name': 'date', 'id': 'date' });
+    //label
+    var date_label = document.createElement('LABEL');
+    var date_label_content = document.createTextNode("Date");
+    date_label.setAttribute('for', 'date');
+    date_label.appendChild(date_label_content);
+
+    //APPENDS 
+    modal.appendChild(closeModal);
+    modal.appendChild(form);
+    form.appendChild(formTitle);
+    form.appendChild(titre);
+    form.appendChild(lieu);
+    form.appendChild(date);
+    form.insertBefore(titre_label, titre);
+    form.insertBefore(lieu_label, lieu);
+    form.insertBefore(date_label, date);
+
+    //AFFICHAGE
+    document.getElementById('affichage').appendChild(modal);
+}
+
 console.log("form");
 formulaire_ajout_publication();
+formulaire_ajout_groupe();
 
 //AFFICHAGE INDIVIDUEL////////////////////////////////////////////////////////////////////
 function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actualité
@@ -199,8 +263,9 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     groupe_name.appendChild(texte_groupe_name);
     groupe_name.onclick = function () {
         clearAffichage();
+        groupeSidebar();
         afficher_page_groupe();
-        afficher_titre_page_groupe(groupe);
+        afficher_titre_page_groupe(groupe_json);
         afficher_toutes_les_publications(publications);
         return;
     }
@@ -214,17 +279,6 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
 
     var groupe_actions = document.createElement('div');
     groupe_actions.className = 'actions';
-
-    //ICONE D'AJOUT
-    var action_add = document.createElement('div'); 
-    action_add.className = 'add icon';
-    action_add.onclick = function () {
-        var modal = document.getElementById('add_publication');
-        modal.style.display = "block";
-    };
-    var add_icon = document.createElement('img');
-    add_icon.setAttribute('src', '../img/plus.png'); 
-    add_icon.className = 'icon-img'; 
 
     //ICONE DE MODIF
     var action_modif = document.createElement('div');
@@ -240,16 +294,11 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     delete_icon.setAttribute('src', '../img/delete.png'); 
     delete_icon.className = 'icon-img'; 
 
-
-
-
     //Ajout des icones à la div action 
-    groupe_actions.appendChild(action_add);
     groupe_actions.appendChild(action_modif);
     groupe_actions.appendChild(action_delete);
 
     //Ajout des images aux icones
-    action_add.appendChild(add_icon);
     action_modif.appendChild(modif_icon);
     action_delete.appendChild(delete_icon);
 
@@ -382,6 +431,8 @@ function afficher_toutes_les_publications(publications) {
     for (let i = 0; i < publications.length; i++) {
         afficher_publication(publications[i]);
     }
+
+
 }
 
 function afficher_tous_les_commentaire(commentaires) {
@@ -403,19 +454,31 @@ function afficher_fil_actualite() {
     var container_index = document.createElement('div');
     container_index.className = "container-index";
 
+    //SIDEBAR
     var sidebar = document.createElement('div');
     sidebar.className = "sidebar";
     container_index.appendChild(sidebar);
 
-    var mois_selection = document.createElement('div');
-    mois_selection.className = "mois-selection";
-    sidebar.appendChild(mois_selection);
+    //AJOUT NOUVEL EVENT
+    var groupe_actions = document.createElement('div');
+    groupe_actions.className = 'actions';
 
-    var menu = document.createElement('ul');
-    menu.className = "menu";
-    menu.id = "menu";
-    mois_selection.appendChild(menu);
+    //ICONE D'AJOUT
+    var action_add = document.createElement('div');
+    action_add.className = 'add icon';
+    action_add.onclick = function () {
+        var modal = document.getElementById('add_groupe');
+        modal.style.display = "block";
+    };
+    var add_icon = document.createElement('img');
+    add_icon.setAttribute('src', '../img/plus.png');
+    add_icon.className = 'icon-img'; 
 
+    groupe_actions.appendChild(action_add);
+    action_add.appendChild(add_icon);
+    sidebar.appendChild(groupe_actions);
+
+    //FIL D'ACTU
     var fil = document.createElement('div');
     fil.className = "fil";
     container_index.appendChild(fil);
@@ -428,8 +491,19 @@ function afficher_page_groupe() {
     header.className = 'header';
     var publications = document.createElement('div');
     publications.className = 'publications';
+    var button = document.createElement('button');
+    button.className = 'return-button';
+    button.innerHTML = "Retour";
+    button.onclick = function() {
+        clearAffichage();
+        afficher_fil_actualite();
+        afficher_tous_les_groupes(groupes);
+    }
+
     document.querySelector('.fil').appendChild(header);
     document.querySelector('.fil').appendChild(publications);
+    document.querySelector('.fil').appendChild(button);
+    
 }
 
 function afficher_titre_page_groupe(groupe_json) {//marche
@@ -496,4 +570,27 @@ function setAttributes(el, attrs) {
 
 function clearAffichage(){
     document.querySelector('.fil').innerHTML = "";
+}
+
+function groupeSidebar(){
+    var sidebar = document.querySelector('.sidebar');
+
+    //AJOUT NOUVELLE PUBLICATION
+    var groupe_actions = document.createElement('div');
+    groupe_actions.className = 'actions';
+
+    //ICONE D'AJOUT
+    var action_add = document.createElement('div');
+    action_add.className = 'add icon';
+    action_add.onclick = function () {
+        var modal = document.getElementById('add_publication');
+        modal.style.display = "block";
+    };
+    var add_icon = document.createElement('img');
+    add_icon.setAttribute('src', '../img/plus.png');
+    add_icon.className = 'icon-img';
+
+    groupe_actions.appendChild(action_add);
+    action_add.appendChild(add_icon);
+    sidebar.appendChild(groupe_actions);
 }

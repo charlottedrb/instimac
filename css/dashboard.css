@@ -27,23 +27,20 @@
     display: flex;
   }
   .container-index .sidebar {
-    width: 15rem;
+    width: 25rem;
   }
   .container-index .fil {
     -webkit-box-flex: 3;
         -ms-flex-positive: 3;
             flex-grow: 3;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     padding: 0 2rem;
-    overflow: auto;
+    height: 100vh;
+    overflow-x: auto;
   }
   .container-index .fil .event {
     position: relative;
@@ -93,5 +90,21 @@
     position: static;
     font-size: 8rem;
     width: 20%;
+  }
+  .container-index .fil .return-button {
+    position: absolute;
+    top: 2rem;
+    right: 5rem;
+    width: 5rem;
+    height: 2rem;
+    color: white;
+    font-family: "Karla";
+    font-size: 1rem;
+    background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
+    border: none;
+    border-radius: 1rem;
+  }
+  .container-index .fil .return-button:hover {
+    cursor: pointer;
   }
 }

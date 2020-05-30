@@ -44,10 +44,14 @@
             opacity: .7;
         }
 
+        &:hover{
+            cursor: pointer;
+        }
+
         .user{
             &-name{
                 position: absolute; 
-                z-index: 100;
+                z-index: 10;
                 bottom: 1rem;
                 left: 1rem;
                 color: white;
@@ -91,6 +95,7 @@
                 &-name{
                     padding-left: 4rem;
                     position: absolute;
+                    color :#535353;
                 }
 
                 &-image{
