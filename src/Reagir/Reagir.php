@@ -41,8 +41,6 @@ class Reagir
     public function test()
     {
         if ($this->set(1, 3, 1) === FALSE) return FALSE;
-        //if ($this->getCount(1) === FALSE) return FALSE;
-        //if ($this->delete(1, 1) === FALSE) return FALSE;
         return TRUE;
     }
 
@@ -76,7 +74,7 @@ class Reagir
      */
     function getCount($photoId)
     {
-        $sql = 'SELECT r_type, COUNT(*) AS count FROM reagir WHERE p_id=? GROUP BY r_type';
+        $sql = 'SELECT r_type, COUNT(*) AS count FROM '.self::TABLE.' WHERE p_id=? GROUP BY r_type';
         $this->database->addParam($photoId);
         $data = $this->database->process($sql);
 

@@ -23,6 +23,7 @@ use Publication\Publication;
 use File\File;
 use Groupe\Groupe;
 use Reagir\Reagir;
+use Commentaire\Commentaire;
 
 // ------------------ PROCESS INIT & TESTING -------------------------
 
@@ -44,6 +45,9 @@ $test['Groupe-Test'] = $groupe->test();
 $publication = new Publication($db);
 $test['Publication-Table'] = $publication->init();
 $test['Publication-Test'] = $publication->test();
+
+$commentaires = new Commentaire($db);
+$test['Commentaire-Table'] = $commentaires->init();
 
 $reagir = new Reagir($db);
 $test['Reagir-Table'] = $reagir->init();

@@ -83,10 +83,10 @@ class Commentaire
         return $commentaires;
     }
 
-    public function set($u_id, $p_id, $c_date, $c_texte)
+    public function set($u_id, $p_id, $c_texte)
     {
         $fields = ['c_date', 'c_texte', 'c_cacher', 'p_id', 'u_id'];
-        $values = [date('Y-m-d H:i:s'), $c_texte, FALSE, $p_id, $c_texte];
+        $values = [date('Y-m-d H:i:s'), $c_texte, FALSE, $p_id, $u_id];
 
         if ($this->database->insert(self::TABLE, $fields  ,$values  ) === FALSE) return FALSE;
         return TRUE;
