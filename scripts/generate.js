@@ -520,7 +520,6 @@ function modal_detail_publication(publication_json){
     var texte_description = document.createTextNode(publication_json.description);
     description.appendChild(texte_description);
 
-
     //DATE
     var publication_date = document.createElement('div');
     publication_date.className = 'publication-date';
@@ -548,9 +547,7 @@ function modal_detail_publication(publication_json){
     publication_description.appendChild(user);
     publication_description.appendChild(description);
     publication_description.appendChild(publication_date);
-
-    publication - publication_infos.appendChild(publication_description);
-
+    publication_infos.appendChild(publication_description);
 
     publication.appendChild(publication_image);
     publication.appendChild(publication_infos);
@@ -561,10 +558,6 @@ function modal_detail_publication(publication_json){
     //AFFICHAGE
     document.getElementById('affichage').appendChild(modal);
 }
-
-
-
-afficher_tous_les_commentaires(commentaires);
 
 function afficher_commentaire(commentaire_json) { //affiche un commentaire
     var commentaires = document.createElement('div');
