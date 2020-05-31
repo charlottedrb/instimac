@@ -39,7 +39,7 @@ function generate_formulaire_ajout_publication() {
 
     //INPUT DESCRIPTION
     var description = document.createElement('input');
-    setAttributes(description, {'type': 'text', 'name': 'description', 'id': 'description'});
+    setAttributes(description, {'type': 'text', 'name': 'description', 'id': 'description', 'value': 'Soit un ingénieur Créatif'});
     //label
     var description_label = document.createElement('LABEL');
     var description_label_content = document.createTextNode("Description");
@@ -384,7 +384,7 @@ function afficher_publication_in_publicationList(publication_json) { //affiche l
 
     //modal_detail_publication(publication_json);
 
-    var publication = document.createElement('div');
+    /* var publication = document.createElement('div');
     publication.className = 'publication';
     publication.setAttribute('data-id', publication_json.id);
     publication.addEventListener("click", function () {
@@ -408,9 +408,9 @@ function afficher_publication_in_publicationList(publication_json) { //affiche l
     var texte_user_name = document.createTextNode(publication_json.utilisateur.nom);
     user_name.appendChild(texte_user_name);
     user.appendChild(user_name);
-    publication.appendChild(user);
+    publication.appendChild(user);*/
 
-    document.querySelector('.publications').appendChild(publication);
+    document.querySelector('.publications').appendChild(generatePublication(publication_json));
 }
 
 function modal_detail_publication(publication_json) {
