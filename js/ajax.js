@@ -12,7 +12,8 @@ function getRequest(URL, body, callBackSuccess, callBackError) {
         method: 'get',
         headers: {"Content-Type": "application/x-www-form-urlencoded"}
     };
-    URL += '?' + urlencoded(body);
+
+    if(body.length !== 0) URL += '?' + urlencoded(body);
     delete options.body;
     sendAjaxRequest(URL, options, callBackSuccess, callBackError);
 }

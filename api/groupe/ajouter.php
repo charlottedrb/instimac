@@ -11,6 +11,7 @@ header('Content-Type: application/json; charset=UTF-8');
 if (Sanitize::checkEmptyFields($_POST, ['titre', 'lieu', 'date'])) {
 
     $secured = Sanitize::arrayFields($_POST, ['titre', 'lieu', 'date']);
+    $secured['date'] .= ' 00:00:00';
 
 // --------------- PROCESSING THE REQUEST------------------------
 

@@ -61,7 +61,7 @@ class Groupe
         $this->date = $date;
         $this->utilisateurId = $utilisateurId;
         $this->hide = $hide;
-        $this->date = date('Y-m-d H:i:s');
+        $this->date = $date;
 
         $this->database->insert(self::TABLE,
             [
@@ -122,7 +122,6 @@ class Groupe
 
         $this->database->where(['g_id' => $this->id]);
         $data = $this->database->select(self::TABLE);
-        if ($this->delete(1, 1) === FALSE) return FALSE;
 
         if ($data !== FALSE & !empty($data)) {
 
@@ -157,7 +156,7 @@ class Groupe
      * @param bool $hide
      * @return bool
      */
-    public function update($nom , $lieu , $date, $hide = FALSE)
+    public function update($nom, $lieu, $date, $hide = FALSE)
     {
         $this->nom = $nom;
         $this->lieu = $lieu;
@@ -175,7 +174,7 @@ class Groupe
 
         $data = $this->database->update(self::TABLE, $values, $where);
 
-        if ( $data === FALSE ) return FALSE;
+        if ($data === FALSE) return FALSE;
         return TRUE;
     }
 

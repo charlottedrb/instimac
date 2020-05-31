@@ -188,12 +188,12 @@ body {
   width: auto;
 }
 
-.commentaires {
+.commentaire {
   position: relative;
   background-color: #f3f2f2;
 }
 
-.commentaires .commentaire {
+.commentaire .commentaire {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -201,30 +201,30 @@ body {
   border-bottom: none;
 }
 
-.commentaires .commentaire:last-child {
+.commentaire .commentaire:last-child {
   padding-bottom: 1rem;
 }
 
-.commentaires .commentaire .user-image {
+.commentaire .commentaire .user-image {
   width: 2rem;
   height: 2rem;
 }
 
-.commentaires .commentaire .user-name {
+.commentaire .commentaire .user-name {
   color: #535353;
 }
 
-.commentaires .commentaire-content {
+.commentaire .commentaire-content {
   width: 100%;
   padding-left: 1rem;
   color: #535353;
 }
 
-.commentaires .commentaire-content p {
+.commentaire .commentaire-content p {
   margin-bottom: 0.2rem;
 }
 
-.commentaires .commentaire-date {
+.commentaire .commentaire-date {
   color: #b3b3b3;
   text-align: right;
   font-size: 0.8rem;

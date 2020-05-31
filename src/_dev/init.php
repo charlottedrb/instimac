@@ -104,10 +104,10 @@ if (!empty($_FILES['file1'])) {
     $env['Publication-BIS-up'] = $publicationBis->update();
 
     $commentaire = new Commentaire($db);
-    $env['Commentaire-set-1'] = $commentaire->set($user->id, $publication->id, 'Very beautiful Comentaire');
+    $env['Commentaire-set-1'] = $commentaire->set($user->id, $publicationBis->id, 'Very beautiful Comentaire');
     $env['Commentaire-set-2'] = $commentaire->set($user->id, $publication->id, 'Very beautiful 2Comentaire');
     $env['Commentaire-set-3'] = $commentaire->set($user2->id, $publication->id, 'Very beautiful 3Comentaire');
-    $env['Commentaire-set-4'] = $commentaire->set($user->id, $publication->id, 'Very beautiful 4Comentaire');
+    $env['Commentaire-set-4'] = $commentaire->set($user->id, $publicationBis->id, 'Very beautiful 4Comentaire');
     $env['Commentaire-set-5'] = $commentaire->set($user2->id, $publication->id, 'Very beautiful Codffmentaire');
 
     $reaction = new Reagir($db);

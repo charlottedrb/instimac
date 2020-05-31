@@ -26,7 +26,7 @@
                     Publiée le 7 mai 2020.
                 </div>
             </div>
-            <div class="commentaires">
+            <div class="commentaire">
                 <div class="commentaire">
                     <div class="user">
                         <div class="user-name">

@@ -22,8 +22,8 @@ if (Sanitize::checkEmptyFields($_GET, ['groupe'])) {
         echo json_encode($data);
 
     } else {
-        http_response_code(500);
-        echo json_encode('Server Error');
+        http_response_code(200);
+        echo json_encode([]);
     }
 
 // --------------- END - PROCESSING THE REQUEST------------------------

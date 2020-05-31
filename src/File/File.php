@@ -351,7 +351,7 @@ class File
     public function idToURL($id = FALSE)
     {
         if ($id !== FALSE) $this->id = (int)$id;
-        return $_SERVER['SERVER_NAME'] . '/api/publication/get-photo.php?id=' . $this->id;
+        return './api/publication/get-photo.php?id=' . $this->id;
     }
 
     public function getContent()
