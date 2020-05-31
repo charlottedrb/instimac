@@ -16,7 +16,7 @@
 			height: 100vh;
 		}
 
-		.child{
+		.child {
 			margin: auto;
 		}
 
@@ -25,19 +25,16 @@
 </head>
 
 <body>
-
 <section class="parent">
-	
 	<div class="child">
 		<img src="img/logoIMAC.png" alt="" style="width: 50%;">
-		<h1>InstImac</h1>
-		<p><a href="login.php">Connectez-vous</a> <a href="register.php">Inscription</a> <a href="./api">Notre API</a></p>
+		<h1 style="margin-bottom: 10px; margin-top: 20px;">InstImac</h1>
+		<p>
+			<a href="login.php" class="btn-line">Connectez-vous</a>
+			<a href="register.php" class="btn-line">Inscription</a>
+			<a href="./api" class="btn-line">Notre API</a>
+		</p>
 	</div>
-	
 </section>
-
-<script src="./js/index.js"></script>
-<script src="./js/generate.js"></script>
-<script src="./js/animate.js"></script>
 </body>
 </html>

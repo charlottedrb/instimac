@@ -533,11 +533,19 @@ function afficher_fil_actualite() {
     affichage.appendChild(sidebar);
 
     //LOGO
+    var button = document.createElement('a');
+    setAttributes(button, {'href': 'logout.php', 'class': 'btn-line'});
+    button.innerText ='Deconnexion';
+
+    var br = document.createElement('br');
+
     var logo = document.createElement('div');
     logo.className = "logo";
     var logo_content = document.createElement('img');
     setAttributes(logo_content, {'src': '../img/logoIMAC.png', 'alt': 'logo-imac'});
     logo.appendChild(logo_content);
+    logo.appendChild(br);
+    logo.appendChild(button);
 
     //AJOUT NOUVEL EVENT
     var groupe_actions = document.createElement('div');
@@ -723,67 +731,3 @@ function loadCommentaires(id) {
 function displayError(value) {
     console.log(value);
 }
-
-
-// function afficher_publication_detail(publication_json) {//affiche le detail d'une publication (sans les commentaires)
-
-//     //PUBLICATION
-//     var publication = document.createElement('div');
-//     publication.className = 'publication modal-content';
-
-//     //IMAGE
-//     var publication_image = document.createElement('div');
-//     publication_image.className = 'publication-image';
-//     var publication_image_url = document.createElement('img');
-//     publication_image_url.setAttribute('src', publication_json.photoURL);
-//     publication_image_url.alt = "photo";
-//     publication_image.appendChild(publication_image_url);
-
-//     //INFOS
-//     var publication_infos = document.createElement('div');
-//     publication_infos.className = 'publication-infos';
-
-//     //DESCRIPTION
-//     var publication_description = document.createElement('div');
-//     publication_description.className = 'publication-description';
-//     var description = document.createElement('p');
-//     var texte_description = document.createTextNode(publication_json.description);
-//     description.appendChild(texte_description);
-
-//     //DATE
-//     var publication_date = document.createElement('div');
-//     publication_date.className = 'publication-date';
-//     var texte_publication_date = document.createTextNode(publication_json.date);
-//     publication_date.appendChild(texte_publication_date);
-
-//     //USER
-//     var user = document.createElement('user');
-//     user.className = 'user';
-
-//     var user_name = document.createElement('div');
-//     user_name.className = 'user-name';
-//     var texte_user_name = document.createTextNode(publication_json.utilisateur.nom);
-
-//     var user_image = document.createElement('div');
-//     user_image.className = 'user-image roundImg';
-//     var user_image_url = document.createElement('img');
-//     user_image_url.src = publication_json.utilisateur.photoURL;
-//     user_image_url.alt = 'photo utilisateur';
-//     user_image.appendChild(user_image_url);
-//     user_name.appendChild(texte_user_name);
-//     user.appendChild(user_name);
-//     user.appendChild(user_image);
-
-//     publication_description.appendChild(description);
-//     publication_description.appendChild(publication_date);
-//     publication_description.appendChild(user);
-
-//     publication-publication_infos.appendChild(publication_description);
-
-
-//     publication.appendChild(publication_image);
-//     publication.appendChild(publication_infos);
-
-//     //AUTRES APPEND
-//     modal.appendChild(publication);
-// }

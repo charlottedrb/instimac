@@ -35,47 +35,22 @@ if (Sanitize::checkIssetFields($_POST, ['login', 'password']) && Sanitize::check
 	<meta charset="utf-8"/>
 	<meta http-equiv="pragma" content="nocache"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="refresh" content="">
-	<!-- Style -->
-	<link rel="stylesheet" type="text/css" href="css/theme.css">
-</head>
-<body>
-
-<section>
-
-	<h1>Say Hello.</h1>
-
-	<form action="" method="post">
-        <?php echo $speaker->generate(); ?>
-		<label for="login">Login</label>
-		<input type="text" name="login" id="login">
-		<label for="pass">Password</label>
-		<input type="password" name="password" id="password">
-		<input type="submit" value="Check">
-	</form>
-</section>
-
-</body>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connectez-vous</title>
-    <link rel="stylesheet" href="css/login.css">
-    <?php include('includes/styles.php'); ?>
+	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/theme.css">
 </head>
 <body id="login">
-    <div class="form-container">
-        <h2>Connectez-vous.</h2>
-        <form action="">
-            <input type="text" name="pseudo" id="pseudo" placeholder="Pseudo ou mail">
-            <input type="text" name="mdp" id="mdp" placeholder="Mot de passe">
-            <button>Connexion</button>
-        </form>
-        <p>Pas de compte ? <a href="registered.php">C'est par ici.</a></p>
-    </div>
+<div class="form-container">
+	<h2>Connectez-vous.</h2>
+	<form action="login.php" method="post">
+        <?php echo $speaker->generate(); ?>
+		<input type="text" name="login" id="email" placeholder="Email">
+		<input type="password" name="password" id="password" placeholder="Mot de passe">
+		<button class="btn">Connexion</button>
+	</form>
+	<p>Pas de compte ? <a href="register.php">C'est par ici.</a> /
+		<a href="index.php">Accueil</a>
+	</p>
+</div>
 </body>
 </html>
 

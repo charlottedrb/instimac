@@ -1,11 +1,2 @@
 User-agent: *
-Disallow: /images/
-Disallow: /js/
-Disallow: /old/
-Disallow: /src/
-Disallow: /css/
-Disallow: /fonts/
-Disallow: /add_message.php
-Disallow: /status.php
-Disallow: /test.php
-Disallow: /tiger.php
+Disallow: /*

@@ -53,45 +53,43 @@ if (Sanitize::checkIssetFields($_POST, ['name', 'surname', 'email', 'password', 
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+	<link rel="stylesheet" href="css/theme.css">
+	<link rel="stylesheet" href="css/login.css">
 </head>
-<body>
+<body id="login">
+<div class="form-container">
+	<h2>Avec un compte c'est mieux</h2>
+	<form action="login.php" method="post" style="max-width: 800px;">
 
-<section>
-		<h1>Create your account, it's easy and fast</h1>
-		<form action="" method="post">
+        <?php echo $speaker->generate(); ?>
 
-            <?php echo $speaker->generate(); ?>
+		<input type="email" name="email" placeholder="Email" autofocus
+			   value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required>
 
-			<input type="email" name="email" placeholder="Email" autofocus
-				   value="<?php if (isset($_POST['email'])) echo $_POST['email']; ?>" required >
+		<input type="text" name="name" class="form-input" placeholder="My name is...oohh"
+			   value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>" required>
 
-			<input type="text" name="name" class="form-input" placeholder="My name is...oohh"
-				   value="<?php if (isset($_POST['name'])) echo $_POST['name']; ?>" required >
+		<input type="text" name="surname" placeholder="My surname is...hey hey"
+			   value="<?php if (isset($_POST['surname'])) echo $_POST['surname']; ?>" required>
 
-			<input type="text" name="surname" placeholder="My surname is...hey hey"
-				   value="<?php if (isset($_POST['surname'])) echo $_POST['surname']; ?>" required >
+		<input type="password" name="password"
+			   value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>"
+			   placeholder="Your fancy password..." id="" required>
+		<input type="password" name="password_confirm"
+			   value="<?php if (isset($_POST['password_confirm'])) echo $_POST['password_confirm']; ?>"
+			   placeholder="Repeat your password, please..." id="" class="form-input" required>
 
-			<input type="password" name="password"
-				   value="<?php if (isset($_POST['password'])) echo $_POST['password']; ?>"
-				   placeholder="Your fancy password..." id="" required>
-			<input type="password" name="password_confirm"
-				   value="<?php if (isset($_POST['password_confirm'])) echo $_POST['password_confirm']; ?>"
-				   placeholder="Repeat your password, please..." id="" class="form-input" required>
+		<label for="agree"><input type="checkbox" name="agree"
+                <?php if (isset($_POST['agree'])) echo 'checked="checked"'; ?> value="1" required
+								  style="display: inline-block; width: auto;" id="agree"> J'accepte les conditions sans
+			les lire</label>
 
-			<label for="agree"><input type="checkbox" name="agree"
-                    <?php if (isset($_POST['agree'])) echo 'checked="checked"'; ?> value="1" required> I agree to
-				our conditions, It means:</label>
-			<ul>
-				<li>Use, process and store your data for <span class="underlined">website use only</span></li>
-				<li>I know our conditions can evolved at anytime and <span class="underlined">I will be informed</span>
-					in
-					that case
-				</li>
-			</ul>
+		<input type="submit" value="Créer mon compte" class="btn">
+	</form>
 
-			<input type="submit" value="Create my account">
-		</form>
-	</div>
-</section>
+	<p>Vous avez un compte ? <a href="login.php">C'est par ici.</a> /
+		<a href="index.php">Accueil</a>
+	</p>
+</div>
 </body>
 </html>
