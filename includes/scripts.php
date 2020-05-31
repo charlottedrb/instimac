@@ -1,5 +1,5 @@
 <!-- THEME -->
-<script src="../scripts/index.js"></script>
-<script src="../scripts/generate.js"></script>
-<script src="../scripts/animate.js"></script>
+<script src="../js/index.js"></script>
+<script src="../js/generate.js"></script>
+<script src="../js/animate.js"></script>
 
