@@ -13,19 +13,10 @@ function getRequest(URL, body, callBackSuccess, callBackError) {
         headers: {"Content-Type": "application/x-www-form-urlencoded"}
     };
 
-    if(body.length !== 0) URL += '?' + urlencoded(body);
+    if(Object.keys(body).length > 0) URL += '?' + urlencoded(body);
     delete options.body;
     sendAjaxRequest(URL, options, callBackSuccess, callBackError);
 }
-
-/*
-function sendAfile(fileElement, URL, callBackSuccess, callBackError) {
-    var body = new FormData();
-    body.append('useless-value', 'no-because-multipart-boundary');
-    body.append('photo', file);
-    postRequest(URL, body, updateDisplay, updateDisplay);
-}
-*/
 
 function sendAjaxRequest(URL, options, callBackSuccess, callBackError) {
 

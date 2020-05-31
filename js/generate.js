@@ -1,16 +1,34 @@
 // ------------- formulaires ------------------
-function formulaire_ajout_publication() {
+function generate_formulaire_ajout_publication() {
 
     var modal = document.createElement('div');
     modal.className = 'modal';
-    var form = document.createElement('form');
-
-    form.className = 'actions-form modal-content';
     modal.id = 'add_publication';
+
+    var form = document.createElement('form');
+    form.className = 'actions-form modal-content';
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var idGroupe = document.getElementById('current_group').getAttribute('data-id');
+
+        var input = document.createElement('input');
+        setAttributes(input, {'type': 'hidden', 'name': 'groupe', 'value': idGroupe});
+        this.append(input);
+
+        var body = new FormData(this);
+        postRequest('./api/publication/ajouter.php', body, displayError, displayError);
+        document.getElementById('closeModal-addpublication').click();
+
+        afficher_page_groupe();
+
+    });
 
     //FERMETURE DE LA MODAL
     var closeModal = document.createElement('span');
     closeModal.className = "closeModal";
+    closeModal.id = 'closeModal-addpublication';
+
     var legend = document.createTextNode('Fermer');
     closeModal.appendChild(legend);
     closeModal.onclick = function () {
@@ -33,21 +51,12 @@ function formulaire_ajout_publication() {
 
     //INPUT IMAGE
     var url_img = document.createElement('input');
-    setAttributes(url_img, {'type': 'file', 'name': 'url_img', 'id': 'url_img'});
+    setAttributes(url_img, {'type': 'file', 'name': 'photo', 'id': 'url_img'});
     //label
     var url_img_label = document.createElement('LABEL');
-    var url_img_label_content = document.createTextNode("URL de l'image");
+    var url_img_label_content = document.createTextNode("Votre image");
     url_img_label.setAttribute('for', 'url_img');
     url_img_label.appendChild(url_img_label_content);
-
-    //INPUT DATE
-    var date = document.createElement('input');
-    setAttributes(date, {'type': 'date', 'name': 'date', 'id': 'date'});
-    //label
-    var date_label = document.createElement('LABEL');
-    var date_label_content = document.createTextNode("Date");
-    date_label.setAttribute('for', 'date');
-    date_label.appendChild(date_label_content);
 
     //BUTTON SUBMIT
     var button = document.createElement('button');
@@ -60,17 +69,15 @@ function formulaire_ajout_publication() {
     form.appendChild(formTitle);
     form.appendChild(description);
     form.appendChild(url_img);
-    form.appendChild(date);
     form.appendChild(button);
     form.insertBefore(description_label, description);
     form.insertBefore(url_img_label, url_img);
-    form.insertBefore(date_label, date);
 
     //AFFICHAGE
     document.getElementById('affichage').appendChild(modal);
 }
 
-function formulaire_ajout_groupe() {
+function generate_formulaire_ajout_groupe() {
     var modal = document.createElement('div');
     modal.className = 'modal';
     modal.id = 'add_groupe';
@@ -149,13 +156,28 @@ function formulaire_ajout_groupe() {
     document.getElementById('affichage').appendChild(modal);
 }
 
-//TODO: ajouter gestion de la modification
-function formulaire_modif_groupe() {
+function generate_formulaire_modif_groupe() {
     var modal = document.createElement('div');
     modal.className = 'modal';
+    modal.id = 'modif_groupe';
+
     var form = document.createElement('form');
     form.className = 'actions-form modal-content';
-    modal.id = 'modif_groupe';
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var parent = this.parentNode;
+        var idGroupe = parent.getAttribute('data-id');
+
+        var input = document.createElement('input');
+        setAttributes(input, {'type': 'hidden', 'name': 'id', 'value': idGroupe});
+        this.append(input);
+
+        var body = new FormData(this);
+        postRequest('./api/groupe/modifier.php', body, displayError, displayError);
+        document.getElementById('closeModal-publication').click();
+        loadGroupes();
+    });
 
     //FERMETURE DE LA MODAL
     var closeModal = document.createElement('span');
@@ -219,7 +241,8 @@ function formulaire_modif_groupe() {
     document.getElementById('affichage').appendChild(modal);
 }
 
-function formulaire_delete_groupe() {
+function generate_formulaire_delete_groupe() {
+
     var modal = document.createElement('div');
     modal.className = 'modal';
     modal.id = 'delete_groupe';
@@ -227,10 +250,14 @@ function formulaire_delete_groupe() {
     var form = document.createElement('form');
     form.className = 'actions-form modal-content';
 
-    //TODO: finir la requete pas de body ?????
     form.addEventListener('submit', function (e) {
+
         e.preventDefault();
-        var body = new FormData(this);
+
+        var parent = this.parentNode;
+        var idGroupe = parent.getAttribute('data-id');
+        var body = {id: idGroupe};
+
         getRequest('./api/groupe/supprimer.php', body, displayError, displayError);
         document.getElementById('closeModal-groupe').click();
         loadGroupes();
@@ -248,15 +275,9 @@ function formulaire_delete_groupe() {
         modal.style.display = "none";
     };
 
-
-
     var formTitle = document.createElement('h3');
     var formTitle_content = document.createTextNode('Supprimer l\'événement');
     formTitle.appendChild(formTitle_content);
-
-    //INPUT TITRE
-    var groupeId = document.createElement('input');
-    setAttributes(groupeId, {'type': 'hidden', 'name': 'id'});
 
     //BUTTON SUBMIT
     var button = document.createElement('button');
@@ -267,7 +288,6 @@ function formulaire_delete_groupe() {
     modal.appendChild(closeModal);
     modal.appendChild(form);
     form.appendChild(formTitle);
-    form.appendChild(groupeId);
     form.appendChild(button);
 
     //AFFICHAGE
@@ -275,10 +295,10 @@ function formulaire_delete_groupe() {
 }
 
 console.log("Création des formulaires");
-formulaire_ajout_publication();
-formulaire_ajout_groupe();
-formulaire_modif_groupe();
-formulaire_delete_groupe();
+generate_formulaire_ajout_publication();
+generate_formulaire_ajout_groupe();
+generate_formulaire_modif_groupe();
+generate_formulaire_delete_groupe();
 
 //AFFICHAGE INDIVIDUEL////////////////////////////////////////////////////////////////////
 function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actualité
@@ -318,22 +338,30 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     //ICONE DE MODIF
     var action_modif = document.createElement('div');
     action_modif.className = 'modif icon';
+    action_modif.setAttribute('data-id', groupe_json.id);
+
     var modif_icon = document.createElement('img');
     modif_icon.setAttribute('src', '../img/modif.png');
     modif_icon.className = 'icon-img';
     action_modif.onclick = function () {
         var modal = document.getElementById('modif_groupe');
+        modal.setAttribute('data-id', this.getAttribute('data-id'));
         modal.style.display = "block";
     };
 
     //ICONE DE SUPPRESSION
     var action_delete = document.createElement('div');
     action_delete.className = 'delete icon';
+    action_delete.setAttribute('data-id', groupe_json.id);
+
     var delete_icon = document.createElement('img');
     delete_icon.setAttribute('src', '../img/delete.png');
     delete_icon.className = 'icon-img';
+
+
     action_delete.onclick = function () {
         var modal = document.getElementById('delete_groupe');
+        modal.setAttribute('data-id', this.getAttribute('data-id'));
         modal.style.display = "block";
     };
 
@@ -522,9 +550,36 @@ function afficher_tous_les_commentaires(commentaires) {
     for (let i = 0; i < commentaires.length; i++) {
         afficher_commentaire(commentaires[i]);
     }
+
+
+    //affichage du formulaire d'ajout 
+    var input = document.createElement('input');
+    setAttributes(input, {'type': 'text', 'name': 'contenu', 'placeholder': 'blableblo'});
+
+    var button = document.createElement('button');
+    button.setAttribute('class', 'btn');
+    button.innerHTML = '+';
+
+    var form = document.createElement('form');
+    form.className = 'form-commentaires';
+    form.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        getRequest('./api/commentaire/ajouter.php', body, function (reponse) {
+
+        }, displayError);
+    });
+
+    form.appendChild(input);
+    form.appendChild(button);
+
+    document.getElementById('commentaires').appendChild(form);
 }
 
 function afficher_tous_les_groupes(groupes) {
+
+    document.querySelector('.fil').innerHTML = '';
+
     for (let i = 0; i < groupes.length; i++) {
         afficher_groupe(groupes[i]);
     }
@@ -593,9 +648,9 @@ function afficher_page_groupe() {
     button.innerHTML = "Retour";
     button.onclick = function () {
         clearAll();
-        formulaire_ajout_groupe();
-        formulaire_modif_groupe();
-        formulaire_delete_groupe();
+        generate_formulaire_ajout_groupe();
+        generate_formulaire_modif_groupe();
+        generate_formulaire_delete_groupe();
         afficher_fil_actualite();
         loadGroupes();
     };
@@ -622,6 +677,9 @@ function afficher_titre_page_groupe(groupe_json) {
     groupe_lieu.className = 'event_date';
     var texte_groupe_lieu = document.createTextNode(groupe_json.lieu);
     groupe_lieu.appendChild(texte_groupe_lieu);
+
+    document.querySelector('.header').setAttribute('id', "current_group");
+    document.querySelector('.header').setAttribute('data-id', groupe_json.id);
 
     document.querySelector('.header').appendChild(groupe_name);
     document.querySelector('.header').appendChild(groupe_date);
@@ -669,7 +727,7 @@ function clearAll() {
 }
 
 function groupeSidebar() {
-    formulaire_ajout_publication();
+    generate_formulaire_ajout_publication();
     var sidebar = document.querySelector('.sidebar');
 
     //LOGO
@@ -692,6 +750,8 @@ function groupeSidebar() {
     //ICONE D'AJOUT
     var action_add = document.createElement('div');
     action_add.className = 'add icon';
+
+
     action_add.onclick = function () {
         var modal = document.getElementById('add_publication');
         modal.style.display = "block";

@@ -14,12 +14,12 @@ if (empty($_SESSION['session']) || $_SESSION['session']->check() == FALSE || $_S
 	<title>Instimac</title>
 	<link rel="stylesheet" href="css/theme.css">
 	<link rel="stylesheet" href="css/dashboard.css">
-	<link rel="stylesheet" href="css/login.css">
 </head>
 <body>
 <div id="affichage"></div>
 
 <script src="./js/ajax.js"></script>
+<script src="./js/modales.js"></script>
 <script src="./js/generate.js"></script>
 <script src="./js/animate.js"></script>
 </body>

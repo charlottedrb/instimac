@@ -146,7 +146,8 @@ class Groupe
      */
     public function delete($groupeId, $utilisateurId)
     {
-        return $this->database->delete(self::TABLE, ['u_id' => $utilisateurId, 'g_id' => $groupeId]);
+        if ($this->database->delete(self::TABLE, ['u_id' => $utilisateurId, 'g_id' => $groupeId])) return FALSE;
+        return TRUE;
     }
 
     /**
