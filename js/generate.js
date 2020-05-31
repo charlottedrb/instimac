@@ -17,11 +17,8 @@ function generate_formulaire_ajout_publication() {
         this.append(input);
 
         var body = new FormData(this);
-        postRequest('./api/publication/ajouter.php', body, displayError, displayError);
+        postRequest('./api/publication/ajouter.php', body, pushToPublications, displayError);
         document.getElementById('closeModal-addpublication').click();
-
-        afficher_page_groupe();
-
     });
 
     //FERMETURE DE LA MODAL
@@ -157,6 +154,7 @@ function generate_formulaire_ajout_groupe() {
 }
 
 function generate_formulaire_modif_groupe() {
+
     var modal = document.createElement('div');
     modal.className = 'modal';
     modal.id = 'modif_groupe';
@@ -175,13 +173,15 @@ function generate_formulaire_modif_groupe() {
 
         var body = new FormData(this);
         postRequest('./api/groupe/modifier.php', body, displayError, displayError);
-        document.getElementById('closeModal-publication').click();
+        document.getElementById('closeModal-publication-maj').click();
         loadGroupes();
     });
 
     //FERMETURE DE LA MODAL
     var closeModal = document.createElement('span');
     closeModal.className = "closeModal";
+    closeModal.id = 'closeModal-publication-maj';
+
     var legend = document.createTextNode('Fermer');
     closeModal.appendChild(legend);
     closeModal.onclick = function () {
@@ -380,16 +380,15 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
     document.querySelector('.fil').appendChild(groupe); //ajoute au fil d'actualité
 }
 
-function afficher_publication(publication_json) { //affiche les pré_vues des publication sur la page du groupe
+function afficher_publication_in_publicationList(publication_json) { //affiche les pré_vues des publication sur la page du groupe
 
-    modal_detail_publication(publication_json);
+    //modal_detail_publication(publication_json);
 
     var publication = document.createElement('div');
     publication.className = 'publication';
     publication.setAttribute('data-id', publication_json.id);
     publication.addEventListener("click", function () {
-        var modal = document.getElementById("publication-" + publication_json.id);
-        modal.style.display = "block";
+        loadPublication(this.getAttribute('data-id'));
     });
 
     //IMAGE
@@ -431,73 +430,6 @@ function modal_detail_publication(publication_json) {
         modal.style.display = "none";
     };
     modal.appendChild(closeModal);
-
-    //PUBLICATION
-    var publication = document.createElement('div');
-    publication.className = 'publication modal-content';
-
-    //IMAGE
-    var publication_image = document.createElement('div');
-    publication_image.className = 'publication-image';
-    var publication_image_url = document.createElement('img');
-    publication_image_url.setAttribute('src', publication_json.photoURL);
-    publication_image_url.alt = "photo";
-    publication_image.appendChild(publication_image_url);
-
-    //INFOS
-    var publication_infos = document.createElement('div');
-    publication_infos.className = 'publication-infos';
-
-    //DESCRIPTION
-    var publication_description = document.createElement('div');
-    publication_description.className = 'publication-description';
-    var description = document.createElement('p');
-    var texte_description = document.createTextNode(publication_json.description);
-    description.appendChild(texte_description);
-
-    //DATE
-    var publication_date = document.createElement('div');
-    publication_date.className = 'publication-date';
-    var texte_publication_date = document.createTextNode(publication_json.date);
-    publication_date.appendChild(texte_publication_date);
-
-    //USER
-    var user = document.createElement('user');
-    user.className = 'user';
-
-    var user_name = document.createElement('div');
-    user_name.className = 'user-name';
-    var texte_user_name = document.createTextNode(publication_json.utilisateur.nom);
-
-    var user_image = document.createElement('div');
-    user_image.className = 'user-image roundImg';
-    var user_image_url = document.createElement('img');
-    user_image_url.src = publication_json.utilisateur.photoURL;
-    user_image_url.alt = 'photo utilisateur';
-    user_image.appendChild(user_image_url);
-    user_name.appendChild(texte_user_name);
-    user.appendChild(user_name);
-    user.appendChild(user_image);
-
-    publication_description.appendChild(user);
-    publication_description.appendChild(description);
-    publication_description.appendChild(publication_date);
-    publication_infos.appendChild(publication_description);
-
-    var zone_commentaires = document.createElement('div');
-    zone_commentaires.setAttribute('id', 'commentaires');
-    publication_infos.appendChild(zone_commentaires);
-
-    loadCommentaires(publication_json.id);
-
-    publication.appendChild(publication_image);
-    publication.appendChild(publication_infos);
-
-    //AUTRES APPEND
-    modal.appendChild(publication);
-
-    //AFFICHAGE
-    document.getElementById('affichage').appendChild(modal);
 }
 
 function afficher_commentaire(commentaire_json) { //affiche un commentaire
@@ -541,7 +473,7 @@ function afficher_commentaire(commentaire_json) { //affiche un commentaire
 //AFFICHAGES MULTIPLES////////////////////////////////////////////////////////////////////////////
 function afficher_toutes_les_publications(publications) {
     for (let i = 0; i < publications.length; i++) {
-        afficher_publication(publications[i]);
+        afficher_publication_in_publicationList(publications[i]);
     }
 }
 
@@ -551,8 +483,7 @@ function afficher_tous_les_commentaires(commentaires) {
         afficher_commentaire(commentaires[i]);
     }
 
-
-    //affichage du formulaire d'ajout 
+    //affichage du formulaire d'ajout d'un commentaire par l'utilisateur
     var input = document.createElement('input');
     setAttributes(input, {'type': 'text', 'name': 'contenu', 'placeholder': 'blableblo'});
 
@@ -561,13 +492,17 @@ function afficher_tous_les_commentaires(commentaires) {
     button.innerHTML = '+';
 
     var form = document.createElement('form');
-    form.className = 'form-commentaires';
-    form.addEventListener('click', function (e) {
+    form.className = 'form-commentaire';
+    form.id = 'form-commentaire';
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        getRequest('./api/commentaire/ajouter.php', body, function (reponse) {
-
-        }, displayError);
+        var publiId = document.getElementById('current-publication-modale').getAttribute('data-id');
+        var input = document.createElement('input');
+        setAttributes(input, {'type': 'hidden', 'name': 'publication-id', 'value': publiId});
+        this.append(input);
+        var body = new FormData(this);
+        postRequest('./api/commentaire/ajouter.php', body, pushToCommentaires, displayError);
     });
 
     form.appendChild(input);

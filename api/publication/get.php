@@ -16,6 +16,8 @@ if (Sanitize::checkEmptyFields($_GET, ['id'])) {
     $publication = new publication($db);
     $publication->id = $secured['id'];
 
+    $file = new \File\File($db);
+
     if ($publication->getById($secured['id'])) {
 
         http_response_code(200);
@@ -23,7 +25,7 @@ if (Sanitize::checkEmptyFields($_GET, ['id'])) {
             [
                 'id' => $publication->id,
                 'description' => $publication->description,
-                'photoURL',
+                'photoURL' => $file->idToURL($publication->photoId),
                 'date' => $publication->date,
                 'utilisateur' => [
                     'photoURL' => './img/default-user.jpg',
