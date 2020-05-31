@@ -21,6 +21,5 @@ if (empty($_SESSION['session']) || $_SESSION['session']->check() == FALSE || $_S
 <script src="./js/ajax.js"></script>
 <script src="./js/modales.js"></script>
 <script src="./js/generate.js"></script>
-<script src="./js/animate.js"></script>
 </body>
 </html>
