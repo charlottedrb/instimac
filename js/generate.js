@@ -39,7 +39,12 @@ function generate_formulaire_ajout_publication() {
 
     //INPUT DESCRIPTION
     var description = document.createElement('input');
-    setAttributes(description, {'type': 'text', 'name': 'description', 'id': 'description', 'value': 'Soit un ingénieur Créatif'});
+    setAttributes(description, {
+        'type': 'text',
+        'name': 'description',
+        'id': 'description',
+        'value': 'Soit un ingénieur Créatif'
+    });
     //label
     var description_label = document.createElement('LABEL');
     var description_label_content = document.createTextNode("Description");
@@ -85,9 +90,11 @@ function generate_formulaire_ajout_groupe() {
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         var body = new FormData(this);
-        postRequest('./api/groupe/ajouter.php', body, displayError, displayError);
+        postRequest('./api/groupe/ajouter.php', body, function (success) {
+            loadGroupes();
+        }, displayError);
         document.getElementById('closeModal-publication').click();
-        loadGroupes();
+
     });
 
     //FERMETURE DE LA MODAL
@@ -172,7 +179,9 @@ function generate_formulaire_modif_groupe() {
         this.append(input);
 
         var body = new FormData(this);
-        postRequest('./api/groupe/modifier.php', body, displayError, displayError);
+        postRequest('./api/groupe/modifier.php', body, function (success) {
+            loadGroupes();
+        }, displayError);
         document.getElementById('closeModal-publication-maj').click();
         loadGroupes();
     });
@@ -258,7 +267,9 @@ function generate_formulaire_delete_groupe() {
         var idGroupe = parent.getAttribute('data-id');
         var body = {id: idGroupe};
 
-        getRequest('./api/groupe/supprimer.php', body, displayError, displayError);
+        getRequest('./api/groupe/supprimer.php', body, function (success) {
+            loadGroupes();
+        }, displayError);
         document.getElementById('closeModal-groupe').click();
         loadGroupes();
     });
@@ -311,8 +322,7 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
 
     var groupe_name = document.createElement('h2');
     groupe_name.className = 'event-name';
-    var texte_groupe_name = document.createTextNode(groupe_json.titre);
-    groupe_name.appendChild(texte_groupe_name);
+    groupe_name.innerHTML = groupe_json.titre;
     groupe_name.onclick = function () {
         clearFilActu();
         clearSidebar();
@@ -382,34 +392,6 @@ function afficher_groupe(groupe_json) { //affiche les groupes sur le fil d'actua
 
 function afficher_publication_in_publicationList(publication_json) { //affiche les pré_vues des publication sur la page du groupe
 
-    //modal_detail_publication(publication_json);
-
-    /* var publication = document.createElement('div');
-    publication.className = 'publication';
-    publication.setAttribute('data-id', publication_json.id);
-    publication.addEventListener("click", function () {
-        loadPublication(this.getAttribute('data-id'));
-    });
-
-    //IMAGE
-    var publication_image = document.createElement('div');
-    publication_image.className = 'publication-image';
-    var publication_image_url = document.createElement('img');
-    publication_image_url.src = publication_json.photoURL;
-    publication_image_url.alt = "photo";
-    publication_image.appendChild(publication_image_url);
-    publication.appendChild(publication_image);
-
-    //USER
-    var user = document.createElement('div');
-    user.className = 'user';
-    var user_name = document.createElement('div');
-    user_name.className = 'user-name';
-    var texte_user_name = document.createTextNode(publication_json.utilisateur.nom);
-    user_name.appendChild(texte_user_name);
-    user.appendChild(user_name);
-    publication.appendChild(user);*/
-
     document.querySelector('.publications').appendChild(generatePublication(publication_json));
 }
 
@@ -435,38 +417,7 @@ function modal_detail_publication(publication_json) {
 function afficher_commentaire(commentaire_json) { //affiche un commentaire
 
     var commentaires = document.getElementById('commentaires');
-
-    var commentaire = document.createElement('div');
-    commentaire.className = 'commentaire';
-
-    //USER
-    var user = document.createElement('div');
-    user.className = 'user';
-    var user_name = document.createElement('div');
-    user_name.className = 'user-name';
-    var paragraphe_user_name = document.createElement('p');
-    var texte_user_name = document.createTextNode(commentaire_json.utilisateur.nom);
-    paragraphe_user_name.appendChild(texte_user_name);
-    user_name.appendChild(paragraphe_user_name);
-    user.appendChild(user_name);
-    commentaire.appendChild(user);
-
-    //CONTENU
-    var commentaire_content = document.createElement('div');
-    commentaire_content.className = 'commentaire-content';
-    var paragraphe_commentaire = document.createElement('p');
-    var texte_commentaire = document.createTextNode(commentaire_json.contenu);
-    paragraphe_commentaire.appendChild(texte_commentaire);
-    commentaire_content.appendChild(paragraphe_commentaire);
-
-    //DATE
-    var commentaire_date = document.createElement('div');
-    commentaire_date.className = 'commentaire-date';
-    var text_commentaire_date = document.createTextNode(commentaire_json.date);
-    commentaire_date.appendChild(text_commentaire_date);
-    commentaire_content.appendChild(commentaire_date);
-
-    commentaire.appendChild(commentaire_content);
+    var commentaire = generateCommentaire(commentaire_json);
     commentaires.appendChild(commentaire);
 }
 
@@ -535,7 +486,7 @@ function afficher_fil_actualite() {
     //LOGO
     var button = document.createElement('a');
     setAttributes(button, {'href': 'logout.php', 'class': 'btn-line'});
-    button.innerText ='Deconnexion';
+    button.innerText = 'Deconnexion';
 
     var br = document.createElement('br');
 
@@ -608,8 +559,7 @@ function afficher_titre_page_groupe(groupe_json) {
 
     var groupe_name = document.createElement('h1');
     groupe_name.className = 'title';
-    var texte_groupe_name = document.createTextNode(groupe_json.titre);
-    groupe_name.appendChild(texte_groupe_name);
+    groupe_name.innerHTML = groupe_json.titre;
 
     var groupe_date = document.createElement('div');
     groupe_date.className = 'event_date';
@@ -618,8 +568,7 @@ function afficher_titre_page_groupe(groupe_json) {
 
     var groupe_lieu = document.createElement('div');
     groupe_lieu.className = 'event_date';
-    var texte_groupe_lieu = document.createTextNode(groupe_json.lieu);
-    groupe_lieu.appendChild(texte_groupe_lieu);
+    groupe_lieu.innerHTML = groupe_json.lieu;
 
     document.querySelector('.header').setAttribute('id', "current_group");
     document.querySelector('.header').setAttribute('data-id', groupe_json.id);

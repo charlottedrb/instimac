@@ -23,10 +23,10 @@ if (Sanitize::checkEmptyFields($_POST, ['publication-id', 'contenu'])) {
             [
                 'id' => $commentaire->id,
                 'date' => $commentaire->created,
-                'contenu' => $commentaire->texte,
+                'contenu' => Sanitize::display($commentaire->texte),
                 'utilisateur' => [
                     'photoURL' => './img/default-user.jpg',
-                    'nom' => $_SESSION['user']->name . ' ' . $_SESSION['user']->surname,
+                    'nom' => Sanitize::display($_SESSION['user']->name . ' ' . $_SESSION['user']->surname),
                 ]
             ]
         );

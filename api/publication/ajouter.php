@@ -27,11 +27,11 @@ if (Sanitize::checkEmptyFields($_POST, ['description', 'groupe']) && Sanitize::c
                 [
                     'id' => $publication->id,
                     'date' => $publication->date,
-                    'description' => $publication->description,
+                    'description' => Sanitize::display($publication->description),
                     'photoURL' => $file->idToURL(),
                     'utilisateur' => [
                         'photoURL' => './img/default-user.jpg',
-                        'nom' => $_SESSION['user']->name . ' ' . $_SESSION['user']->surname,
+                        'nom' => Sanitize::display($_SESSION['user']->name . ' ' . $_SESSION['user']->surname),
                     ]
                 ]
             );

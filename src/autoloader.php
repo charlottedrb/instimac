@@ -1,13 +1,4 @@
 <?php
-/*
-// one folder back
-$root = __DIR__ . '\\..\\';
-echo $root."<br>";
-$root = $_SERVER['DOCUMENT_ROOT'];
-echo $root."<br>";
-$root = dirname(__DIR__);
-echo $root."<br>";
-*/
 
 spl_autoload_register(function ($className) {
 
@@ -20,5 +11,4 @@ spl_autoload_register(function ($className) {
     } else {
         //echo '/!\ Not Founded ' . $className . ' in ' . $file . ';<br>'.PHP_EOL;
     }
-    //echo '----------------<br>';
 });

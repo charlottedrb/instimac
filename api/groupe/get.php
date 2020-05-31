@@ -23,8 +23,8 @@ if (Sanitize::checkEmptyFields($_GET, ['id'])) {
         echo json_encode(
             [
                 'id' => (int)$groupe->id,
-                'titre' => $groupe->nom,
-                'lieu' => $groupe->lieu,
+                'titre' => Sanitize::display($groupe->nom),
+                'lieu' => Sanitize::display($groupe->lieu),
                 'date' => $groupe->date
             ]
         );

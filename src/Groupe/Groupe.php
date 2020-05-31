@@ -8,6 +8,7 @@ namespace Groupe;
 
 use Database\Database;
 use Publication\Publication;
+use Sanitize\Sanitize;
 
 class Groupe
 {
@@ -102,8 +103,8 @@ class Groupe
             foreach ($data as $row) {
                 $results[] = [
                     'id' => (int)$row['g_id'],
-                    'titre' => $row['g_nom'],
-                    'lieu' => $row['g_lieu'],
+                    'titre' => Sanitize::display($row['g_nom']),
+                    'lieu' => Sanitize::display($row['g_lieu']),
                     'date' => $row['g_date'],
                 ];
             }

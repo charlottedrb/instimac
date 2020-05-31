@@ -8,6 +8,7 @@
 namespace Commentaire;
 
 use Database\Database;
+use Sanitize\Sanitize;
 
 class Commentaire
 {
@@ -71,10 +72,10 @@ class Commentaire
                 $commentaires[] = [
                     'id' => $value['c_id'],
                     'date' => $value['c_date'],
-                    'contenu' => $value['c_texte'],
+                    'contenu' => Sanitize::display($value['c_texte']),
                     'utilisateur' => [
                         'id' => $value['u_id'],
-                        'nom' => $value['u_prenom'] . ' ' . $value['u_nom'],
+                        'nom' => Sanitize::display($value['u_prenom'] . ' ' . $value['u_nom']),
                     ]
                 ];
             }

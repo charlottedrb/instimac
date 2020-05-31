@@ -59,7 +59,7 @@ if (Sanitize::checkIssetFields($_POST, ['name', 'surname', 'email', 'password', 
 <body id="login">
 <div class="form-container">
 	<h2>Avec un compte c'est mieux</h2>
-	<form action="login.php" method="post" style="max-width: 800px;">
+	<form action="register.php" method="post" style="max-width: 800px;">
 
         <?php echo $speaker->generate(); ?>
 

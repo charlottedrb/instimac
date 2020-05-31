@@ -47,7 +47,7 @@ Class Sanitize
 
     public static function display($string)
     {
-        return htmlspecialchars_decode(nl2br($string));
+        return html_entity_decode($string);
     }
 
     public static function decode($string)

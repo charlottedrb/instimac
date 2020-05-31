@@ -8,6 +8,7 @@ namespace Publication;
 
 use Database\Database;
 use File\File;
+use Sanitize\Sanitize;
 
 class Publication
 {
@@ -163,11 +164,11 @@ class Publication
                 $results[] = [
                     'id' => (int)$row['p_id'],
                     'date' => $row['p_date'],
-                    'description' => $row['p_description'],
+                    'description' => Sanitize::display($row['p_description']),
                     'photoURL' => $file->idToURL($row['f_id']),
                     'utilisateur' => [
                         'photoURL' => './img/default-user.jpg',
-                        'nom' => $row['u_prenom'] . ' ' . $row['u_nom'],
+                        'nom' => Sanitize::display($row['u_prenom'] . ' ' . $row['u_nom']),
                     ],
                 ];
             }

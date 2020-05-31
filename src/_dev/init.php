@@ -95,10 +95,10 @@ if (!empty($_FILES['file1'])) {
     $env['File-1-set'] = $file->set($_FILES['file1']);
 
     $groupe = new Groupe($db);
-    $env['Groupe-1'] = $groupe->set('JEUDIMAC', 'COPEPANIC', "2016-05-12 12:23:02", $user->id);
+    $env['Groupe-1'] = $groupe->set('JEUDIMAC', 'COPERPANIC', "2016-05-12 12:23:02", $user->id);
 
     $groupe2 = new Groupe($db);
-    $env['Groupe-2'] = $groupe2->set('BUREAU SONIA', 'RESERVE', "2018-05-22 12:52:02", $user2->id);
+    $env['Groupe-2'] = $groupe2->set('Wei', 'secret', "2018-05-22 12:52:02", $user2->id);
 
 
     $publication = new Publication($db);

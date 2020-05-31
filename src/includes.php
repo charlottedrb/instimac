@@ -2,7 +2,7 @@
 
 require 'autoloader.php';
 
-use DataBase\DataBase as DataBase;
+use Database\Database;
 use User\Speaker;
 
 if (session_status() == PHP_SESSION_NONE) session_start();

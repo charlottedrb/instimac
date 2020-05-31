@@ -9,6 +9,8 @@ use \PDOException;
  * Class Database
  * @package Database
  */
+
+
 class Database
 {
     const HOST = 'localhost';

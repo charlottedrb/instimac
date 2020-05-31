@@ -24,12 +24,12 @@ if (Sanitize::checkEmptyFields($_GET, ['id'])) {
         echo json_encode(
             [
                 'id' => $publication->id,
-                'description' => $publication->description,
+                'description' => Sanitize::display($publication->description),
                 'photoURL' => $file->idToURL($publication->photoId),
                 'date' => $publication->date,
                 'utilisateur' => [
                     'photoURL' => './img/default-user.jpg',
-                    'nom' => $publication->utilisateurName,
+                    'nom' => Sanitize::display($publication->utilisateurName),
                 ]
             ]
         );
