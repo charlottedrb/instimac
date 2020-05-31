@@ -82,6 +82,14 @@ if (!empty($_FILES['file1'])) {
     $user2->enabled = 1;
     $env['User-2'] = $user2->create(['USER']);
 
+    $prof = new User($db);
+    $prof->name = "Sylvain";
+    $prof->surname = "Cherrier";
+    $prof->email = "cherrier@u-pem.fr";
+    $prof->password = "Lejoueurdebanane#1";
+    $prof->enabled = 1;
+    $env['Prof'] = $prof->create(['USER']);
+
 
     $file = new File($db);
     $env['File-1-set'] = $file->set($_FILES['file1']);
