@@ -1,0 +1,197 @@
+@import "../general";
+
+//////////////////////////////////////////////////////////////////////////
+//
+//
+//             STYLE PUBLICATION
+//
+//
+//////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////
+//             ARCHIVE DES PUBLICATIONS
+//////////////////////////////////////////////////////////////////////////
+
+.publications{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+
+    a{
+        flex:0 0 50%;
+    }
+
+    @include lg{
+        a{
+            flex: 0 0 25%;
+        }
+    }
+
+    .publication{
+        $this : &;
+        position: relative;
+        margin-bottom: 1rem;
+        margin-right: 1.5rem;
+
+        &::after{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(0deg, rgb(0, 0, 0), rgba(71, 71, 71, 0));
+            opacity: .7;
+        }
+
+        &:hover{
+            cursor: pointer;
+        }
+
+        .user{
+            &-name{
+                position: absolute; 
+                z-index: 10;
+                bottom: 1rem;
+                left: 1rem;
+                color: white;
+            }
+        }
+
+        @include lg{
+            margin-right: 1.5rem;
+            margin-bottom: 1.5rem;
+
+            &-image{
+                width: 100%;
+            }
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////
+//             PUBLICATION SOLO
+//////////////////////////////////////////////////////////////////////////
+
+.publication{
+    $this: &;
+
+    &-image{
+        overflow: hidden;
+
+        img{
+            width: 100%;
+        }
+    }
+
+    &-infos{
+        #{$this}-description{
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 0 1rem 0;
+            padding: 1rem;
+            background-color: #fff;
+
+            .user{
+                &-name{
+                    padding-left: 4rem;
+                    position: absolute;
+                    color :#535353;
+                }
+
+                &-image{
+                    width: 3rem;
+                    height: 3rem;  
+                }
+            }
+
+            p{
+                flex: 1 1;
+                padding-left: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            #{$this}-date{
+                width: 100%;
+                color: rgb(179, 179, 179);
+                text-align: right;
+                font-size: 0.8rem;
+            }
+        }
+    }
+
+    // 992px window width and more
+    @include lg{
+
+        display: flex; 
+
+        &-image{
+            width: 50%;
+        }
+
+        &-infos{
+            width: 50%;
+        }
+    }
+}
+
+#affichage{
+    display: flex;
+    flex: wrap;
+
+    .publication{
+        width: 100%;
+    }
+
+    .add-comm{
+        position: absolute;
+        bottom: -3rem;
+        left: 0;
+        width: 100%;
+
+        input[type="text"]{
+            position: relative; 
+            border-radius: 0 0 10px 10px;
+        }
+
+        button[type="submit"]{
+            position: absolute; 
+            bottom: 1rem; 
+            right: 0; 
+            border-radius: 0 0 10px 0; 
+            width: 5rem;
+            height: 35px;
+            color: white; 
+            font-family: "Karla";
+            font-size: 1rem;
+            background: $gradient-lr;
+            border: none; 
+        }
+    }
+
+    .return-button{
+        position: absolute; 
+        top: 2rem; 
+        right: 0.7rem;
+        width: 5rem;
+        height: 2rem;
+        color: white; 
+        font-family: "Karla";
+        font-size: 1rem;
+        background: $gradient-lr;
+        border: none; 
+        border-radius: 1rem;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    .fil{
+        .publications{
+            .publication{
+                width: auto;
+            }
+        }
+    }
+}

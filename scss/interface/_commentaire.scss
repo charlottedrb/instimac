@@ -1,0 +1,54 @@
+//////////////////////////////////////////////////////////////////////////
+//
+//
+//             STYLE COMMENTAIRE
+//
+//
+//////////////////////////////////////////////////////////////////////////
+
+$xs-com-img-w: 2rem;
+
+.commentaires{
+    position: relative;
+    background-color: rgb(243, 242, 242);
+
+    .commentaire{
+        display: flex;
+        padding: 0 1rem;
+        border-bottom: none;
+
+        &:last-child{
+            padding-bottom: 1rem;
+        }
+
+        .user{
+            &-image{
+                width: $xs-com-img-w;
+                height: $xs-com-img-w;
+            }
+
+            &-name{
+                color: rgb(83, 83, 83);
+            }
+        }
+
+        &-content{
+            width: 100%;
+            padding-left: 1rem;
+            color: rgb(83, 83, 83);
+
+            p { margin-bottom: 0.2rem;}
+        }
+
+        &-date{
+           color: rgb(179, 179, 179);
+           text-align: right;
+           font-size: 0.8rem;
+        }
+    }
+
+    // 992px window width and more
+    @include lg{
+
+    }
+}

@@ -1,74 +1,53 @@
 .container-index .fil .event .container-event {
   padding-left: 1.5rem;
 }
-
 .container-index .fil .event .container-event .event-name {
   width: 60%;
 }
-
 .container-index .fil .event .container-event .event-name a {
   color: black;
   font-weight: bold;
   text-decoration: none;
 }
-
 .container-index .fil .event-date {
   position: absolute;
   top: -0.5rem;
   right: 0;
   font-size: 3.5rem;
   text-align: center;
+  background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-
 @media (min-width: 992px) {
   .container-index {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
   }
   .container-index .sidebar {
-    -webkit-box-flex: 1;
-        -ms-flex-positive: 1;
-            flex-grow: 1;
+    flex-grow: 1;
   }
   .container-index .fil {
-    -webkit-box-flex: 4;
-        -ms-flex-positive: 4;
-            flex-grow: 4;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    flex-grow: 4;
     display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    flex-wrap: wrap;
+    align-items: center;
     padding: 0 2rem;
     height: 100vh;
     overflow: auto;
   }
   .container-index .fil .event {
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    flex-wrap: wrap;
+    align-items: center;
     width: 100%;
     height: 100%;
   }
   .container-index .fil .event .container-event {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 80%;
-            flex: 0 0 80%;
+    flex: 0 0 80%;
     padding-left: 0;
   }
   .container-index .fil .event .container-event .event-name {
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 10%;
-            flex: 0 0 10%;
+    flex: 0 0 10%;
   }
   .container-index .fil .event .container-event .event-name a {
     position: relative;
@@ -84,8 +63,7 @@
     width: 0;
     height: 10px;
     margin: 5px 0 0;
-    background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
-    -webkit-transition: width 0.5s ease-in-out;
+    background: linear-gradient(120deg, #ff004c 0%, #ff8600 50%, #fffa00 100%);
     transition: width 0.5s ease-in-out;
   }
   .container-index .fil .event .container-event .event-name a:hover:before {
@@ -93,10 +71,10 @@
   }
   .container-index .fil .event-date {
     position: static;
-    -webkit-box-flex: 0;
-        -ms-flex: 0 0 20%;
-            flex: 0 0 20%;
+    flex: 0 0 20%;
     font-size: 8rem;
     width: 100%;
   }
 }
+
+/*# sourceMappingURL=index.css.map */

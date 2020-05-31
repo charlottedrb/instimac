@@ -1,0 +1,121 @@
+@import "../general";
+
+//////////////////////////////////////////////////////////////////////////
+//
+//
+//             STYLE DE LA PAGE INDEX.PHP
+//
+//
+//////////////////////////////////////////////////////////////////////////
+
+#affichage{
+    $this: '.event';
+
+    .fil{
+        width: 100%;
+        .event{
+            .container-event{
+                padding-left: 1.5rem;
+        
+                #{$this}-name{
+                    width: 60%;
+                }
+            }
+
+            &-date{
+                position: absolute; 
+                top: -0.5rem;
+                right: 0;
+                font-size: 3.5rem;
+                text-align: center;
+            }
+        }
+    }
+    
+    @include lg{
+    display: flex;
+
+        .sidebar{
+            width: 25rem;
+        }
+
+        .fil{
+            flex-grow: 3;
+            //flex-direction: column;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 2rem;
+            height: 100vh; 
+            overflow-x: auto;
+
+            .header{
+                width: 100%;
+            }
+
+            .event{
+                position: relative;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+
+                .container-event{
+                    flex: 0 0 80%;
+                    padding-left: 0;                  
+                    
+                    #{$this}-name{
+                        width: 50%;
+                        a{
+                            position: relative;
+                            color: black;
+                            font-weight: bold; 
+                            text-decoration: none;
+    
+                            &:before{
+                                content: "";
+                                position: absolute; 
+                                bottom: 0; 
+                                left: 0;
+                                width: 0;
+                                height: 10px;
+                                margin: 5px 0 0;
+                                background: $gradient-lr;                                
+                                transition: width 0.5s ease-in-out;
+                            }
+    
+                            &:hover{
+                                cursor: pointer;
+                                &:before{
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &-date{
+                    position: static;
+                    font-size: 8rem;
+                    width: 20%
+                }
+            }
+
+            .return-button{
+                position: absolute; 
+                top: 7rem; 
+                right: 5rem;
+                width: 5rem;
+                height: 2rem;
+                color: white; 
+                font-family: "Karla";
+                font-size: 1rem;
+                background: $gradient-lr;
+                border: none; 
+                border-radius: 1rem;
+
+                &:hover{
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

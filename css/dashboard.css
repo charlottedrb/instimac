@@ -1,0 +1,111 @@
+#affichage .fil {
+  width: 100%;
+}
+
+#affichage .fil .event .container-event {
+  padding-left: 1.5rem;
+}
+
+#affichage .fil .event .container-event .event-name {
+  width: 60%;
+}
+
+#affichage .fil .event-date {
+  position: absolute;
+  top: -0.5rem;
+  right: 0;
+  font-size: 3.5rem;
+  text-align: center;
+}
+
+@media (min-width: 992px) {
+  #affichage {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  #affichage .sidebar {
+    width: 25rem;
+  }
+  #affichage .fil {
+    -webkit-box-flex: 3;
+        -ms-flex-positive: 3;
+            flex-grow: 3;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    padding: 0 2rem;
+    height: 100vh;
+    overflow-x: auto;
+  }
+  #affichage .fil .header {
+    width: 100%;
+  }
+  #affichage .fil .event {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  #affichage .fil .event .container-event {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 80%;
+            flex: 0 0 80%;
+    padding-left: 0;
+  }
+  #affichage .fil .event .container-event .event-name {
+    width: 50%;
+  }
+  #affichage .fil .event .container-event .event-name a {
+    position: relative;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  #affichage .fil .event .container-event .event-name a:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 10px;
+    margin: 5px 0 0;
+    background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
+    -webkit-transition: width 0.5s ease-in-out;
+    transition: width 0.5s ease-in-out;
+  }
+  #affichage .fil .event .container-event .event-name a:hover {
+    cursor: pointer;
+  }
+  #affichage .fil .event .container-event .event-name a:hover:before {
+    width: 100%;
+  }
+  #affichage .fil .event-date {
+    position: static;
+    font-size: 8rem;
+    width: 20%;
+  }
+  #affichage .fil .return-button {
+    position: absolute;
+    top: 7rem;
+    right: 5rem;
+    width: 5rem;
+    height: 2rem;
+    color: white;
+    font-family: "Karla";
+    font-size: 1rem;
+    background: linear-gradient(120deg, #5ed663 0%, #02799a 100%);
+    border: none;
+    border-radius: 1rem;
+  }
+  #affichage .fil .return-button:hover {
+    cursor: pointer;
+  }
+}
